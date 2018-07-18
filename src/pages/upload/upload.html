@@ -1,0 +1,26 @@
+<!--
+  Generated template for the UploadPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Upload</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only clear (tap)="openSettings()">
+        Guardar
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <img *ngIf="imgURL == ''" class="uploadImg" src="assets/imgs/Unknown.png" (tap)=openGallery()>
+  <img *ngIf="imgURL != ''" class="uploadImg" src={{imgURL}} (tap)=openGallery()>
+  <div class="linebreaker"></div>
+  <ion-input *ngIf="uploadType == 1" placeholder="Titulo" [(ngModel)] = title></ion-input>
+  <ion-textarea placeholder="Mensaje" floating></ion-textarea>
+</ion-content>

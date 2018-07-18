@@ -1,0 +1,39 @@
+<!--
+  Generated template for the ServicesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Services</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="document" item-start></ion-icon>
+      <h2>Tramites</h2>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="book" item-start></ion-icon>
+      <h2>Revista</h2>
+    </ion-item>
+    <ion-item (tap)="getData(2)">
+      <ion-icon name="bookmark" item-start ></ion-icon>
+      <h2>Capacitacion</h2>
+    </ion-item>
+    <ion-item (tap)="getData(0)">
+      <ion-icon name="create" item-start></ion-icon>
+      <h2>Asesoria</h2>
+    </ion-item>
+    <ion-item (tap)="getData(1)">
+      <ion-icon name="calendar" item-start></ion-icon>
+      <h2>Eventos</h2>
+    </ion-item>
+  </ion-list>
+</ion-content>

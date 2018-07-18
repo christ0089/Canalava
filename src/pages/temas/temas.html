@@ -1,0 +1,32 @@
+<!--
+  Generated template for the TemasPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Temas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let tema of temas.Inqury" (tap)="openTema(tema)">
+      <ion-avatar item-start>
+        <img src={{tema.Img}}>
+      </ion-avatar>
+      <h2>{{tema.Name}}</h2>
+      <p>{{tema.Title}}</p>
+      <ion-note item-end>{{tema.Timestamp | date}}</ion-note>
+    </ion-item>
+  </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab color="blue" (tap)="createTema()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,34 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+<ion-content class="master" style="background-image: url('assets/imgs/background.png');">
+  <ion-slides padding pager="true">
+    <ion-slide>
+      <ion-img height="280" src="assets/imgs/region1.png"></ion-img>
+    </ion-slide>
+    <ion-slide>
+      <ion-img height="280" src="assets/imgs/region2.png"></ion-img>
+    </ion-slide>
+    <ion-slide>
+      <ion-img height="280" src="assets/imgs/region3.png"></ion-img>
+    </ion-slide>
+  </ion-slides>
+  <div padding class="LoginContainer">
+    <ion-item>
+      <ion-label color="primary" floating>Email</ion-label>
+      <ion-input [(ngModel)]="Email" type="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" floating>Password</ion-label>
+      <ion-input [(ngModel)]="Password" type="password"></ion-input>
+    </ion-item>
+
+    <button ion-button class="styleLoginButton" (tap)="LoginWithEmail()">Login</button>
+    <div class="Divider"></div>
+  </div>
+</ion-content>

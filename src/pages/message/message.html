@@ -1,0 +1,57 @@
+<!--
+  Generated template for the MessagePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+
+    <ion-title>
+      <img alt="logo" height="25"  width="25" src={{userData.getUserImage(messageKey)}}>
+      {{userData.getUserName(messageKey)}}
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let chat of test" no-lines>
+      <div class="chat-status" text-center *ngIf="chat.type==='join'||chat.type==='exit';else message">
+        <span class="chat-date">{{chat.Timestamp | date:'short'}}</span>
+        <span class="chat-content-center">{{chat.Message}}</span>
+      </div>
+      <ng-template #message>
+        <div class="chat-message" text-right *ngIf="chat.Sender === userData.userID">
+          <div class="right-bubble">
+            <span class="msg-name">Yo</span>
+            <span class="msg-date">{{chat.Timestamp | date:'short'}}</span>
+            <p text-wrap>{{chat.Message}}</p>
+          </div>
+        </div>
+        <div class="chat-message" text-left *ngIf="chat.Sender !== userData.userID">
+          <div class="left-bubble">
+            <span class="msg-name">{{userData.getUserName(chat.Sender)}}</span>
+            <span class="msg-date">{{chat.Timestamp | date:'short'}}</span>
+            <p text-wrap>{{chat.Message}}</p>
+          </div>
+        </div>
+      </ng-template>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10>
+        <ion-input type="text" placeholder="Type a message" [(ngModel)]="data.Message" name="message"></ion-input>
+      </ion-col>
+      <ion-col col-2 (click)="sendMessage()">
+        <ion-icon name="paper-plane"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
