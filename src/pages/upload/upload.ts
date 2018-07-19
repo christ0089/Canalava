@@ -70,7 +70,6 @@ export class UploadPage {
     this.camera.openGallery().then((url:string) => {
       this.imgURL = url;
     });
-
   }
 
 }

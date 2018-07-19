@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FirebaseApp } from '../../../node_modules/angularfire2';
+import { DocumentViewer, DocumentViewerOptions} from '@ionic-native/document-viewer';
 
 /**
  * Generated class for the ServicesPage page.
@@ -16,7 +16,7 @@ import { FirebaseApp } from '../../../node_modules/angularfire2';
 })
 export class ServicesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private document:DocumentViewer) {
 
   }
 
@@ -24,6 +24,14 @@ export class ServicesPage {
     this.navCtrl.push("EventManagerPage", {
       Type : type
     })
+  }
+
+  openDocument(){
+    const options: DocumentViewerOptions = {
+      title: 'My PDF'
+    }
+    
+    this.document.viewDocument("assets/Beneficios.pdf", 'application/pdf', options)
   }
 
   ionViewDidLoad() {

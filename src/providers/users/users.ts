@@ -117,7 +117,23 @@ export class UsersProvider {
         return success(profileData);
       })
     })
+  }
 
+  updateUserData(userData) {
+    const db = this.firebase.database().ref();
+    return new Promise((success, reject) => {
+      db.child("UserData").child(this.userID).update({
+        "Name": userData.Name,
+        "Phone": userData.Phone,
+        "ProfileImg": userData.Img,
+        "isPhonePublic": userData.isPhonePublic,
+      }).then(() => {
+        this.content.getContent();
+        return success();
+      }).catch((error) =>{
+        return reject(error);
+      })
+    })
   }
 
   getUser(Name:string) {

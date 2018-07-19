@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Camera } from '@ionic-native/camera';
+import { DocumentViewer } from '@ionic-native/document-viewer';
 
 import { HttpModule} from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -62,7 +63,8 @@ export const firebaseConfig = {
     TemasDeIndustriaProvider,
     ToastAndLoadProvider,
     PostPicture,
-    Camera
+    Camera,
+    DocumentViewer
   ]
 })
 export class AppModule {}

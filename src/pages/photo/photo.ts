@@ -21,14 +21,16 @@ export class PhotoPage {
   content: any;
   message = "";
   id = "";
-  @Input('isEditEnabled')isEditEnabled: boolean = false;
+  isEditEnabled: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private userData: UsersProvider
-    , private actionSheetCtrl:ActionSheetController, private contentProvider: ContentProvider,
+    , private actionSheetCtrl: ActionSheetController, private contentProvider: ContentProvider,
     private alertCtrl: ToastAndLoadProvider) {
+    this.isEditEnabled = false;
     this.content = navParams.get("Content");
     this.id = navParams.get("ID");
+    this.isEditEnabled = navParams.get("isEditEnabled");
     this.message = this.content.Message;
-    this.isEditEnabled = false;
+
   }
 
   ionViewDidLoad() {
@@ -39,12 +41,12 @@ export class PhotoPage {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Que deseas hacer?',
       buttons: [
-        { 
+        {
           text: 'Borrar',
           role: 'destructive',
           handler: () => {
             console.log(this.content.Key)
-            this.contentProvider.deletePicture(this.content.Key, this.userData.userID).then(() =>{
+            this.contentProvider.deletePicture(this.content.Key, this.userData.userID).then(() => {
               this.navCtrl.pop();
             });
           }
@@ -64,7 +66,7 @@ export class PhotoPage {
         }
       ]
     });
- 
+
     actionSheet.present();
   }
 

@@ -25,6 +25,7 @@
     </ion-avatar>
     <h2>{{userData.userData.Name}}</h2>
     <p>Telefono: {{userData.userData.Phone}}</p>
+    <button ion-button (tap)="editData()">Editar Informacion</button>
   </ion-item>
   <div padding>
     <ion-segment [(ngModel)]="displayMode">
@@ -48,7 +49,7 @@
             <img src={{userData.userData.Img}}>
           </ion-avatar>
           <h2>{{userData.userData.Name}}</h2>
-          <button ion-button clear item-end (tap)="presentActionSheet()">
+          <button ion-button clear item-end (tap)="presentActionSheet(content)">
             <ion-icon name="more"></ion-icon>
           </button>
         </ion-item>

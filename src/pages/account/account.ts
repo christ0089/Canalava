@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, ModalController } from 'ionic-angular';
 import { ContentProvider } from '../../providers/content/content';
 import { UsersProvider } from '../../providers/users/users';
 
@@ -18,7 +18,7 @@ import { UsersProvider } from '../../providers/users/users';
 export class AccountPage { 
   displayMode: string;
   constructor(public navCtrl: NavController, public navParams: NavParams, private content:ContentProvider, private userData: UsersProvider,
-  private actionSheetCtrl:ActionSheetController) {
+  private actionSheetCtrl:ActionSheetController, private modalCtrl:ModalController) {
     this.displayMode = "List";
   }
 
@@ -43,7 +43,7 @@ export class AccountPage {
     })
   }
 
-  presentActionSheet() {
+  presentActionSheet(content) {
     console.log("OpenActionScheet");
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Modify your album',
@@ -52,13 +52,19 @@ export class AccountPage {
           text: 'Borrar',
           role: 'destructive',
           handler: () => {
-            console.log('Destructive clicked');
+            this.content.deletePicture(content.Key, this.userData.userID).then(() =>{
+              this.navCtrl.pop();
+            });
           }
         },
         {
           text: 'Editar',
           handler: () => {
-            console.log('Archive clicked');
+            this.navCtrl.push("PhotoPage", {
+              Content: content,
+              ID : this.userData.userID,
+              isEditEnabled : true
+            })
           }
         },
         {
@@ -90,5 +96,10 @@ export class AccountPage {
         content.likeNumber--;
       }
     })
+  }
+
+  editData() {
+    let profileModal = this.modalCtrl.create("EditPage");
+    profileModal.present();
   }
 }

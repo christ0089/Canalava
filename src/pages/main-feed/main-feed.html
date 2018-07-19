@@ -25,22 +25,23 @@
   <ion-list>
     <ion-list>
       <div *ngFor="let content of content.contentArray" class="feed">
-        <ion-item (tap) = "openAccount(content.Key)">
+        <ion-item (tap)="openAccount(content.Key)">
           <ion-avatar item-start>
             <img src={{content.Img}}>
           </ion-avatar>
           <h2>{{content.Name}}</h2>
-          <ion-note item-end>{{content.Timestamp | date}}
-          </ion-note>
         </ion-item>
         <img src={{content.ImageURL}}>
         <ion-item>
-          <h2 item-start>{{content.Message}}</h2>
-          <ion-badge item-end>{{content.likeNumber}} Likes</ion-badge>
-          <button ion-button clear (tap)="giveLike(content)">
-            <ion-icon *ngIf="content.isImageLiked == false" name="heart-outline"></ion-icon>
-            <ion-icon *ngIf="content.isImageLiked == true" name="heart"></ion-icon>
-          </button>
+          <h2>{{content.Message}}</h2>
+          <div item-end>
+            <ion-badge >{{content.likeNumber}} Likes</ion-badge>
+            <button ion-button clear (tap)="giveLike(content)">
+              <ion-icon *ngIf="content.isImageLiked == false" name="heart-outline"></ion-icon>
+              <ion-icon *ngIf="content.isImageLiked == true" name="heart"></ion-icon>
+            </button>
+          </div>
+          <p>{{content.Timestamp | date}}</p>
         </ion-item>
       </div>
     </ion-list>

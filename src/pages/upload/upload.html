@@ -22,5 +22,5 @@
   <img *ngIf="imgURL != ''" class="uploadImg" src={{imgURL}} (tap)=openGallery()>
   <div class="linebreaker"></div>
   <ion-input *ngIf="uploadType == 1" placeholder="Titulo" [(ngModel)] = title></ion-input>
-  <ion-textarea placeholder="Mensaje" floating></ion-textarea>
+  <ion-textarea placeholder="Mensaje" floating text-wrap></ion-textarea>
 </ion-content>
