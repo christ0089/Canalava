@@ -23,7 +23,7 @@ export class AccountPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AccountPage');
+    this.userData.getCurrentSession();
   }
 
   addImage(){
@@ -99,7 +99,15 @@ export class AccountPage {
   }
 
   editData() {
-    let profileModal = this.modalCtrl.create("EditPage");
+    let data = {
+      "Name": this.userData.userData.Name,
+      "Phone": this.userData.userData.Phone,
+      "Img": this.userData.userData.Img,
+      "isPhonePublic": this.userData.userData.isPhonePublic,
+    }
+    let profileModal = this.modalCtrl.create("EditPage", {
+      UserData : data
+    });
     profileModal.present();
   }
 }

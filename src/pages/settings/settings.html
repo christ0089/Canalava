@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Settings</ion-title>
+    <ion-title>Configuracion</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,10 +15,9 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item>Mas Informacion</ion-item>
-    <ion-item>Terminos y Condiciones</ion-item>
-    <ion-item>Poliza de Seguridad</ion-item>
-    <ion-item>Mostrar Celular?</ion-item>
-    <ion-item>Salir</ion-item>
+    <ion-item (tap)="openWebsite(Canalava)">Mas Informacion</ion-item>
+    <ion-item (tap)="openWebsite(Terms)" >Terminos y Condiciones</ion-item>
+    <ion-item (tap)="openWebsite(Security)">Poliza de Seguridad</ion-item>
+    <ion-item (tap)="signOut()">Salir</ion-item>
   </ion-list>
 </ion-content>

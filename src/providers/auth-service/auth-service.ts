@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
+import * as firebase from 'firebase';
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -15,7 +15,9 @@ export class AuthServiceProvider {
 
 	constructor(public afAuth: AngularFireAuth) {
 		afAuth.authState.subscribe(user => {
-			this.user = user;
+			if (user != null) {
+				this.user = user;
+			}
 		});
 	}
 

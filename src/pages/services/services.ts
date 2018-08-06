@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DocumentViewer, DocumentViewerOptions} from '@ionic-native/document-viewer';
+import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
 
 /**
  * Generated class for the ServicesPage page.
@@ -16,7 +17,8 @@ import { DocumentViewer, DocumentViewerOptions} from '@ionic-native/document-vie
 })
 export class ServicesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private document:DocumentViewer) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private document:DocumentViewer
+  , private toast: ToastAndLoadProvider) {
 
   }
 
@@ -28,10 +30,11 @@ export class ServicesPage {
 
   openDocument(){
     const options: DocumentViewerOptions = {
-      title: 'My PDF'
+      title: 'Beneficios'
     }
-    
-    this.document.viewDocument("assets/Beneficios.pdf", 'application/pdf', options)
+    let toast = this.toast
+    this.document.viewDocument('www/assets/Beneficios.pdf', 'application/pdf', options, function onShow(){}, function onClose(){}, function onMissingApp(){},
+    function onError(){ toast.presetToast("Error al abrir archivo") })
   }
 
   ionViewDidLoad() {

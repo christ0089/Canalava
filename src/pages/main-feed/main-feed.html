@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>MainFeed</ion-title>
+    <ion-title>Canalava</ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (tap)="openSettings()">
         <ion-icon name="chatbubbles"></ion-icon>
@@ -33,7 +33,7 @@
         </ion-item>
         <img src={{content.ImageURL}}>
         <ion-item>
-          <h2>{{content.Message}}</h2>
+          <h2 text-wrap>{{content.Message}}</h2>
           <div item-end>
             <ion-badge >{{content.likeNumber}} Likes</ion-badge>
             <button ion-button clear (tap)="giveLike(content)">

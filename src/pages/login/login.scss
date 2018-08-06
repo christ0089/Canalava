@@ -8,16 +8,12 @@ page-login {
  ion-slides {
      height: 60%;
      ion-slide {
-        ion-img{
-            padding-top: 40px;
-            background: transparent;
-        }
      }
  }
 
  .LoginContainer {
      background-color: white;
-     height: 40%;
+     height: 240px;
 
      button {
          width: 100%;
@@ -26,6 +22,14 @@ page-login {
  }
 
 
+}
+
+.slider  {
+    width: 60% !important;
+    height:  80% !important;
+    //object-fit: cover;
+    padding-top: 40px;
+    background: transparent;
 }
 
 .styleLoginButton {

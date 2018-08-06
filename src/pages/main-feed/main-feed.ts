@@ -19,11 +19,11 @@ import { DatePipe } from '@angular/common';
 export class MainFeedPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userContent: UsersProvider, public content: ContentProvider) {
-
+    this.userContent.getCurrentSession();
   }
 
   ionViewDidLoad() {
-    this.userContent.getCurrentSession();
+    
   }
 
   openSettings() {

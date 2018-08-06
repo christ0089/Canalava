@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Photo</ion-title>
+    <ion-title>Subir Imagen</ion-title>
     <ion-buttons end>
       <button  ion-button icon-only clear *ngIf="isEditEnabled == true" (tap)="saveMessage()">
         <ion-icon name="checkmark"></ion-icon>
@@ -21,9 +21,9 @@
   <div class="feed" *ngIf="isEditEnabled == false">
     <ion-item>
       <ion-avatar item-start>
-        <img src={{userData.userData.Img}}>
+        <img src={{userData.getUserImage(id)}}>
       </ion-avatar>
-      <h2>{{userData.userData.Name}}</h2>
+      <h2>{{userData.getUserName(id)}}</h2>
       <button ion-button clear item-end (tap)="presentActionSheet()" *ngIf="userData.userID == id">
         <ion-icon name="more"></ion-icon>
       </button>

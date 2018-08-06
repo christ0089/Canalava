@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FirebaseApp } from '../../../node_modules/angularfire2';
+import { FirebaseApp } from 'angularfire2';
 import { UsersProvider } from '../../providers/users/users';
 import { MessagesServiceProvider } from '../../providers/messages-service/messages-service';
 import { ToastAndLoadProvider } from '../../providers/AlertandLoader';

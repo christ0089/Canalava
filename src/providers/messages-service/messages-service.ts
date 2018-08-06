@@ -30,9 +30,7 @@ export class MessagesServiceProvider {
           db.child("MessagesBranch").child("Messages").child(messages.key).once("value").then((message) => {
             console.log(message.val());
             let data = message.val();
-            if (data.Sender == toID) {
               convos[toID] = data;
-            }
           }).then(()=> {
             console.log(convos, "Data");
             return resolve(convos);    

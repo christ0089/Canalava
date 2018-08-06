@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Account</ion-title>
+    <ion-title>Cuenta</ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (tap)="openSettings()">
         <ion-icon name="cog"></ion-icon>
@@ -60,7 +60,7 @@
             <ion-icon *ngIf="content.isImageLiked == false" name="heart-outline"></ion-icon>
             <ion-icon *ngIf="content.isImageLiked == true" name="heart"></ion-icon>
           </button>
-          <h2>{{content.Message}}</h2>
+          <h2 text-wrap>{{content.Message}}</h2>
           <p>{{content.Timestamp | date}}</p>
         </ion-item>
         <div class="linebreaker"></div>

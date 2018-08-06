@@ -9,5 +9,8 @@ import { PhotoPage } from './photo';
   imports: [
     IonicPageModule.forChild(PhotoPage),
   ],
+  exports : [
+    PhotoPage
+  ]
 })
 export class PhotoPageModule {}

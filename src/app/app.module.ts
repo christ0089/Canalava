@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Camera } from '@ionic-native/camera';
 import { DocumentViewer } from '@ionic-native/document-viewer';
+import { Network } from '@ionic-native/network';
 
 import { HttpModule} from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,7 +15,7 @@ import { UsersProvider } from '../providers/users/users';
 import { ContentProvider } from '../providers/content/content';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { ToastAndLoadProvider } from '../providers/AlertandLoader';
-import { PostPicture } from '../providers/ImageUploadRouting';
+import { PostPicture } from '../providers/post-picture';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
@@ -22,6 +23,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { MessagesServiceProvider } from '../providers/messages-service/messages-service';
 import { TemasDeIndustriaProvider } from '../providers/temas-de-industria/temas-de-industria';
+import {InternetProvider} from '../providers/internet';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBcPwfSEd-LvsCcqNByVBZzORT1vM50qSI",
@@ -63,8 +65,10 @@ export const firebaseConfig = {
     TemasDeIndustriaProvider,
     ToastAndLoadProvider,
     PostPicture,
+    InternetProvider,
     Camera,
-    DocumentViewer
+    DocumentViewer,
+    Network
   ]
 })
 export class AppModule {}

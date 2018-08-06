@@ -2,10 +2,9 @@ import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { FirebaseApp } from 'angularfire2';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { AuthServiceProvider } from '../auth-service/auth-service';
-import { resolveDefinition } from '../../../node_modules/@angular/core/src/view/util';
+
 /*
   Generated class for the ContentProvider provider.
 
@@ -25,6 +24,9 @@ export class ContentProvider {
     let tempArray = [];
     const firebaseDb = this.db.database().ref();
     this.auth.afAuth.authState.subscribe(user => {
+      if (user == null) {
+        return
+      }
       firebaseDb.child("PublicContent").orderByChild("Timestamp").on("child_added", function (snapchot) {
         let data = snapchot.val();
 
@@ -112,22 +114,28 @@ export class ContentProvider {
   postPicture(userID, data) {
     const firebaseDb = this.db.database().ref();
     let reference = firebaseDb.child("PublicContent").push();
-    reference.update({
-      "Image" : data.Img,
-      "Message": data.Message,
-      "Timestamp" : Date.now(),
-      "Uploader" : userID
-    }).then(() => {
-      let key = reference.key
-      firebaseDb.child("Content").child(userID).update({
-        [key] : 1
+    return new Promise((resolve, reject)=> {
+      reference.update({
+        "Image" : data.Img,
+        "Message": data.Message,
+        "Timestamp" : Date.now(),
+        "Uploader" : userID
+      }).then(() => {
+        let key = reference.key
+        firebaseDb.child("Content").child(userID).update({
+          [key] : 1
+        });
+        firebaseDb.child("ContentLikes").child(key).set({
+          Likes : 0
+        });
+      }).then(() => {
+        this.getUserContent(userID);
+        return resolve();
+      }).catch((error)=> {
+        return reject(error)
       });
-      firebaseDb.child("ContentLikes").child(key).set({
-        Likes : 0
-      });
-    }).then(() => {
-      this.getUserContent(userID);
     });
+
   }
 
   deletePicture(id, uid) {

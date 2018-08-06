@@ -24,23 +24,20 @@ export class UsersProvider {
     "isPhonePublic": ""
   }
 
-  constructor(public http: Http, private auth: AuthServiceProvider, private content: ContentProvider, 
-    private firebase: FirebaseApp, private events:Events) {
+  constructor(public http: Http, private auth: AuthServiceProvider, private content: ContentProvider,
+    private firebase: FirebaseApp, private events: Events) {
 
   }
 
 
   getCurrentSession() {
     this.auth.afAuth.authState.subscribe(user => {
-      console.log("LogIn Attempt",);
       if (user == null) {
         this.signOut();
       } else {
-        this.userID = user.uid;
-        if (user.emailVerified == true || user.uid == "kiCJPCT9GPTEYd1sP9tgP2nzgg63") {
+        if (user.emailVerified == true || user.uid != null) {
+          this.userID = user.uid;
           this.loadData();
-        }else {
-          this.signOut();
         }
       }
     });
@@ -48,20 +45,17 @@ export class UsersProvider {
 
   signOut() {
     let eventLoop = this.events;
-    this.auth.signOut().then(() => {
-      console.log("LogOut");
+    this.auth.signOut().then(() => 
+    {
       eventLoop.publish("LogOut");
     });
   }
 
   loadData() {
-    this.auth.afAuth.authState.subscribe(user => {
-      this.userID = user.uid;
-      this.content.getContent();
-      this.content.getUserContent(this.userID);
-      this.getUserData();
-      this.funcLoadUserData();
-    });
+    this.content.getContent();
+    this.content.getUserContent(this.userID);
+    this.getUserData();
+    this.funcLoadUserData();
   }
 
   funcLoadUserData() {
@@ -128,15 +122,16 @@ export class UsersProvider {
         "ProfileImg": userData.Img,
         "isPhonePublic": userData.isPhonePublic,
       }).then(() => {
+        this.userData = userData;
         this.content.getContent();
         return success();
-      }).catch((error) =>{
+      }).catch((error) => {
         return reject(error);
       })
     })
   }
 
-  getUser(Name:string) {
+  getUser(Name: string) {
     if (!Name) {
       this.funcLoadUserData();
       return;
@@ -154,13 +149,13 @@ export class UsersProvider {
   getUserImage(id) {
     if (id == this.userID) {
       return this.userData.Img;
-    }else {
+    } else {
       let user = this.users.filter(user => {
         if (id == user.Key) {
-         return true;
+          return true;
         }
       });
-      console.log(id, user);
+
       return user[0].Img;
     }
   }
@@ -168,13 +163,12 @@ export class UsersProvider {
   getUserName(id) {
     if (id == this.userID) {
       return this.userData.Name;
-    }else {
+    } else {
       let user = this.users.filter(user => {
         if (id == user.Key) {
-         return true;
+          return true;
         }
       });
-      console.log(id, user);
       return user[0].Name;
     }
 

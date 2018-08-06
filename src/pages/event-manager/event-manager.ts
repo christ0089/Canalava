@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FirebaseApp } from '../../../node_modules/angularfire2';
+import { FirebaseApp } from 'angularfire2';
 
 /**
  * Generated class for the EventManagerPage page.

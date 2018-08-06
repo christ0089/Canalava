@@ -20,7 +20,6 @@ export class MessagesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private messages: MessagesServiceProvider, private users: UsersProvider) {
     if (this.messageKeys.length == 0) {
       this.messages.getMessagesUserConvos().then((data) => {
-        console.log(data);
         this.convos = data;
         this.getMessageData(data);
       });

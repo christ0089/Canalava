@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FirebaseApp } from '../../../node_modules/angularfire2';
+import { FirebaseApp } from 'angularfire2';
 import { UsersProvider } from '../users/users';
 
 /*
@@ -21,7 +21,6 @@ export class TemasDeIndustriaProvider {
   getIndustryTopicSimple() {
     let tempArray = [];
     this.firebase.database().ref().child("InductryInquiry").child("AllInquiries").once("value").then((snapchot) => {
-      let data = snapchot.val();
       snapchot.forEach((child) => {
         let data = child.val();
         let inquiryData = {
@@ -85,14 +84,14 @@ export class TemasDeIndustriaProvider {
   updateTema(Title,Message, key) {
     return new Promise ((resolve, reject) => {
       let id = this.userData.userID; 
-      var allInquiries = this.firebase.database().ref().child("InductryInquiry").child("FullInquiry").child(key).update({
+      var fullInquiries = this.firebase.database().ref().child("InductryInquiry").child("FullInquiry").child(key).update({
         "Text" : Message,
         "Title" : Title
       })
-      var fullInquiry = this.firebase.database().ref().child("InductryInquiry").child("AllInquiries").child(key).update({
+      var allInquiries = this.firebase.database().ref().child("InductryInquiry").child("AllInquiries").child(key).update({
         "Topic" : Title
       })
-      Promise.all([fullInquiry,allInquiries]).then(()=> {
+      Promise.all([fullInquiries,allInquiries]).then(()=> {
         return resolve();
       }).catch((error) => {
         return reject(error);
@@ -103,13 +102,25 @@ export class TemasDeIndustriaProvider {
   postTema(data: any) {
     return new Promise ((success, reject) => {
       let id = this.userData.userID;
-      let postKey =  this.firebase.database().ref().child("InductryInquiry").child("Comments").push()
-      postKey.set({
-        "Title" : data.Topic,
-        "Message" : data.Message,
+      let postKey =  this.firebase.database().ref().child("InductryInquiry").child("AllInquiries").push()
+      postKey.update({
+        "Topic" : data.Title,
+        "Timestamp" : Date.now(),
         "PostedBy" : id 
       }).then(() => {
-        return success()
+        this.firebase.database().ref().child("InductryInquiry").child("FullInquiry").child(postKey.key).update({
+          "MainPhoto" : data.Img,
+          "Text" : data.Message,
+          "Title" : data.Title,
+          "PostedBy" : id 
+        }).then(() => {
+          this.getIndustryTopicSimple();
+          return success();
+        }).catch((error) => {
+          return reject(error);
+        })
+      }).catch((error) => {
+        return reject(error);
       })
     })
   }

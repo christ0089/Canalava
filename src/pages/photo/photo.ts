@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
 import { ContentProvider } from '../../providers/content/content';
@@ -28,9 +28,7 @@ export class PhotoPage {
     this.isEditEnabled = false;
     this.content = navParams.get("Content");
     this.id = navParams.get("ID");
-    this.isEditEnabled = navParams.get("isEditEnabled");
     this.message = this.content.Message;
-
   }
 
   ionViewDidLoad() {

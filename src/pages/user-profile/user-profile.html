@@ -48,16 +48,18 @@
             <img src={{userData.Img}}>
           </ion-avatar>
           <h2>{{userData.Name}}</h2>
-          <ion-note item-end>{{content.Timestamp | date}}</ion-note>
         </ion-item>
         <img src={{content.ImageURL}}>
         <ion-item>
-          <h2 item-start>{{content.Message}}</h2>
-          <ion-badge item-end>{{content.likeNumber}} Likes</ion-badge>
-          <button ion-button clear (tap)="giveLike(content)">
-            <ion-icon *ngIf="content.isImageLiked == false" name="heart-outline"></ion-icon>
-            <ion-icon *ngIf="content.isImageLiked == true" name="heart"></ion-icon>
-          </button>
+          <h2 text-wrap>{{content.Message}}</h2>
+          <p>{{content.Timestamp | date}}</p>
+          <div item-end>
+            <ion-badge>{{content.likeNumber}} Likes</ion-badge>
+            <button ion-button clear (tap)="giveLike(content)">
+              <ion-icon *ngIf="content.isImageLiked == false" name="heart-outline"></ion-icon>
+              <ion-icon *ngIf="content.isImageLiked == true" name="heart"></ion-icon>
+            </button>
+          </div>
         </ion-item>
       </div>
     </ion-list>
