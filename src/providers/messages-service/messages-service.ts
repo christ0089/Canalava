@@ -21,7 +21,7 @@ export class MessagesServiceProvider {
   getMessagesUserConvos() {
     var convos = {};
     const db = this.firebase.database().ref();
-    const id = this.userConent.userID;
+    const id = this.userConent.selectedID;
     return new Promise((resolve) => {
       db.child("Messages").child(id).on("child_added", (snapchot) => {
         var toID = snapchot.key

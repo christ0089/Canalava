@@ -17,11 +17,14 @@ export class UsersProvider {
   userID: string = "";
   public users = [];
 
+  selectedID: string = "";
+
   public userData = {
-    "Name": "",
-    "Phone": "",
-    "Img": "",
-    "isPhonePublic": ""
+    Name: "",
+    Phone: "",
+    Img: "",
+    isPhonePublic: false,
+    Key : ""
   }
 
   constructor(public http: Http, private auth: AuthServiceProvider, private content: ContentProvider,
@@ -37,6 +40,7 @@ export class UsersProvider {
       } else {
         if (user.emailVerified == true || user.uid != null) {
           this.userID = user.uid;
+          this.selectedID = this.userID;
           this.loadData();
         }
       }
@@ -53,9 +57,40 @@ export class UsersProvider {
 
   loadData() {
     this.content.getContent();
-    this.content.getUserContent(this.userID);
+    this.content.getUserContent(this.selectedID);
     this.getUserData();
     this.funcLoadUserData();
+  }
+
+  getBusiness() {
+    let data = [];
+    return new Promise ((resolve, reject) => {
+      console.log(this.userID);
+      this.firebase.database().ref().child("BusinesID").child(this.userID).once("value").then((snapchot)=> {
+        
+        if (snapchot.val()  == null) {
+          return
+        }
+
+        snapchot.forEach((child) => {
+          console.log(child.val());
+          var values = child.val()
+          var business = {
+            Name : values.Name,
+            Phone: values.Phone,
+            Img: values.ProfileImg,
+            isPhonePublic : values.isPhonePublic,
+            Key : child.key
+          }
+  
+          data.push(business);
+        })
+
+
+      }).then(() => {
+        return resolve(data);
+      }) 
+    })
   }
 
   funcLoadUserData() {
@@ -73,7 +108,7 @@ export class UsersProvider {
           "Name": data.Name,
           "Phone": data.Phone,
           "Img": data.ProfileImg,
-          "isPhonePublic": data.isPhonePublic,
+          isPhonePublic: data.isPhonePublic,
           "Key": child.key
         }
         dataArray.push(userData);
@@ -84,15 +119,24 @@ export class UsersProvider {
 
   getUserData() {
     const db = this.firebase.database().ref()
-    db.child("UserData").child(this.userID).once("value").then((snapchot) => {
+    db.child("UserData").child(this.selectedID).once("value").then((snapchot) => {
       let data = snapchot.val();
       this.userData = {
-        "Name": data.Name,
-        "Phone": data.Phone,
-        "Img": data.ProfileImg,
-        "isPhonePublic": data.isPhonePublic
+        Name: data.Name,
+        Phone: data.Phone,
+        Img: data.ProfileImg,
+        isPhonePublic: data.isPhonePublic,
+        Key: snapchot.key
       }
     })
+  }
+
+  getSelectedAccount() {
+    
+  }
+
+  setSelectedAccount() {
+
   }
 
   getProfileData(key) {
@@ -116,7 +160,7 @@ export class UsersProvider {
   updateUserData(userData) {
     const db = this.firebase.database().ref();
     return new Promise((success, reject) => {
-      db.child("UserData").child(this.userID).update({
+      db.child("UserData").child(this.selectedID).update({
         "Name": userData.Name,
         "Phone": userData.Phone,
         "ProfileImg": userData.Img,

@@ -21,12 +21,23 @@
 <ion-content padding>
   <ion-item>
     <ion-avatar item-start>
-      <img src={{userData.userData.Img}} item-start>
+      <img src={{data[selected].Img}} item-start>
     </ion-avatar>
-    <h2>{{userData.userData.Name}}</h2>
-    <p>Telefono: {{userData.userData.Phone}}</p>
+    <h2>{{data[selected].Name}}</h2>
+    <p>Telefono: {{data[selected].Phone}}</p>
     <button ion-button (tap)="editData()">Editar Informacion</button>
+    
   </ion-item>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Cuentas</ion-label>
+      <ion-select (ionChange)="onChange($event)" >
+        <ion-option value={{i}} *ngFor = "let account of data; let i = index" [attr.data-index]="i">{{account.Name}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
   <div padding>
     <ion-segment [(ngModel)]="displayMode">
       <ion-segment-button value="List">

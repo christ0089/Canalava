@@ -34,7 +34,7 @@ export class MessagePage {
     this.getMessages(this.test);
   }
 
-  getMessages(messageArray) {
+  getMessages(messageArray: Array<any>) {
     this.messageKey = this.navParams.get("key");
     let ref = this.firebase.database().ref();
 
@@ -51,6 +51,9 @@ export class MessagePage {
 
         messageArray.push(value);
       }).then(() => {
+        messageArray = messageArray.sort((n1, n2) => {
+          return n1.Timestamp - n2.Timestamp
+        })
         console.log(messageArray);
       });
     });

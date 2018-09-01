@@ -22,12 +22,23 @@ export class AccountPage {
     this.displayMode = "List";
   }
 
+  data = [this.userData.userData];
+
+  selected = 0;
+
   ionViewDidLoad() {
     this.userData.getCurrentSession();
+    this.userData.getBusiness().then((resolve: any[]) => {
+      this.data = this.data.concat(resolve);
+    })
   }
 
   addImage(){
     this.navCtrl.push('UploadPage');
+  }
+
+  onChange(event) {
+    this.selected = event;
   }
 
   openSettings() {

@@ -47,29 +47,36 @@ export class ContentProvider {
           firebaseDb.child("UserData").child(data.Uploader).once("value").then((user_snapchot) => {
             let user_data = user_snapchot.val();
             let content = {
-              "ImageURL": data.Image,
-              "Message": data.Message,
-              "Timestamp": data.Timestamp,
-              "likeNumber": likeNumber["Likes"],
-              "Key" : data.Uploader,
-              "Name": user_data.Name,
-              "Img": user_data.ProfileImg,
-              "isImageLiked" : isImageLiked,
-              "ID" : snapchot.key
+              ImageURL: data.Image,
+              Message: data.Message,
+              Timestamp: data.Timestamp,
+              likeNumber: likeNumber["Likes"],
+              Key : data.Uploader,
+              Name: user_data.Name,
+              Img: user_data.ProfileImg,
+              isImageLiked : isImageLiked,
+              ID : snapchot.key
             }
             tempArray.push(content);
           });
         });
       });
     })
-
+    tempArray = tempArray.sort((n1, n2) => {
+      return n1.Timestamp - n2.Timestamp
+    })
+    console.log(tempArray);
     this.contentArray = tempArray;
+
   }
 
   userContent = [];
 
   getUserContent(userID) {
     this.userContent = this.getProfileContent(userID, userID);
+    this.contentArray.sort((n1, n2) => {
+      return n1.Timestamp - n2.Timestamp
+    })
   }
 
   public getProfileContent(id, uid) {

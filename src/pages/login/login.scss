@@ -7,8 +7,6 @@ page-login {
     
  ion-slides {
      height: 60%;
-     ion-slide {
-     }
  }
 
  .LoginContainer {
@@ -30,10 +28,4 @@ page-login {
     //object-fit: cover;
     padding-top: 40px;
     background: transparent;
-}
-
-.styleLoginButton {
-    background-image : (linear-gradient(to left, #00D8FF 0%,rgb(0, 255, 200) 95%));
-    height: 40px;
-    border-radius: 20px;
 }
