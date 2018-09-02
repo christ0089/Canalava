@@ -33,7 +33,7 @@ export class EditPage {
       this.toastCtrl.dismissLoader();
       this.toastCtrl.presetToast("Necesitas un Nombre");
     }
-    else if (this.user_data.Img == this.userData.userData.Img){
+    else if (this.user_data.Img == this.userData.getSelectedAccount().Img){
       this.userData.updateUserData(this.user_data).then(() => {
         this.toastCtrl.dismissLoader();
         this.closeModal();

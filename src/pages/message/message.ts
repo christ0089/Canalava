@@ -25,7 +25,7 @@ export class MessagePage {
 
   data = {
     "Receiver" : this.messageKey,
-    "Sender" : this.userData.userID,
+    "Sender" : this.userData.selectedID,
     "Timestamp" : 0,
     "Message" : ""
   }

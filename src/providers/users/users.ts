@@ -11,6 +11,8 @@ import { Events } from 'ionic-angular';
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
+
+
 @Injectable()
 export class UsersProvider {
 
@@ -18,14 +20,15 @@ export class UsersProvider {
   public users = [];
 
   selectedID: string = "";
+  selectedValue: number = 0;
 
-  public userData = {
+  public userData = [{
     Name: "",
     Phone: "",
     Img: "",
     isPhonePublic: false,
     Key : ""
-  }
+  }]
 
   constructor(public http: Http, private auth: AuthServiceProvider, private content: ContentProvider,
     private firebase: FirebaseApp, private events: Events) {
@@ -59,6 +62,7 @@ export class UsersProvider {
     this.content.getContent();
     this.content.getUserContent(this.selectedID);
     this.getUserData();
+    this.getBusiness();
     this.funcLoadUserData();
   }
 
@@ -88,7 +92,8 @@ export class UsersProvider {
 
 
       }).then(() => {
-        return resolve(data);
+        this.userData = this.userData.concat(data)
+        return resolve(this.userData);
       }) 
     })
   }
@@ -121,22 +126,24 @@ export class UsersProvider {
     const db = this.firebase.database().ref()
     db.child("UserData").child(this.selectedID).once("value").then((snapchot) => {
       let data = snapchot.val();
-      this.userData = {
+      this.userData= [{
         Name: data.Name,
         Phone: data.Phone,
         Img: data.ProfileImg,
         isPhonePublic: data.isPhonePublic,
         Key: snapchot.key
-      }
+      }]
     })
   }
 
   getSelectedAccount() {
-    
+    return this.userData[this.selectedValue];
   }
 
-  setSelectedAccount() {
-
+  setSelectedAccount(value: number) {
+    this.selectedValue = value;
+    this.selectedID = this.getSelectedAccount().Key
+    this.content.getUserContent(this.selectedID);
   }
 
   getProfileData(key) {
@@ -191,9 +198,12 @@ export class UsersProvider {
   }
 
   getUserImage(id) {
-    if (id == this.userID) {
-      return this.userData.Img;
-    } else {
+    if (id == this.selectedID) {
+      return this.userData[this.selectedValue].Img;
+    } else if (id == this.userID) {
+      return this.userData[0].Img;
+    }
+    else {
       let user = this.users.filter(user => {
         if (id == user.Key) {
           return true;
@@ -205,9 +215,12 @@ export class UsersProvider {
   }
 
   getUserName(id) {
-    if (id == this.userID) {
-      return this.userData.Name;
-    } else {
+    if (id == this.selectedID) {
+      return this.userData[this.selectedValue].Name;
+    } else if (id == this.userID) {
+      return this.userData[0].Name;
+    }
+    else {
       let user = this.users.filter(user => {
         if (id == user.Key) {
           return true;

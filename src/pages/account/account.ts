@@ -22,15 +22,11 @@ export class AccountPage {
     this.displayMode = "List";
   }
 
-  data = [this.userData.userData];
 
   selected = 0;
 
   ionViewDidLoad() {
     this.userData.getCurrentSession();
-    this.userData.getBusiness().then((resolve: any[]) => {
-      this.data = this.data.concat(resolve);
-    })
   }
 
   addImage(){
@@ -39,6 +35,7 @@ export class AccountPage {
 
   onChange(event) {
     this.selected = event;
+    this.userData.setSelectedAccount(this.selected);
   }
 
   openSettings() {
@@ -63,7 +60,7 @@ export class AccountPage {
           text: 'Borrar',
           role: 'destructive',
           handler: () => {
-            this.content.deletePicture(content.Key, this.userData.userID).then(() =>{
+            this.content.deletePicture(content.Key, this.userData.selectedID).then(() =>{
               this.navCtrl.pop();
             });
           }
@@ -110,11 +107,12 @@ export class AccountPage {
   }
 
   editData() {
+    let user: any = this.userData.getSelectedAccount();
     let data = {
-      "Name": this.userData.userData.Name,
-      "Phone": this.userData.userData.Phone,
-      "Img": this.userData.userData.Img,
-      "isPhonePublic": this.userData.userData.isPhonePublic,
+      "Name": user.Name,
+      "Phone": user.Phone,
+      "Img": user.Img,
+      "isPhonePublic": user.isPhonePublic,
     }
     let profileModal = this.modalCtrl.create("EditPage", {
       UserData : data

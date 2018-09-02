@@ -21,10 +21,10 @@
 <ion-content padding>
   <ion-item>
     <ion-avatar item-start>
-      <img src={{data[selected].Img}} item-start>
+      <img src={{userData.userData[selected].Img}} item-start>
     </ion-avatar>
-    <h2>{{data[selected].Name}}</h2>
-    <p>Telefono: {{data[selected].Phone}}</p>
+    <h2>{{userData.userData[selected].Name}}</h2>
+    <p>Telefono: {{userData.userData[selected].Phone}}</p>
     <button ion-button (tap)="editData()">Editar Informacion</button>
     
   </ion-item>
@@ -33,7 +33,7 @@
     <ion-item>
       <ion-label>Cuentas</ion-label>
       <ion-select (ionChange)="onChange($event)" >
-        <ion-option value={{i}} *ngFor = "let account of data; let i = index" [attr.data-index]="i">{{account.Name}}</ion-option>
+        <ion-option value={{i}} *ngFor = "let account of userData.userData; let i = index" [attr.data-index]="i">{{account.Name}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
@@ -55,11 +55,11 @@
   <div [ngSwitch]="displayMode">
     <ion-list *ngSwitchCase="'List'">
       <div *ngFor="let content of content.userContent" class="feed">
-        <ion-item>
+        <ion-item >
           <ion-avatar item-start>
-            <img src={{userData.userData.Img}}>
+            <img src={{userData.getSelectedAccount().Img}}>
           </ion-avatar>
-          <h2>{{userData.userData.Name}}</h2>
+          <h2>{{userData.getSelectedAccount().Name}}</h2>
           <button ion-button clear item-end (tap)="presentActionSheet(content)">
             <ion-icon name="more"></ion-icon>
           </button>
