@@ -22,8 +22,9 @@ export class MainFeedPage {
     this.userContent.getCurrentSession();
   }
 
+  data = [];
+
   ionViewDidLoad() {
-    
   }
 
   openSettings() {

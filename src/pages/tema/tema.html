@@ -38,7 +38,7 @@
   <p>Comentarios</p>
   <ion-item *ngFor="let comment of commentsArray">
     <ion-avatar item-start>
-      <img src="{{userData.getUserImage(comment.Id)}}}">
+      <img src="{{userData.getUserImage(comment.Id)}}">
     </ion-avatar>
     <h2>{{userData.getUserName(comment.Id)}}</h2>
     <p>{{comment.Message}}</p>

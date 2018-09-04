@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 /**
  * Generated class for the SettingsPage page.
@@ -16,7 +17,8 @@ import { UsersProvider } from '../../providers/users/users';
 })
 export class SettingsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userData:UsersProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userData: UsersProvider,
+    private inAppBrowser: InAppBrowser) {
   }
 
   ionViewDidLoad() {
@@ -28,14 +30,20 @@ export class SettingsPage {
     this.userData.signOut();
   }
 
-  openWebsite(path:string) {
+  openWebsite(path: string) {
+    console.log(path);
     if (path == "Canalava") {
-      window.open("http://oneware.com.mx", '_system', 'location=yes');
-    }else if (path == "Terms") {
-      window.open("http://oneware.com.mx", '_system', 'location=yes');
-    }else if (path == "Security") {
-      window.open("http://oneware.com.mx", '_system', 'location=yes');
+      this.inAppBrowser.create("https://www.canalava.org.mx")
+    } else if (path == "Privacy") {
+      this.inAppBrowser.create("https://https://canalava.org.mx/AVISO-DE-PRIVACIDAD.html")
+    } else if (path == "Terms") {
+      this.inAppBrowser.create("https://www.canalava.org.mx")
+    } else {
+      this.inAppBrowser.create("https://www.canalava.org.mx")
+
     }
+
   }
+
 
 }

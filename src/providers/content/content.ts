@@ -62,21 +62,13 @@ export class ContentProvider {
         });
       });
     })
-    tempArray = tempArray.sort((n1, n2) => {
-      return n1.Timestamp - n2.Timestamp
-    })
-    console.log(tempArray);
     this.contentArray = tempArray;
-
   }
 
   userContent = [];
 
   getUserContent(userID) {
     this.userContent = this.getProfileContent(userID, userID);
-    this.contentArray.sort((n1, n2) => {
-      return n1.Timestamp - n2.Timestamp
-    })
   }
 
   public getProfileContent(id, uid) {

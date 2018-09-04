@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, ChangeDetectorRef } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -7,6 +7,7 @@ import { Camera } from '@ionic-native/camera';
 import { DocumentViewer } from '@ionic-native/document-viewer';
 import { Network } from '@ionic-native/network';
 import { File } from '@ionic-native/file';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { HttpModule} from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -66,6 +67,7 @@ export const firebaseConfig = {
     TemasDeIndustriaProvider,
     ToastAndLoadProvider,
     PostPicture,
+    InAppBrowser,
     InternetProvider,
     Camera,
     DocumentViewer,

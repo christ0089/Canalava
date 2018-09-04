@@ -24,7 +24,7 @@
 <ion-content>
   <ion-list>
     <ion-list>
-      <div *ngFor="let content of content.contentArray" class="feed">
+      <div *ngFor="let content of content.contentArray.reverse()" class="feed">
         <ion-item (tap)="openAccount(content.Key)">
           <ion-avatar item-start>
             <img src={{content.Img}}>
