@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, ModalController } from 'ionic-angular';
 import { ContentProvider } from '../../providers/content/content';
 import { UsersProvider } from '../../providers/users/users';
-
+declare var google: any;
 /**
  * Generated class for the AccountPage page.
  *
@@ -17,17 +17,22 @@ import { UsersProvider } from '../../providers/users/users';
 })
 export class AccountPage { 
   displayMode: string;
+  @ViewChild('googleMaps') mapRef : ElementRef;
+  map : any;
+  selected = 0;
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private content:ContentProvider, private userData: UsersProvider,
   private actionSheetCtrl:ActionSheetController, private modalCtrl:ModalController) {
     this.displayMode = "List";
   }
 
-
-  selected = 0;
-
   ionViewDidLoad() {
     this.userData.getCurrentSession();
+    console.log(this.mapRef);
+    //this.showMap();
   }
+
 
   addImage(){
     this.navCtrl.push('UploadPage');
@@ -36,6 +41,17 @@ export class AccountPage {
   onChange(event) {
     this.selected = event;
     this.userData.setSelectedAccount(this.selected);
+  }
+
+  showMap() {
+    const location = new google.maps.LatLng(-51.507351, -0.127758)
+
+    const options = {
+      center: location,
+      zoom: 10
+    }
+
+    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
   }
 
   openSettings() {

@@ -46,6 +46,9 @@
       <ion-segment-button value="Grid">
         <ion-icon name="grid"></ion-icon>
       </ion-segment-button>
+      <ion-segment-button value="Map">
+        <ion-icon name="pin"></ion-icon>
+      </ion-segment-button>
     </ion-segment>
   </div>
 
@@ -82,6 +85,11 @@
         </button>
       </div>
     </div>
+
+    <div *ngSwitchCase="'Map'">
+      <div id="googleMaps" #googleMaps ></div>
+    </div>
+
   </div>
 
   <ion-fab right bottom (tap)="addImage()">

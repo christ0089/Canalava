@@ -33,16 +33,12 @@ export class SettingsPage {
   openWebsite(path: string) {
     console.log(path);
     if (path == "Canalava") {
-      this.inAppBrowser.create("https://www.canalava.org.mx")
+      this.inAppBrowser.create("https://canalava.org.mx")
     } else if (path == "Privacy") {
-      this.inAppBrowser.create("https://https://canalava.org.mx/AVISO-DE-PRIVACIDAD.html")
+      this.inAppBrowser.create("https://canalava.org.mx/AVISO-DE-PRIVACIDAD.html")
     } else if (path == "Terms") {
-      this.inAppBrowser.create("https://www.canalava.org.mx")
-    } else {
-      this.inAppBrowser.create("https://www.canalava.org.mx")
-
+      this.inAppBrowser.create("https://canalava.org.mx")
     }
-
   }
 
 
