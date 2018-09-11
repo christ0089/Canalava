@@ -18,7 +18,7 @@
       <img class="slider" src="assets/imgs/region3.png">
     </ion-slide>
   </ion-slides>
-  <div padding class="LoginContainer" *ngIf = "phoneLogin == false">
+  <div padding class="LoginContainer">
     <ion-item>
       <ion-label color="primary" floating>Email</ion-label>
       <ion-input [(ngModel)]="Email" type="email"></ion-input>
@@ -34,18 +34,14 @@
 
   <div padding class="LoginContainer">
     <label for="Phone">Numero de Telefono</label><br>
-    <div class="input">
-      <input type="number" [(ngModel)]="phoneNumber.Country"   placeholder="1" maxlength="2">
-      <input type="number" [(ngModel)]="phoneNumber.Area"      placeholder="555" maxlength="3">
-      <input type="number" [(ngModel)]="phoneNumber.Prefix"    placeholder="555" maxlength="3">
-      <input type="number" [(ngModel)]="phoneNumber.line"      placeholder="0000" maxlength="4">
+    <div padding>
+      <input type="number" [(ngModel)]="phoneNumber.Country"   class="input" placeholder="1" maxlength="2">
+      <input type="number" [(ngModel)]="phoneNumber.Area"     class="input"  placeholder="555" maxlength="3">
+      <input type="number" [(ngModel)]="phoneNumber.Prefix"   class="input"  placeholder="555" maxlength="3">
+      <input type="number" [(ngModel)]="phoneNumber.line"      class="input" placeholder="0000" maxlength="4">
     </div>
-
-
     <div id="recaptcha-container"></div>
-
     <button ion-button class="styleLoginButton"  (click)="sendLoginCode()">Mandar SMS</button>
-
     <div *ngIf="windowRef.confirmationResult">
       <hr>
       <label for="code">Enter your Verification Code Here</label><br>

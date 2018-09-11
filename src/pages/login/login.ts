@@ -43,8 +43,6 @@ export class LoginPage implements OnInit {
   verificationCode: string;
   windowRef: any;
 
-  phoneLogin = false
-
   constructor(public navCtrl: NavController, public navParams: NavParams, private load_and_toast: ToastAndLoadProvider,
     private auth: AuthServiceProvider, private platform: Platform, private alertCtrl: AlertController,
     private firebase: FirebaseApp, private events: Events,
@@ -52,8 +50,7 @@ export class LoginPage implements OnInit {
   }
 
   ionViewDidLoad() {
-    this.unregister = this.platform.registerBackButtonAction(() => {
-    })
+    this.unregister = this.platform.registerBackButtonAction(() => {})
   }
 
   ngOnInit() {
@@ -132,19 +129,14 @@ export class LoginPage implements OnInit {
   }
 
   sendLoginCode() {
-
     const appVerifier = this.windowRef.recaptchaVerifier;
-
     const num = this.phoneNumber.e164;
 
     this.firebase.auth().signInWithPhoneNumber(num, appVerifier)
       .then(result => {
-
         this.windowRef.confirmationResult = result;
-
       })
       .catch(() => this.load_and_toast.presetToast("No se pudo Iniciar Session"));
-
   }
 
 
@@ -154,7 +146,7 @@ export class LoginPage implements OnInit {
       .then(() => {
         this.logIn();
       })
-      .catch(error => console.log(error, "Incorrect code entered?"));
+      .catch(error => this.load_and_toast.presetToast("Verfique el Codigo"));
   }
 
 }
