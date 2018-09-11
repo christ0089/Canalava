@@ -4,6 +4,8 @@ import { AuthServiceProvider } from '../auth-service/auth-service';
 import { ContentProvider } from '../content/content';
 import { FirebaseApp } from 'angularfire2';
 import { Events } from 'ionic-angular';
+import { FcmProvider } from '../messages-service/fcm';
+
 
 /*
   Generated class for the UsersProvider provider.
@@ -27,7 +29,7 @@ export class UsersProvider {
     Phone: "",
     Img: "",
     isPhonePublic: false,
-    Key : ""
+    Key: ""
   }]
 
   constructor(public http: Http, private auth: AuthServiceProvider, private content: ContentProvider,
@@ -45,6 +47,8 @@ export class UsersProvider {
           this.userID = user.uid;
           this.selectedID = this.userID;
           this.loadData();
+
+         
         }
       }
     });
@@ -52,8 +56,7 @@ export class UsersProvider {
 
   signOut() {
     let eventLoop = this.events;
-    this.auth.signOut().then(() => 
-    {
+    this.auth.signOut().then(() => {
       eventLoop.publish("LogOut");
     });
   }
@@ -68,11 +71,11 @@ export class UsersProvider {
 
   getBusiness() {
     let data = [];
-    return new Promise ((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       console.log(this.userID);
-      this.firebase.database().ref().child("BusinesID").child(this.userID).once("value").then((snapchot)=> {
-        
-        if (snapchot.val()  == null) {
+      this.firebase.database().ref().child("BusinesID").child(this.userID).once("value").then((snapchot) => {
+
+        if (snapchot.val() == null) {
           return
         }
 
@@ -80,13 +83,13 @@ export class UsersProvider {
           console.log(child.val());
           var values = child.val()
           var business = {
-            Name : values.Name,
+            Name: values.Name,
             Phone: values.Phone,
             Img: values.ProfileImg,
-            isPhonePublic : values.isPhonePublic,
-            Key : child.key
+            isPhonePublic: values.isPhonePublic,
+            Key: child.key
           }
-  
+
           data.push(business);
         })
 
@@ -94,7 +97,7 @@ export class UsersProvider {
       }).then(() => {
         this.userData = this.userData.concat(data)
         return resolve(this.userData);
-      }) 
+      })
     })
   }
 
@@ -126,7 +129,7 @@ export class UsersProvider {
     const db = this.firebase.database().ref()
     db.child("UserData").child(this.selectedID).once("value").then((snapchot) => {
       let data = snapchot.val();
-      this.userData= [{
+      this.userData = [{
         Name: data.Name,
         Phone: data.Phone,
         Img: data.ProfileImg,

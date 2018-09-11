@@ -85,11 +85,9 @@
         </button>
       </div>
     </div>
-
-    <div *ngSwitchCase="'Map'">
-      <div id="googleMaps" #googleMaps ></div>
+    <div [style.display]="displayMode == 'Map' ? 'block' : 'none'">
+      <div #googleMaps id="googleMaps"></div>
     </div>
-
   </div>
 
   <ion-fab right bottom (tap)="addImage()">

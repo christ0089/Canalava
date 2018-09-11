@@ -70,8 +70,8 @@
         </button>
       </div>
     </div>
-    <div *ngSwitchCase="Map">
-      <div #map id='map'></div>
+    <div [style.display]="displayMode == 'Map' ? 'block' : 'none'">
+      <div #googleMaps id="googleMaps"></div>
     </div>
   </div>
 </ion-content>

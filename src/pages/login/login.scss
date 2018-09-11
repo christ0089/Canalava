@@ -17,7 +17,15 @@ page-login {
          width: 100%;
          margin-top: 10px;
      }
+
+    .input {
+        float: none; /* if you had floats before? otherwise inline-block will behave differently */
+        display: inline-block;
+        vertical-align: middle;  
+    }
  }
+
+
 
 
 }

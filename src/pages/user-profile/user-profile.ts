@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { ContentProvider } from '../../providers/content/content';
 import { UsersProvider } from '../../providers/users/users';
 declare var google: any;
@@ -28,17 +28,21 @@ export class UserProfilePage {
 
   map:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private content: ContentProvider, private user_data:UsersProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     private content: ContentProvider, private user_data:UsersProvider, private platform: Platform) {
 
     
   }
 
-  @ViewChild('map') mapRef : ElementRef;
+  @ViewChild('googleMaps') mapRef : ElementRef;
 
   ionViewDidLoad() {
     this.userData = this.navParams.get('data');
     this.DataImgs = this.content.getProfileContent(this.userData.Key, this.user_data.userID);
-    this.showMap();
+    this.platform.ready().then(() => {
+      console.log(this.mapRef);
+      this.showMap();
+    })
   }
 
   openMessages() {

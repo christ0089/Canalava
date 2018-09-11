@@ -23,7 +23,6 @@ export class EventManagerPage {
   title = ""
 
   getData(type,array) {
-    var tempArray = [];
     if (type == 0) //Asesoria 
     {
       this.title = "Asesorias"

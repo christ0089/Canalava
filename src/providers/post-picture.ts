@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import * as firebaseRef from 'firebase';
 import { Platform, normalizeURL } from 'ionic-angular';
-import { UsersProvider } from './users/users';
 import { ToastAndLoadProvider } from './AlertandLoader';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
@@ -17,7 +16,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 */
 @Injectable()
 export class PostPicture {
-  constructor(public http: Http, private platform: Platform, private userData: UsersProvider,
+  constructor(public http: Http, private platform: Platform,
     private camera: Camera, private toastLoader: ToastAndLoadProvider) {
 
   }

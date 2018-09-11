@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, ModalController, Platform } from 'ionic-angular';
 import { ContentProvider } from '../../providers/content/content';
 import { UsersProvider } from '../../providers/users/users';
+import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 declare var google: any;
 /**
  * Generated class for the AccountPage page.
@@ -23,14 +24,18 @@ export class AccountPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private content:ContentProvider, private userData: UsersProvider,
-  private actionSheetCtrl:ActionSheetController, private modalCtrl:ModalController) {
+  private actionSheetCtrl:ActionSheetController, private modalCtrl:ModalController, private platform:Platform,
+private googleMaps: GoogleMapsProvider) {
     this.displayMode = "List";
   }
 
   ionViewDidLoad() {
     this.userData.getCurrentSession();
-    console.log(this.mapRef);
-    //this.showMap();
+
+    this.platform.ready().then(() => {
+      console.log(this.mapRef);
+      this.showMap();
+    })
   }
 
 
@@ -41,6 +46,7 @@ export class AccountPage {
   onChange(event) {
     this.selected = event;
     this.userData.setSelectedAccount(this.selected);
+    this.showMap();
   }
 
   showMap() {
@@ -52,6 +58,7 @@ export class AccountPage {
     }
 
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+    this.googleMaps.getAddresses(this.map, this.userData.selectedID)
   }
 
   openSettings() {

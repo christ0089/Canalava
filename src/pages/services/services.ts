@@ -47,6 +47,8 @@ private file: File) {
     console.log('ionViewDidLoad ServicesPage');
   }
 
-
+  openMagazine() {
+    this.toast.presetToast("No Revista Disponible en este momento");
+  }
 
 }
