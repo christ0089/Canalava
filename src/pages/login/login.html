@@ -34,19 +34,18 @@
 
   <div padding class="LoginContainer">
     <label for="Phone">Numero de Telefono</label><br>
-    <div padding>
-      <input type="number" [(ngModel)]="phoneNumber.Country"   class="input" placeholder="1" maxlength="2">
-      <input type="number" [(ngModel)]="phoneNumber.Area"     class="input"  placeholder="555" maxlength="3">
-      <input type="number" [(ngModel)]="phoneNumber.Prefix"   class="input"  placeholder="555" maxlength="3">
-      <input type="number" [(ngModel)]="phoneNumber.line"      class="input" placeholder="0000" maxlength="4">
+    <div padding class="PhoneInput">
+      <input type="number" max="9"     [(ngModel)]="phoneNumber.Country"   class="input" placeholder="52" (keyup)="keyTab($event, 2)">
+      <input type="number" max="99"    [(ngModel)]="phoneNumber.Area"     class="input"  placeholder="555" (keyup)="keyTab($event, 3)">
+      <input type="number" max="999"   [(ngModel)]="phoneNumber.Prefix"   class="input"  placeholder="555" (keyup)="keyTab($event, 3)">
+      <input type="number" max="9999" [(ngModel)]="phoneNumber.line"      class="input" placeholder="0000" (keyup)="keyTab($event, 4)">
     </div>
     <div id="recaptcha-container"></div>
     <button ion-button class="styleLoginButton"  (click)="sendLoginCode()">Mandar SMS</button>
-    <div *ngIf="windowRef.confirmationResult">
+    <div *ngIf="windowRef.confirmationResult" class="VerifyCode">
       <hr>
-      <label for="code">Enter your Verification Code Here</label><br>
-      <input type="text" name="code" [(ngModel)]="verificationCode">
-  
+      <label for="code">Ingresa numero de verificacion</label><br>
+      <input type="number" name="code" [(ngModel)]="verificationCode" (keyup)="keyTab($event, 6)">
       <button ion-button class="styleLoginButton" (click)="verifyLoginCode()">Verify</button>
     </div>
   </div>

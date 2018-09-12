@@ -37,7 +37,7 @@ export class SettingsPage {
     } else if (path == "Privacy") {
       this.inAppBrowser.create("https://canalava.org.mx/AVISO-DE-PRIVACIDAD.html")
     } else if (path == "Terms") {
-      this.inAppBrowser.create("https://canalava.org.mx")
+      this.inAppBrowser.create("https://canalava.org.mx/Terminos-y-condiciones.html")
     }
   }
 

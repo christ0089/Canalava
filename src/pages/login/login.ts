@@ -20,7 +20,7 @@ export class Phone {
   line: string;
 
   get e164() {
-    const num = this.Country + this.Area + this.Prefix + this.line
+    const num = this.Country.toString() + this.Area.toString() + this.Prefix.toString() + this.line.toString()
     return `+${num}`;
   }
 }
@@ -132,6 +132,8 @@ export class LoginPage implements OnInit {
     const appVerifier = this.windowRef.recaptchaVerifier;
     const num = this.phoneNumber.e164;
 
+    console.log(num);
+
     this.firebase.auth().signInWithPhoneNumber(num, appVerifier)
       .then(result => {
         this.windowRef.confirmationResult = result;
@@ -146,7 +148,20 @@ export class LoginPage implements OnInit {
       .then(() => {
         this.logIn();
       })
-      .catch(error => this.load_and_toast.presetToast("Verfique el Codigo"));
+      .catch(error => this.load_and_toast.presetToast("Error :Verfique el Codigo"));
   }
+
+  keyTab(event, max) {
+    let element = event.srcElement.nextElementSibling;
+
+    console.log(event.target.value.length, max) 
+ // get the sibling element
+
+    if(element == null)   // check if its null
+        return;
+    else if (event.target.value.length == max) {
+      element.focus();  
+    }
+  } 
 
 }

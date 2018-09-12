@@ -11,20 +11,46 @@ page-login {
 
  .LoginContainer {
      background-color: white;
-     height: 250px;
+     display: block;
 
      button {
          width: 100%;
          margin-top: 10px;
      }
 
-    .input {
+    .PhoneInput {
         float: none; /* if you had floats before? otherwise inline-block will behave differently */
         display: inline-block;
         vertical-align: middle;  
+
+        input {
+            width: 22.5%;
+            height: 30px;
+            border-radius: 5px;
+            background-color: white;
+            &:focus {
+                transition:.5s;
+                border-color: lightgreen;
+            }
+        }
+    }
+    .VerifyCode {
+        background-color: white;
+        display: inline-block;
+        input {
+            width: 30%;
+            height: 30px;
+            border-radius: 5px;
+            background-color: white;
+            &:focus {
+                border-color: lightgreen;
+            }
+        }
+        
     }
  }
 }
+
 
 .slider  {
     width: 60% !important;

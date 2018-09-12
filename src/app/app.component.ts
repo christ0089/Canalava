@@ -53,6 +53,7 @@ export class MyApp {
 
       }, 3000);
     });
+
     
     this.network.onDisconnect().subscribe(() => {
       if (this.rootPage != 'NoInternetPage') {
