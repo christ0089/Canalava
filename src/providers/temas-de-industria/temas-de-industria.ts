@@ -69,7 +69,7 @@ export class TemasDeIndustriaProvider {
 
   postComments(message,key) {
     return new Promise ((success, reject) => {
-      let id = this.userData.userID;
+      let id = this.userData.selectedID;
       let postKey =  this.firebase.database().ref().child("InductryInquiry").child("Comments").child(key).push()
       postKey.update({
         [id] : message

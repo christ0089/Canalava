@@ -24,14 +24,14 @@
         <span class="chat-content-center">{{chat.Message}}</span>
       </div>
       <ng-template #message>
-        <div class="chat-message" text-right *ngIf="chat.Sender === userData.userID">
+        <div class="chat-message" text-right *ngIf="chat.Sender === userData.selectedID">
           <div class="right-bubble">
             <span class="msg-name">Yo</span>
             <span class="msg-date">{{chat.Timestamp | date:'short'}}</span>
             <p text-wrap>{{chat.Message}}</p>
           </div>
         </div>
-        <div class="chat-message" text-left *ngIf="chat.Sender !== userData.userID">
+        <div class="chat-message" text-left *ngIf="chat.Sender !== userData.selectedID">
           <div class="left-bubble">
             <span class="msg-name">{{userData.getUserName(chat.Sender)}}</span>
             <span class="msg-date">{{chat.Timestamp | date:'short'}}</span>

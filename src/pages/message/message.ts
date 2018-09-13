@@ -38,7 +38,7 @@ export class MessagePage {
     this.messageKey = this.navParams.get("key");
     let ref = this.firebase.database().ref();
 
-    ref.child("Messages").child(this.userData.userID).child(this.messageKey).on("child_added", function(snapchot) {
+    ref.child("Messages").child(this.userData.selectedID).child(this.messageKey).on("child_added", function(snapchot) {
       let key  = snapchot.key;
        ref.child("MessagesBranch").child("Messages").child(key).once("value").then((snapchotMessage) => {
         console.log(snapchotMessage.val());

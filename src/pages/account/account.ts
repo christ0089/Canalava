@@ -93,7 +93,7 @@ private googleMaps: GoogleMapsProvider) {
           handler: () => {
             this.navCtrl.push("PhotoPage", {
               Content: content,
-              ID : this.userData.userID,
+              ID : this.userData.selectedID,
               isEditEnabled : true
             })
           }

@@ -24,19 +24,11 @@ export class UsersProvider {
   selectedID: string = "";
   selectedValue: number = 0;
 
-  public userData = [{
-    Name: "",
-    Phone: "",
-    Img: "",
-    isPhonePublic: false,
-    Key: ""
-  }]
+  public userData = []
 
   constructor(public http: Http, private auth: AuthServiceProvider, private content: ContentProvider,
     private firebase: FirebaseApp, private events: Events) {
-
   }
-
 
   getCurrentSession() {
     this.auth.afAuth.authState.subscribe(user => {
@@ -46,9 +38,7 @@ export class UsersProvider {
         if (user.emailVerified == true || user.uid != null) {
           this.userID = user.uid;
           this.selectedID = this.userID;
-          this.loadData();
-
-         
+          this.loadData();         
         }
       }
     });
@@ -64,7 +54,9 @@ export class UsersProvider {
   loadData() {
     this.content.getContent();
     this.content.getUserContent(this.selectedID);
-    this.getUserData();
+    this.getProfileData(this.userID).then((data : { Name: string, Phone: string, Img:string, isPhonePublic: boolean, Key: string}) => {
+      this.userData = [data];
+    })
     this.getBusiness();
     this.funcLoadUserData();
   }
@@ -78,25 +70,20 @@ export class UsersProvider {
         if (snapchot.val() == null) {
           return
         }
-
         snapchot.forEach((child) => {
-          console.log(child.val());
-          var values = child.val()
-          var business = {
-            Name: values.Name,
-            Phone: values.Phone,
-            Img: values.ProfileImg,
-            isPhonePublic: values.isPhonePublic,
-            Key: child.key
-          }
+          console.log(child.key);
+          var values = child.key
 
-          data.push(business);
+          this.getProfileData(values).then((business) => {
+            data.push(business)
+            this.userData = this.userData.concat(data);
+          })
         })
 
-
       }).then(() => {
-        this.userData = this.userData.concat(data)
         return resolve(this.userData);
+      }).catch((error) => {
+        return reject(error);
       })
     })
   }
@@ -123,20 +110,6 @@ export class UsersProvider {
       });
     });
     this.users = dataArray;
-  }
-
-  getUserData() {
-    const db = this.firebase.database().ref()
-    db.child("UserData").child(this.selectedID).once("value").then((snapchot) => {
-      let data = snapchot.val();
-      this.userData = [{
-        Name: data.Name,
-        Phone: data.Phone,
-        Img: data.ProfileImg,
-        isPhonePublic: data.isPhonePublic,
-        Key: snapchot.key
-      }]
-    })
   }
 
   getSelectedAccount() {
@@ -170,13 +143,14 @@ export class UsersProvider {
   updateUserData(userData) {
     const db = this.firebase.database().ref();
     return new Promise((success, reject) => {
+      console.log(userData)
       db.child("UserData").child(this.selectedID).update({
         "Name": userData.Name,
         "Phone": userData.Phone,
         "ProfileImg": userData.Img,
         "isPhonePublic": userData.isPhonePublic,
       }).then(() => {
-        this.userData = userData;
+        this.userData[this.selectedValue] = userData;
         this.content.getContent();
         return success();
       }).catch((error) => {
@@ -201,6 +175,7 @@ export class UsersProvider {
   }
 
   getUserImage(id) {
+    console.log(id);
     if (id == this.selectedID) {
       return this.userData[this.selectedValue].Img;
     } else if (id == this.userID) {
@@ -212,7 +187,6 @@ export class UsersProvider {
           return true;
         }
       });
-
       return user[0].Img;
     }
   }
@@ -231,7 +205,5 @@ export class UsersProvider {
       });
       return user[0].Name;
     }
-
   }
-
 }

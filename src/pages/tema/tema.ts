@@ -51,24 +51,18 @@ export class TemaPage {
         "PostedBy": key.PostedBy
       }
     })
-    temas.getCommentsOnInquiry(key.Key).then((comments: any) => {
-      this.commentsArray = comments;
-    })
   }
 
   ionViewDidLoad() {
+    this.temas.getCommentsOnInquiry(this.id).then((comments: any) => {
+      this.commentsArray = comments;
+    })
     console.log('ionViewDidLoad TemaPage');
   }
 
   postComment() {
-    var data = {
-      "Id": this.userData.userID,
-      "Message": this.comment
-    };
-    this.commentsArray.push(data);
-    console.log(this.commentsArray);
     this.temas.postComments(this.comment, this.id).then(() => {
-
+      console.log(this.commentsArray);
     }).catch((error) => {
       this.alertController.presetToast("error")
     })
