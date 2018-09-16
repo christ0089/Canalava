@@ -177,9 +177,9 @@ export class UsersProvider {
   getUserImage(id) {
     console.log(id);
     if (id == this.selectedID) {
-      return this.userData[this.selectedValue].Img;
+      return this.userData[this.selectedValue].Img != null ? this.userData[this.selectedValue].Img : "https://firebasestorage.googleapis.com/v0/b/canalava-353c7.appspot.com/o/Icon.png?alt=media&token=6c3a295c-e9e0-43ba-8b8b-75b4d548e647" ;
     } else if (id == this.userID) {
-      return this.userData[0].Img;
+      return this.userData[0].Img != null ? this.userData[0].Img : "https://firebasestorage.googleapis.com/v0/b/canalava-353c7.appspot.com/o/Icon.png?alt=media&token=6c3a295c-e9e0-43ba-8b8b-75b4d548e647" ;
     }
     else {
       let user = this.users.filter(user => {
@@ -187,15 +187,15 @@ export class UsersProvider {
           return true;
         }
       });
-      return user[0].Img;
+      return user[0].Img != null ? user[0].Img : "https://firebasestorage.googleapis.com/v0/b/canalava-353c7.appspot.com/o/Icon.png?alt=media&token=6c3a295c-e9e0-43ba-8b8b-75b4d548e647";
     }
   }
 
   getUserName(id) {
     if (id == this.selectedID) {
-      return this.userData[this.selectedValue].Name;
+      return this.userData[this.selectedValue].Name != null? this.userData[this.selectedValue].Name : "" ;
     } else if (id == this.userID) {
-      return this.userData[0].Name;
+      return this.userData[0].Name != null? this.userData[0].Name: "" ;
     }
     else {
       let user = this.users.filter(user => {
@@ -203,7 +203,7 @@ export class UsersProvider {
           return true;
         }
       });
-      return user[0].Name;
+      return user[0].Name != null? user[0].Name : "" ;
     }
   }
 }

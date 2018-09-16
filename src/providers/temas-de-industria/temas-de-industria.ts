@@ -51,7 +51,7 @@ export class TemasDeIndustriaProvider {
   getCommentsOnInquiry(id) {
     let array = [];
     return new Promise ((success, reject)=> {
-      this.firebase.database().ref().child("InductryInquiry").child("Comments").child(id).on("child_added", function(snapchot) {
+      this.firebase.database().ref().child("InductryInquiry").child("Comments").child(id).on("child_added", (snapchot) => {
         console.log(snapchot.val());
         snapchot.forEach((child) => {
           var data = {
@@ -59,6 +59,7 @@ export class TemasDeIndustriaProvider {
             "Message" : child.val()
           }
           array.push(data);
+          return false;
         })
         return success(array);
       }, function(error) {

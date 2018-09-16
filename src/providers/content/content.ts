@@ -14,11 +14,12 @@ import { AuthServiceProvider } from '../auth-service/auth-service';
 @Injectable()
 export class ContentProvider {
 
+  userContent = [];
+  contentArray = [];
+
   constructor(public http: Http, private db: FirebaseApp, private auth:AuthServiceProvider) {
     console.log('Hello ContentProvider Provider');
   }
-
-  contentArray = [];
 
   async getContent() {
     let tempArray = [];
@@ -58,6 +59,7 @@ export class ContentProvider {
               ID : snapchot.key
             }
             tempArray.push(content);
+            tempArray = tempArray.sort((a,b) => b.Timestamp - a.Timestamp);
           });
         });
       });
@@ -65,10 +67,8 @@ export class ContentProvider {
     this.contentArray = tempArray;
   }
 
-  userContent = [];
-
   getUserContent(userID) {
-    this.userContent = this.getProfileContent(userID, userID);
+    this.userContent = this.getProfileContent(userID, userID)
   }
 
   public getProfileContent(id, uid) {
@@ -102,11 +102,14 @@ export class ContentProvider {
             "ID" : myContent.key
           }
           tempArray.push(content);
+          console.log(tempArray);
+          tempArray = tempArray.sort((a,b) => b.Timestamp - a.Timestamp);
+          console.log(tempArray);
         });
       }).catch((error) => {
         console.log(error);
       })
-    })
+    });
     return tempArray;
   }
 
@@ -165,11 +168,15 @@ export class ContentProvider {
   } 
 
   updateContent(id, isImageLiked) {
+    this.db.database().ref().child("ContentLikes").child(id).once('value').then((snapchotLikes) => {
+      let likeNumber = snapchotLikes.val();
       this.contentArray.filter(content => {
         if (id == content.ID) {
          content.isImageLiked = isImageLiked
+         content.likeNumber - likeNumber;
         }
       });
+    })
   }
 
   public postLike(contentID, uid, isLiked) {

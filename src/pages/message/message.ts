@@ -67,10 +67,8 @@ export class MessagePage {
   {
     this.data.Timestamp = Date.now();
     this.data.Receiver = this.messageKey;
-    //this.test.push(this.data);
     this.messageProvider.postMessage(this.data).catch((error) => {
       this.alertProvider.presetToast(error);
     })
-    //this.alertProvider.dismissToast();
   }
 }

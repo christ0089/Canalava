@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { ContentProvider } from '../../providers/content/content';
 import { UsersProvider } from '../../providers/users/users';
+import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 declare var google: any;
 /**
  * Generated class for the UserProfilePage page.
@@ -24,12 +25,13 @@ export class UserProfilePage {
     "isPhonePublic": "",
     "Key": ""
   };
-  DataImgs = [];
 
+  DataImgs = [];
   map:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-     private content: ContentProvider, private user_data:UsersProvider, private platform: Platform) {
+     private content: ContentProvider, private googleMaps:GoogleMapsProvider,
+      private user_data:UsersProvider, private platform: Platform) {
 
     
   }
@@ -67,6 +69,7 @@ export class UserProfilePage {
     }
 
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+    this.googleMaps.getAddresses(this.map,  this.userData.Key, this.userData.Name)
   }
 
   giveLike(content) {

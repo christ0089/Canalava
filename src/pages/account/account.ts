@@ -22,15 +22,20 @@ export class AccountPage {
   map : any;
   selected = 0;
 
+  data = [];
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private content:ContentProvider, private userData: UsersProvider,
   private actionSheetCtrl:ActionSheetController, private modalCtrl:ModalController, private platform:Platform,
 private googleMaps: GoogleMapsProvider) {
     this.displayMode = "List";
+
+    
   }
 
   ionViewDidLoad() {
     this.userData.getCurrentSession();
+    this.data = this.content.userContent;
 
     this.platform.ready().then(() => {
       console.log(this.mapRef);
@@ -46,11 +51,12 @@ private googleMaps: GoogleMapsProvider) {
   onChange(event) {
     this.selected = event;
     this.userData.setSelectedAccount(this.selected);
+    this.data = this.content.userContent;
     this.showMap();
   }
 
   showMap() {
-    const location = new google.maps.LatLng(-51.507351, -0.127758)
+    const location = new google.maps.LatLng(19.432470, -99.16884)
 
     const options = {
       center: location,
@@ -58,7 +64,7 @@ private googleMaps: GoogleMapsProvider) {
     }
 
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-    this.googleMaps.getAddresses(this.map, this.userData.selectedID)
+    this.googleMaps.getAddresses(this.map, this.userData.selectedID, this.userData.getSelectedAccount().Name)
   }
 
   openSettings() {

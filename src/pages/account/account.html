@@ -19,7 +19,7 @@
 
 
 <ion-content padding>
-  <ion-item>
+  <ion-item *ngIf="userData.userData[selected]">
     <ion-avatar item-start>
       <img src={{userData.userData[selected].Img}} item-start>
     </ion-avatar>
@@ -54,8 +54,8 @@
 
   <div [ngSwitch]="displayMode">
     <ion-list *ngSwitchCase="'List'">
-      <div *ngFor="let content of content.userContent.reverse()" class="feed">
-        <ion-item >
+      <div *ngFor="let content of data" class="feed">
+        <ion-item>
           <ion-avatar item-start>
             <img src={{userData.getSelectedAccount().Img}}>
           </ion-avatar>
@@ -79,7 +79,7 @@
     </ion-list>
 
     <div *ngSwitchCase="'Grid'">
-      <div class="square" *ngFor="let content of content.userContent">
+      <div class="square" *ngFor="let content of data">
         <button class="content" (tap)="openPhoto(content)">
           <img class="image" src="{{content.ImageURL}}">
         </button>
