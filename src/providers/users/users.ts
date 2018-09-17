@@ -6,15 +6,6 @@ import { FirebaseApp } from 'angularfire2';
 import { Events } from 'ionic-angular';
 import { FcmProvider } from '../messages-service/fcm';
 
-
-/*
-  Generated class for the UsersProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
-
-
 @Injectable()
 export class UsersProvider {
 
@@ -71,15 +62,12 @@ export class UsersProvider {
           return
         }
         snapchot.forEach((child) => {
-          console.log(child.key);
           var values = child.key
-
           this.getProfileData(values).then((business) => {
             data.push(business)
             this.userData = this.userData.concat(data);
           })
         })
-
       }).then(() => {
         return resolve(this.userData);
       }).catch((error) => {
@@ -91,9 +79,8 @@ export class UsersProvider {
   funcLoadUserData() {
     const db = this.firebase.database().ref();
     let dataArray = [];
-
     let userID = this.userID;
-    db.child("UserData").once("value").then((snapchot) => {
+    db.child("UserData").limitToFirst(40).once("value").then((snapchot) => {
       snapchot.forEach(function (child) {
         let data = child.val();
         if (child.key == userID) {
@@ -110,6 +97,34 @@ export class UsersProvider {
       });
     });
     this.users = dataArray;
+  }
+
+  loadUsers(name, query) {
+    const db = this.firebase.database().ref();
+    let dataArray = [];
+
+    let userID = this.userID;
+    return new Promise((resolve, reject) => {
+      db.child("UserData").orderByChild(query).equalTo(name).once("value").then((snapchot) => {
+        snapchot.forEach(function (child) {
+          let data = child.val();
+          if (child.key == userID) {
+            return
+          }
+          var userData = {
+            "Name": data.Name,
+            "Phone": data.Phone,
+            "Img": data.ProfileImg,
+            isPhonePublic: data.isPhonePublic,
+            "Key": child.key
+          }
+          dataArray.push(userData);
+        });
+      }).catch((error) => {
+        return reject(error);
+      });
+      return resolve(dataArray);
+    })
   }
 
   getSelectedAccount() {
@@ -143,7 +158,6 @@ export class UsersProvider {
   updateUserData(userData) {
     const db = this.firebase.database().ref();
     return new Promise((success, reject) => {
-      console.log(userData)
       db.child("UserData").child(this.selectedID).update({
         "Name": userData.Name,
         "Phone": userData.Phone,
@@ -159,6 +173,9 @@ export class UsersProvider {
     })
   }
 
+// Purpose: Set the Array of Users in Search Bar 
+// Paramater: Takes the Name or Business from Search Bar
+// Result: Sets Filtered Users Lists or Unfiltered List depending on Field Name
   getUser(Name: string) {
     if (!Name) {
       this.funcLoadUserData();
@@ -172,10 +189,16 @@ export class UsersProvider {
         return false;
       }
     });
+    if (this.users == []) {
+      this.loadUsers(Name, "Name").then((resolve: []) => this.users = resolve);
+    }
   }
 
+
+// Purpose: Returns the User's Image based on his ID
+// Paramater: Takes the UID of the User to Query
+// Result: Returns the Single user Image of Query
   getUserImage(id) {
-    console.log(id);
     if (id == this.selectedID) {
       return this.userData[this.selectedValue].Img != null ? this.userData[this.selectedValue].Img : "https://firebasestorage.googleapis.com/v0/b/canalava-353c7.appspot.com/o/Icon.png?alt=media&token=6c3a295c-e9e0-43ba-8b8b-75b4d548e647" ;
     } else if (id == this.userID) {
@@ -191,6 +214,9 @@ export class UsersProvider {
     }
   }
 
+// Purpose: Returns the User's Name based on his ID
+// Paramater: Takes the UID of the User to Query
+// Result: Returns the Single User Name from Query
   getUserName(id) {
     if (id == this.selectedID) {
       return this.userData[this.selectedValue].Name != null? this.userData[this.selectedValue].Name : "" ;
