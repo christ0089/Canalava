@@ -190,7 +190,7 @@ export class UsersProvider {
       }
     });
     if (this.users == []) {
-      this.loadUsers(Name, "Name").then((resolve: []) => this.users = resolve);
+      this.loadUsers(Name, "Name").then((resolve: any) => this.users = resolve);
     }
   }
 

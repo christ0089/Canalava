@@ -102,9 +102,7 @@ export class ContentProvider {
             "ID" : myContent.key
           }
           tempArray.push(content);
-          console.log(tempArray);
           tempArray = tempArray.sort((a,b) => b.Timestamp - a.Timestamp);
-          console.log(tempArray);
         });
       }).catch((error) => {
         console.log(error);
