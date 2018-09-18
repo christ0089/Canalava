@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { DocumentViewer, DocumentViewerOptions} from '@ionic-native/document-viewer';
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
 import { File } from '@ionic-native/file';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 /**
  * Generated class for the ServicesPage page.
  *
@@ -17,30 +18,36 @@ import { File } from '@ionic-native/file';
 })
 export class ServicesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private document:DocumentViewer
-  , private toast: ToastAndLoadProvider, private platform: Platform,
-private file: File) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private document: DocumentViewer
+    , private toast: ToastAndLoadProvider, private platform: Platform,
+    private inAppBrowser: InAppBrowser) {
 
   }
 
   getData(type) {
     this.navCtrl.push("EventManagerPage", {
-      Type : type
+      Type: type
     })
   }
 
-  openDocument(){
+  openDocument() {
     const options: DocumentViewerOptions = {
       title: 'Beneficios'
     }
     let toast = this.toast;
 
     var address = "assets/Beneficios.pdf";
-    if (this.platform.is('Android')) {
-      address = this.file.applicationDirectory + "www/assets/Beneficios.pdf"
+    if (this.platform.is('android')) {
+      this.inAppBrowser.create("https://canalava.org.mx/Beneficios.html")
+      return 
     }
-    this.document.viewDocument(address, 'application/pdf', options, function onShow(){}, function onClose(){}, function onMissingApp(){},
-    function onError(error){ toast.presetToast("Error al abrir archivo" + error) })
+    this.document.viewDocument(address, 'application/pdf', options, function onShow() { }, function onClose() { }, function onMissingApp(appId, installer) {
+      if (confirm("No tienes un visor de PDF, Quieres Instalar uno?" +
+        + appId + " for Android?")) {
+        installer();
+      }
+    },
+      function onError(error) { toast.presetToast("Error al abrir archivo" + error) })
   }
 
   ionViewDidLoad() {
@@ -48,7 +55,8 @@ private file: File) {
   }
 
   openMagazine() {
-    this.toast.presetToast("No Revista Disponible en este momento");
+    this.inAppBrowser.create("https://canalava.org.mx/Revista.html")
+    //this.toast.presetToast("No Revista Disponible en este momento");
   }
 
 }

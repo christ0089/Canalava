@@ -4,7 +4,8 @@ import { UsersProvider } from '../../providers/users/users';
 import { ContentProvider } from '../../providers/content/content';
 import { DatePipe } from '@angular/common';
 import { FcmProvider } from '../../providers/messages-service/fcm';
-
+import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
+import { tap } from 'rxjs/operators';
 /**
  * Generated class for the MainFeedPage page.
  *
@@ -21,15 +22,20 @@ export class MainFeedPage {
 
   data = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fcm: FcmProvider, private userContent: UsersProvider, public content: ContentProvider) {
+  constructor(public navCtrl: NavController,
+     public navParams: NavParams, 
+     private fcm: FcmProvider,
+     private userContent: UsersProvider,
+     public content: ContentProvider,
+     private toastCtrl: ToastAndLoadProvider) {
     this.userContent.getCurrentSession();
   }
 
 
   ionViewDidLoad() {
-//    this.fcm.listenToNotification().pipe(tap(msg => {
-//      this.toastCtrl.presetToast(msg.body)
-//     }))
+    /*this.fcm.listenToNotification().pipe(tap(msg => {
+      this.toastCtrl.presetToast(msg.body)
+     }))*/
   }
 
   openSettings() {
