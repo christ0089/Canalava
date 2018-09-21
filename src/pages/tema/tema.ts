@@ -54,6 +54,8 @@ export class TemaPage {
       })
     }else {
       let tema = this.navParams.get("Tema");
+
+      tema.Description = tema.Description.split("\\n").join("\n")
       this.id = null;
       console.log(tema);
       this.tema = {
