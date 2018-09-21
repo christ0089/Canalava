@@ -17,7 +17,7 @@
   <ion-list >
       <ion-item (tap)="openAccount(user)" *ngFor="let user of userContent.users">
           <ion-avatar item-start>
-            <img src={{user.Img}}>
+            <img-loader useImg src={{user.Img}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
           </ion-avatar>
           <h2>{{user.Name}}</h2>
         </ion-item>

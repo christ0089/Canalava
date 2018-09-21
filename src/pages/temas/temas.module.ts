@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TemasPage } from './temas';
+import { IonicImageLoader } from 'ionic-image-loader';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { TemasPage } from './temas';
   ],
   imports: [
     IonicPageModule.forChild(TemasPage),
+    IonicImageLoader
   ],
 })
 export class TemasPageModule {}

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule, ChangeDetectorRef } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -9,6 +9,7 @@ import { Network } from '@ionic-native/network';
 import { File } from '@ionic-native/file';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Firebase } from '@ionic-native/firebase';
+import { IonicImageLoader } from 'ionic-image-loader'
 
 import { HttpModule} from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -53,6 +54,7 @@ export const firebaseConfig = {
     HttpClientModule,
     IonicModule.forRoot(MyApp),  
     AngularFireModule.initializeApp(firebaseConfig),
+    IonicImageLoader.forRoot(),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFirestoreModule,

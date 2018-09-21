@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
-import { File } from '@ionic-native/file';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 /**
  * Generated class for the ServicesPage page.

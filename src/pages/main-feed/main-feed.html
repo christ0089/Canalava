@@ -27,11 +27,11 @@
       <div *ngFor="let content of content.contentArray" class="feed">
         <ion-item (tap)="openAccount(content.Key)">
           <ion-avatar item-start>
-            <img src={{content.Img}}>
+              <img-loader useImg src={{content.Img}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
           </ion-avatar>
           <h2>{{content.Name}}</h2>
         </ion-item>
-        <img src={{content.ImageURL}}>
+        <img class="uploadImg" src={{content.ImageURL}}>
         <ion-item>
           <h2 text-wrap>{{content.Message}}</h2>
           <div item-end>

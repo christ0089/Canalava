@@ -80,6 +80,7 @@ private googleMaps: GoogleMapsProvider) {
     })
   }
 
+
   presentActionSheet(content) {
     console.log("OpenActionScheet");
     let actionSheet = this.actionSheetCtrl.create({
