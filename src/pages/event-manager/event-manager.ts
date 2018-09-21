@@ -29,8 +29,8 @@ export class EventManagerPage {
       this.firebase.database().ref().child("Events/Asesorias").on("child_added", function(snapchot){
         let data = snapchot.val();
         console.log(data);
-
         array.push(data);
+        array = array.sort((a,b) => b.Timestamp - a.Timestamp)
       })
     }else if (type == 1) { //Eventos
       this.title = "Eventos"
@@ -38,6 +38,7 @@ export class EventManagerPage {
         let data = snapchot.val();
         console.log(data);
         array.push(data);
+        array = array.sort((a,b) => b.Timestamp - a.Timestamp)
       })
     }else { //Capacitacion
       this.title = "Capacitacion"
@@ -45,9 +46,19 @@ export class EventManagerPage {
         let data = snapchot.val();
         console.log(data);
         array.push(data);
+        array = array.sort((a,b) => b.Timestamp - a.Timestamp)
       })
     }
   }
+
+  openTema(tema) {
+    console.log(tema);
+    this.navCtrl.push("TemaPage",{
+      Key : null,
+      Tema : tema
+    });
+  }
+
 
   ionViewDidLoad() {
     this.getData(this.navParams.get("Type"), this.contentArray);

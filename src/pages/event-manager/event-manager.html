@@ -15,8 +15,8 @@
 
 <ion-content padding>
     <ion-list>
-        <div *ngFor="let content of contentArray" class="feed">
-          <ion-item (tap) = "openAccount(content.Key)">
+        <div *ngFor="let content of contentArray" class="feed" (tap) = "openTema(content)">
+          <ion-item >
             <ion-avatar item-start>
               <img src="https://firebasestorage.googleapis.com/v0/b/canalava-353c7.appspot.com/o/Icon.png?alt=media&token=6c3a295c-e9e0-43ba-8b8b-75b4d548e647">
             </ion-avatar>

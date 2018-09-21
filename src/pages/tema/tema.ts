@@ -30,7 +30,7 @@ export class TemaPage {
 
   comment = "";
   commentsArray = [];
-  id = "";
+  id : any = null;
 
   isEditEnabled = false;
 
@@ -39,21 +39,40 @@ export class TemaPage {
     private actionSheetCtrl: ActionSheetController) {
     this.isEditEnabled = false;
     let key = this.navParams.get("Key");
-    this.id = key.Key;
-    temas.getIndustryTopicSpecific(key.Key).then((tema_download: any) => {
+    if (key != null) {
+      this.id = key.Key;
+      temas.getIndustryTopicSpecific(key.Key).then((tema_download: any) => {
+        this.tema = {
+          "Title": tema_download.Title,
+          "Message": tema_download.Text,
+          "MainPhoto": tema_download.MainPhoto,
+          "Author": key.Name,
+          "AuthorImg": key.Img,
+          "Date": key.Timestamp,
+          "PostedBy": key.PostedBy
+        }
+      })
+    }else {
+      let tema = this.navParams.get("Tema");
+      this.id = null;
+      console.log(tema);
       this.tema = {
-        "Title": tema_download.Title,
-        "Message": tema_download.Text,
-        "MainPhoto": tema_download.MainPhoto,
-        "Author": key.Name,
-        "AuthorImg": key.Img,
-        "Date": key.Timestamp,
-        "PostedBy": key.PostedBy
+        "Title": tema.Title,
+        "Message": tema.Description,
+        "MainPhoto": tema.Img,
+        "Author": "Canalava",
+        "AuthorImg": "https://firebasestorage.googleapis.com/v0/b/canalava-353c7.appspot.com/o/Icon.png?alt=media&token=6c3a295c-e9e0-43ba-8b8b-75b4d548e647",
+        "Date": tema.Timestamp,
+        "PostedBy": ""
       }
-    })
+    }
+
   }
 
   ionViewDidLoad() {
+    if (this.id == null) {
+      return
+    }
     this.temas.getCommentsOnInquiry(this.id).then((comments: any) => {
       this.commentsArray = comments;
     })

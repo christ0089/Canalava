@@ -12,7 +12,7 @@
       <button ion-button icon-only clear (tap)="editTema()" *ngIf="tema.PostedBy == userData.userID && isEditEnabled == false">
         <ion-icon name="create"></ion-icon>
       </button>
-      <button  ion-button icon-only clear *ngIf="isEditEnabled == true" (tap)="saveMessage()">
+      <button ion-button icon-only clear *ngIf="isEditEnabled == true" (tap)="saveMessage()">
         <ion-icon name="checkmark"></ion-icon>
       </button>
     </ion-buttons>
@@ -29,28 +29,31 @@
   <ion-input *ngIf="isEditEnabled == true" [(ngModel)]="tema.Message">{{tema.Message}}</ion-input>
   <ion-item>
     <ion-avatar item-start>
-      <img src={{tema.AuthorImg}}>
+      <img src="{{tema.AuthorImg}}">
     </ion-avatar>
     <h2>hecho por: {{tema.Author}}</h2>
     <p>{{tema.Date | date:'short'}}</p>
   </ion-item>
-  <div class="linebreaker"></div>
-  <p>Comentarios</p>
-  <ion-item *ngFor="let comment of commentsArray">
-    <ion-avatar item-start>
-      <img src="{{userData.getUserImage(comment.Id)}}">
-    </ion-avatar>
-    <h2>{{userData.getUserName(comment.Id)}}</h2>
-    <p>{{comment.Message}}</p>
-  </ion-item>
-  <ion-item>
-    <ion-avatar item-start>
-      <img src="{{userData.getSelectedAccount().Img}}">
-    </ion-avatar>
-    <h2>{{userData.getSelectedAccount().Name}}</h2>
-    <ion-input placeholder="Escribe un Comentario" [(ngModel)]="comment"></ion-input>
-    <button ion-button item-end (tap)="postComment()">
-      <ion-icon name="send"></ion-icon>
-    </button>
-  </ion-item>
+  <div *ngIf="id !== null">
+    <div class="linebreaker"></div>
+    <p>Comentarios</p>
+    <ion-item  *ngFor="let comment of commentsArray">
+      <ion-avatar item-start>
+        <img src="{{userData.getUserImage(comment.Id)}}">
+      </ion-avatar>
+      <h2>{{userData.getUserName(comment.Id)}}</h2>
+      <p>{{comment.Message}}</p>
+    </ion-item>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{userData.getSelectedAccount().Img}}">
+      </ion-avatar>
+      <h2>{{userData.getSelectedAccount().Name}}</h2>
+      <ion-input placeholder="Escribe un Comentario" [(ngModel)]="comment"></ion-input>
+      <button ion-button item-end (tap)="postComment()">
+        <ion-icon name="send"></ion-icon>
+      </button>
+    </ion-item>
+  </div>
+
 </ion-content>
