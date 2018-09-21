@@ -52,19 +52,23 @@
     </ion-segment>
   </div>
 
+
   <div [ngSwitch]="displayMode">
     <ion-list *ngSwitchCase="'List'">
+      <div *ngIf="data == []">
+        <p>No Hay Imagenes</p>
+      </div>
       <div *ngFor="let content of data" class="feed">
         <ion-item>
           <ion-avatar item-start>
-            <img-loader useImg src={{userData.getSelectedAccount().Img}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
+            <img-loader useImg src={{userData.getSelectedAccount().Img}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true" fallbackAsPlaceholder="true"></img-loader>
           </ion-avatar>
           <h2>{{userData.getSelectedAccount().Name}}</h2>
           <button ion-button clear item-end (tap)="presentActionSheet(content)">
             <ion-icon name="more"></ion-icon>
           </button>
         </ion-item>
-        <img-loader useImg src={{content.ImageURL}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
+        <img-loader useImg src={{content.ImageURL}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true" fallbackAsPlaceholder="true"></img-loader>
         <ion-item no-lines>
           <ion-badge>{{content.likeNumber}} Likes</ion-badge>
           <button ion-button clear (tap)="giveLike(content)">
@@ -81,7 +85,7 @@
     <div *ngSwitchCase="'Grid'">
       <div class="square" *ngFor="let content of data">
         <button class="content" (tap)="openPhoto(content)">
-          <img class="image" src="{{content.ImageURL}}">
+            <img-loader useImg src={{content.ImageURL}} fallbackUrl="/assets/imgs/Unknown.png" [spinner]="true" [fallbackAsPlaceholder]="true"></img-loader>
         </button>
       </div>
     </div>

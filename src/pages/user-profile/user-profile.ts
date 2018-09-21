@@ -33,7 +33,6 @@ export class UserProfilePage {
      private content: ContentProvider, private googleMaps:GoogleMapsProvider,
       private user_data:UsersProvider, private platform: Platform) {
 
-    
   }
 
   @ViewChild('googleMaps') mapRef : ElementRef;

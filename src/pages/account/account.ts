@@ -28,9 +28,7 @@ export class AccountPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private content:ContentProvider, private userData: UsersProvider,
   private actionSheetCtrl:ActionSheetController, private modalCtrl:ModalController, private platform:Platform,
 private googleMaps: GoogleMapsProvider) {
-    this.displayMode = "List";
-
-    
+    this.displayMode = "List"; 
   }
 
   ionViewDidLoad() {

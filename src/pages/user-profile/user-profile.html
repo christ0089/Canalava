@@ -42,6 +42,11 @@
 
   <div [ngSwitch]="displayMode">
     <ion-list *ngSwitchCase="'List'">
+
+      <div *ngIf="DataImgs.length == 0">
+        <p>No Hay Imagenes</p>
+      </div>
+
       <div *ngFor="let content of DataImgs" class="feed">
         <ion-item>
           <ion-avatar item-start>
@@ -49,7 +54,7 @@
           </ion-avatar>
           <h2>{{userData.Name}}</h2>
         </ion-item>
-        <img src={{content.ImageURL}}>
+        <img class="uploadImg" src={{content.ImageURL}}>
         <ion-item>
           <h2 text-wrap>{{content.Message}}</h2>
           <p>{{content.Timestamp | date}}</p>
@@ -64,6 +69,11 @@
       </div>
     </ion-list>
     <div *ngSwitchCase="'Grid'">
+
+      <div *ngIf="DataImgs.length == 0">
+        <p>No Hay Imagenes</p>
+      </div>
+
       <div class="square" *ngFor="let content of DataImgs">
         <button class="content" (tap)="openPhoto(content)">
           <img class="image" src="{{content.ImageURL}}">
