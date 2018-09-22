@@ -54,6 +54,7 @@ export class ContentProvider {
               likeNumber: likeNumber["Likes"],
               Key : data.Uploader,
               Name: user_data.Name,
+              isVideo : data.isVideo != null ?  true : false,
               Img: user_data.ProfileImg,
               isImageLiked : isImageLiked,
               ID : snapchot.key
@@ -99,6 +100,7 @@ export class ContentProvider {
             "Timestamp": data.Timestamp,
             "likeNumber": likeNumber["Likes"],
             "isImageLiked" : isImageLiked,
+            "isVideo" : data.isVideo != null ? true : false,
             "ID" : myContent.key
           }
           tempArray.push(content);
@@ -120,6 +122,7 @@ export class ContentProvider {
         "Message": data.Message,
         "Timestamp" : Date.now(),
         "Uploader" : userID
+
       }).then(() => {
         let key = reference.key
         firebaseDb.child("Content").child(userID).update({

@@ -68,7 +68,10 @@
             <ion-icon name="more"></ion-icon>
           </button>
         </ion-item>
-        <img-loader useImg src={{content.ImageURL}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true" fallbackAsPlaceholder="true"></img-loader>
+        <video *ngIf="content.isVideo == true"  muted="true" autoplay controls looped width="100%">
+          <source src={{content.ImageURL}} type="video/mp4">
+        </video>
+        <img-loader *ngIf="content.isVideo == false" useImg src={{content.ImageURL}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true" fallbackAsPlaceholder="true"></img-loader>
         <ion-item no-lines>
           <ion-badge>{{content.likeNumber}} Likes</ion-badge>
           <button ion-button clear (tap)="giveLike(content)">

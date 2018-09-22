@@ -30,14 +30,13 @@ export class MessagesServiceProvider {
           db.child("MessagesBranch").child("Messages").child(messages.key).once("value").then((message) => {
             console.log(message.val());
             let data = message.val();
-              convos[toID] = data;
+            convos[toID] = data;
           }).then(()=> {
             console.log(convos, "Data");
             return resolve(convos);    
           });
         })
       });
-     
     });
   }
 

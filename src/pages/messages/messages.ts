@@ -34,7 +34,7 @@ export class MessagesPage {
   }
 
   getMessageData(data) {
-    this.messageKeys = Object.keys(data).reverse();
+    this.messageKeys = Object.keys(data);
   }
 
   openMessages(messageKey) {

@@ -31,7 +31,10 @@
           </ion-avatar>
           <h2>{{content.Name}}</h2>
         </ion-item>
-        <img class="uploadImg" src={{content.ImageURL}}>
+        <video *ngIf="content.isVideo == true"  muted="true" autoplay controls loop width="100%">
+          <source src={{content.ImageURL}} type="video/mp4">
+        </video>
+        <img-loader *ngIf="content.isVideo == false" useImg src={{content.ImageURL}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true" fallbackAsPlaceholder="true"></img-loader>
         <ion-item>
           <h2 text-wrap>{{content.Message}}</h2>
           <div item-end>
