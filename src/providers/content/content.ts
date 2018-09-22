@@ -140,14 +140,18 @@ export class ContentProvider {
 
   deletePicture(id, uid) {
     const firebaseDb = this.db.database().ref();
+    console.log(id, uid)
     return new Promise((resolve, reject) => {
       firebaseDb.child("PublicContent").child(id).remove().catch((error)=> {
         return reject(error)
+      }).then(() => {
+        this.contentArray.splice(this.contentArray.indexOf(id), 1)
       });
       firebaseDb.child("Content").child(uid).child(id).remove().catch((error)=> {
         return reject(error)
+      }).then(() => {
+        this.userContent.splice(this.userContent.indexOf(id),1)
       });
-      this.getUserContent(uid);
       return resolve();
     })
   } 

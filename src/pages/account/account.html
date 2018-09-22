@@ -58,7 +58,7 @@
       <div *ngIf="data == []">
         <p>No Hay Imagenes</p>
       </div>
-      <div *ngFor="let content of data" class="feed">
+      <div *ngFor="let content of content.userContent" class="feed">
         <ion-item>
           <ion-avatar item-start>
             <img-loader useImg src={{userData.getSelectedAccount().Img}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true" fallbackAsPlaceholder="true"></img-loader>
@@ -83,7 +83,7 @@
     </ion-list>
 
     <div *ngSwitchCase="'Grid'">
-      <div class="square" *ngFor="let content of data">
+      <div class="square" *ngFor="let content of content.userContent">
         <button class="content" (tap)="openPhoto(content)">
             <img-loader useImg src={{content.ImageURL}} fallbackUrl="/assets/imgs/Unknown.png" [spinner]="true" [fallbackAsPlaceholder]="true"></img-loader>
         </button>

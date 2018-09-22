@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ActionSheetController, ModalContro
 import { ContentProvider } from '../../providers/content/content';
 import { UsersProvider } from '../../providers/users/users';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
 declare var google: any;
 /**
  * Generated class for the AccountPage page.
@@ -16,24 +17,23 @@ declare var google: any;
   selector: 'page-account',
   templateUrl: 'account.html',
 })
-export class AccountPage { 
+export class AccountPage {
   displayMode: string;
-  @ViewChild('googleMaps') mapRef : ElementRef;
-  map : any;
+  @ViewChild('googleMaps') mapRef: ElementRef;
+  map: any;
   selected = 0;
 
   data = [];
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private content:ContentProvider, private userData: UsersProvider,
-  private actionSheetCtrl:ActionSheetController, private modalCtrl:ModalController, private platform:Platform,
-private googleMaps: GoogleMapsProvider) {
-    this.displayMode = "List"; 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private content: ContentProvider, private userData: UsersProvider,
+    private actionSheetCtrl: ActionSheetController, private modalCtrl: ModalController, private platform: Platform,
+    private googleMaps: GoogleMapsProvider, private toastCtrl: ToastAndLoadProvider) {
+    this.displayMode = "List";
   }
 
   ionViewDidLoad() {
     this.userData.getCurrentSession();
-    this.data = this.content.userContent;
 
     this.platform.ready().then(() => {
       console.log(this.mapRef);
@@ -42,7 +42,7 @@ private googleMaps: GoogleMapsProvider) {
   }
 
 
-  addImage(){
+  addImage() {
     this.navCtrl.push('UploadPage');
   }
 
@@ -67,14 +67,14 @@ private googleMaps: GoogleMapsProvider) {
 
   openSettings() {
     this.navCtrl.push("SettingsPage", {
-      Type : 0
+      Type: 0
     })
   }
 
   openPhoto(content) {
     this.navCtrl.push("PhotoPage", {
       Content: content,
-      ID : this.userData.userID
+      ID: this.userData.userID
     })
   }
 
@@ -88,8 +88,8 @@ private googleMaps: GoogleMapsProvider) {
           text: 'Borrar',
           role: 'destructive',
           handler: () => {
-            this.content.deletePicture(content.Key, this.userData.selectedID).then(() =>{
-              this.navCtrl.pop();
+            this.content.deletePicture(content.ID, this.userData.selectedID).catch(() => {
+              this.toastCtrl.presetToast("Algo Salio Mal");
             });
           }
         },
@@ -98,8 +98,8 @@ private googleMaps: GoogleMapsProvider) {
           handler: () => {
             this.navCtrl.push("PhotoPage", {
               Content: content,
-              ID : this.userData.selectedID,
-              isEditEnabled : true
+              ID: this.userData.selectedID,
+              isEditEnabled: true
             })
           }
         },
@@ -143,7 +143,7 @@ private googleMaps: GoogleMapsProvider) {
       "isPhonePublic": user.isPhonePublic,
     }
     let profileModal = this.modalCtrl.create("EditPage", {
-      UserData : data
+      UserData: data
     });
     profileModal.present();
   }
