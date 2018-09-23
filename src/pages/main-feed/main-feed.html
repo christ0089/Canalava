@@ -31,10 +31,8 @@
           </ion-avatar>
           <h2>{{content.Name}}</h2>
         </ion-item>
-        <video *ngIf="content.isVideo == true"  muted="true" autoplay controls loop width="100%">
-          <source src={{content.ImageURL}} type="video/mp4">
-        </video>
-        <img-loader *ngIf="content.isVideo == false" useImg src={{content.ImageURL}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true" fallbackAsPlaceholder="true"></img-loader>
+        <video *ngIf="content.isVideo == true" [src]=content.ImageURL muted="true" autoplay controls playsinline webkit-playsinline loop width="100%"></video>
+        <img *ngIf="content.isVideo == false" src={{content.ImageURL}}>
         <ion-item>
           <h2 text-wrap>{{content.Message}}</h2>
           <div item-end>

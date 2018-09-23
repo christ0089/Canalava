@@ -101,6 +101,7 @@ export class ContentProvider {
             "likeNumber": likeNumber["Likes"],
             "isImageLiked" : isImageLiked,
             "isVideo" : data.isVideo != null ? true : false,
+            "Thumbnail" : data.isVideo != null ? data.Thumbnail : "",
             "ID" : myContent.key
           }
           tempArray.push(content);

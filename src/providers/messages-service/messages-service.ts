@@ -16,28 +16,43 @@ export class MessagesServiceProvider {
     console.log('Hello MessagesServiceProvider Provider');
   }
 
-  convos = {};
+  public convos = {};
+  public key = [];
 
   getMessagesUserConvos() {
-    var convos = {};
     const db = this.firebase.database().ref();
     const id = this.userConent.selectedID;
-    return new Promise((resolve) => {
-      db.child("Messages").child(id).on("child_added", (snapchot) => {
-        var toID = snapchot.key
-        db.child("Messages").child(id).child(toID).once("child_added").then((messages) => {
+    db.child("Messages").child(id).on("value", (snapchot) => {
+      snapchot.forEach((child) => {
+        console.log("Message Call");
+        var toID = child.key
+        this.key.push(child.key);
+        db.child("Messages").child(id).child(toID).on("value", (messages) => {
           console.log(messages.val());
-          db.child("MessagesBranch").child("Messages").child(messages.key).once("value").then((message) => {
-            console.log(message.val());
+          let key = []
+          let value = "";
+          messages.forEach(element => {
+            key.push(element.val())
+            return false;
+          })
+          key = key.sort((a, b) => { return b - a });
+
+          messages.forEach(element => {
+            if (element.val() == key[0]) {
+              value = element.key
+            }
+            return false;
+          })
+
+          db.child("MessagesBranch").child("Messages").child(value).once("value").then((message) => {
             let data = message.val();
-            convos[toID] = data;
-          }).then(()=> {
-            console.log(convos, "Data");
-            return resolve(convos);    
-          });
+            this.convos[toID] = data;
+          })
         })
-      });
+        return false;
+      })
     });
+
   }
 
 
@@ -48,19 +63,23 @@ export class MessagesServiceProvider {
       let ref = db.child("MessagesBranch").child("Messages").push()
       key = ref.key
       ref.set({
-        "Message" : message.Message,
-        "Receiver" : message.Receiver,
-        "Sender" : message.Sender,
-        "Timestamp" : Date.now()
-      }).then(()=> {
+        "Message": message.Message,
+        "Receiver": message.Receiver,
+        "Sender": message.Sender,
+        "Timestamp": Date.now()
+      }).then(() => {
         db.child("Messages").child(message.Receiver).child(message.Sender).update({
-          [key] : Date.now()
+          [key]: Date.now()
+        }).catch((error) => {
+          return reject(error);
         })
         db.child("Messages").child(message.Sender).child(message.Receiver).update({
-          [key] : Date.now()
+          [key]: Date.now()
+        }).catch((error) => {
+          return reject(error);
         })
         return resolve();
-      }).catch((error)=> {
+      }).catch((error) => {
         return reject(error);
       })
     })

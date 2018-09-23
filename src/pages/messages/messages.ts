@@ -17,25 +17,15 @@ import { DatePipe } from '@angular/common';
 })
 export class MessagesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private messages: MessagesServiceProvider, private users: UsersProvider) {
-    if (this.messageKeys.length == 0) {
-      this.messages.getMessagesUserConvos().then((data) => {
-        this.convos = data;
-        this.getMessageData(data);
-      });
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     private messages: MessagesServiceProvider, private users: UsersProvider) {
+    if (this.messages.key.length == 0) {
+      this.messages.getMessagesUserConvos()
     } 
   }
-
-  messageKeys = [];
-  convos = {};
-
   ionViewDidLoad() {
-
   }
 
-  getMessageData(data) {
-    this.messageKeys = Object.keys(data);
-  }
 
   openMessages(messageKey) {
     this.navCtrl.push("MessagePage", {

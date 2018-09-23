@@ -177,6 +177,7 @@ export class UsersProvider {
 // Paramater: Takes the Name or Business from Search Bar
 // Result: Sets Filtered Users Lists or Unfiltered List depending on Field Name
   getUser(Name: string) {
+    console.log("UserName")
     if (!Name) {
       this.funcLoadUserData();
       return;

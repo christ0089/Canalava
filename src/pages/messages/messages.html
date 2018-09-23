@@ -15,13 +15,13 @@
 
 <ion-content>
     <ion-list>
-        <ion-item (tap)="openMessages(message)" *ngFor="let message of messageKeys">
+        <ion-item (tap)="openMessages(message)" *ngFor="let message of messages.key">
             <ion-avatar item-start>
               <img src="{{users.getUserImage(message)}}">
             </ion-avatar>
             <h2>{{users.getUserName(message)}}</h2>
-            <p>{{convos[this.messageKeys[0]].Message}}</p>
-            <ion-note item-end>{{convos[this.messageKeys[0]].Timestamp | date}}</ion-note>
+            <p>{{messages.convos[message].Message}}</p>
+            <ion-note item-end>{{messages.convos[message].Timestamp | date}}</ion-note>
           </ion-item>
     </ion-list>  
     <ion-fab right bottom (tap)="searchUser()">

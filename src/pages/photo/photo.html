@@ -28,7 +28,10 @@
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-item>
-    <img src={{content.ImageURL}}>
+    <video *ngIf="content.isVideo == true"  muted="true" autoplay controls looped width="100%">
+      <source src={{content.ImageURL}} type="video/mp4">
+    </video>
+    <img *ngIf="content.isVideo == false" src={{content.ImageURL}}>
     <ion-item no-lines>
       <ion-badge>{{content.likeNumber}} Likes</ion-badge>
       <button ion-button>
