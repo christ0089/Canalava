@@ -87,6 +87,7 @@ export class LoginPage implements OnInit {
       });
   }
 
+
   private logIn() {
     this.load_and_toast.dismissLoader();
     this.unregister();

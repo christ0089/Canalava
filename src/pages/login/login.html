@@ -27,7 +27,6 @@
       <ion-label color="primary" floating>Password</ion-label>
       <ion-input [(ngModel)]="Password" type="password"></ion-input>
     </ion-item>
-
     <button ion-button class="styleLoginButton" (tap)="LoginWithEmail()">Login</button>
     <div class="Divider"></div>
   </div>
@@ -35,10 +34,10 @@
   <div padding class="LoginContainer">
     <label for="Phone">Numero de Telefono</label><br>
     <div padding class="PhoneInput">
-      <input type="number" max="9"     [(ngModel)]="phoneNumber.Country"   class="input" placeholder="52" (keyup)="keyTab($event, 2)">
-      <input type="number" max="99"    [(ngModel)]="phoneNumber.Area"     class="input"  placeholder="555" (keyup)="keyTab($event, 3)">
-      <input type="number" max="999"   [(ngModel)]="phoneNumber.Prefix"   class="input"  placeholder="555" (keyup)="keyTab($event, 3)">
-      <input type="number" max="9999" [(ngModel)]="phoneNumber.line"      class="input" placeholder="0000" (keyup)="keyTab($event, 4)">
+      <input type="tel" max="9"     [(ngModel)]="phoneNumber.Country"   class="input" placeholder="52" (keyup)="keyTab($event, 2)">
+      <input type="tel" max="99"    [(ngModel)]="phoneNumber.Area"     class="input"  placeholder="555" (keyup)="keyTab($event, 3)">
+      <input type="tel" max="999"   [(ngModel)]="phoneNumber.Prefix"   class="input"  placeholder="555" (keyup)="keyTab($event, 3)">
+      <input type="tel" max="9999" [(ngModel)]="phoneNumber.line"      class="input" placeholder="0000" (keyup)="keyTab($event, 4)">
     </div>
     <div id="recaptcha-container"></div>
     <button ion-button class="styleLoginButton"  (click)="sendLoginCode()">Mandar SMS</button>

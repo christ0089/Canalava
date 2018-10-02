@@ -77,8 +77,7 @@
       <div class="square" *ngFor="let content of DataImgs">
         <button class="content" (tap)="openPhoto(content)">
           <img *ngIf="content.isVideo == true" src={{content.Thumbnail}}>
-          <img-loader *ngIf="content.isVideo == false" useImg src={{content.ImageURL}} fallbackUrl="/assets/imgs/Unknown.png"
-            spinner="true" fallbackAsPlaceholder="true"></img-loader>
+          <img *ngIf="content.isVideo == false" src={{content.ImageURL}}>
         </button>
       </div>
     </div>

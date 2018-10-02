@@ -29,7 +29,8 @@ export class UsersProvider {
         if (user.emailVerified == true || user.uid != null) {
           this.userID = user.uid;
           this.selectedID = this.userID;
-          this.loadData();         
+          this.loadData();  
+
         }
       }
     });
@@ -47,9 +48,13 @@ export class UsersProvider {
     this.content.getUserContent(this.selectedID);
     this.getProfileData(this.userID).then((data : { Name: string, Phone: string, Img:string, isPhonePublic: boolean, Key: string}) => {
       this.userData = [data];
+      //this.loadData();
+    }).then(() => {
+      this.getBusiness();
+    }).then(() => {
+      this.funcLoadUserData();
     })
-    this.getBusiness();
-    this.funcLoadUserData();
+  
   }
 
   getBusiness() {
@@ -57,7 +62,6 @@ export class UsersProvider {
     return new Promise((resolve, reject) => {
       console.log(this.userID);
       this.firebase.database().ref().child("BusinesID").child(this.userID).once("value").then((snapchot) => {
-
         if (snapchot.val() == null) {
           return
         }
@@ -105,7 +109,8 @@ export class UsersProvider {
 
     let userID = this.userID;
     return new Promise((resolve, reject) => {
-      db.child("UserData").orderByChild(query).equalTo(name).once("value").then((snapchot) => {
+      db.child("UserData").orderByChild(query).limitToFirst(10).startAt(name).once("value").then((snapchot) => {
+        console.log(snapchot.val());
         snapchot.forEach(function (child) {
           let data = child.val();
           if (child.key == userID) {
@@ -119,11 +124,11 @@ export class UsersProvider {
             "Key": child.key
           }
           dataArray.push(userData);
+          return resolve(dataArray);
         });
       }).catch((error) => {
         return reject(error);
       });
-      return resolve(dataArray);
     })
   }
 
@@ -177,7 +182,6 @@ export class UsersProvider {
 // Paramater: Takes the Name or Business from Search Bar
 // Result: Sets Filtered Users Lists or Unfiltered List depending on Field Name
   getUser(Name: string) {
-    console.log("UserName")
     if (!Name) {
       this.funcLoadUserData();
       return;
@@ -190,11 +194,12 @@ export class UsersProvider {
         return false;
       }
     });
-    if (this.users == []) {
+    console.log(this.users.length == 0);
+    if (this.users.length == 0) {
+      console.log("Attempt To Get User");
       this.loadUsers(Name, "Name").then((resolve: any) => this.users = resolve);
     }
   }
-
 
 // Purpose: Returns the User's Image based on his ID
 // Paramater: Takes the UID of the User to Query
@@ -210,9 +215,19 @@ export class UsersProvider {
         if (id == user.Key) {
           return true;
         }
+        return false;
       });
-      return user[0].Img != null ? user[0].Img : "https://firebasestorage.googleapis.com/v0/b/canalava-353c7.appspot.com/o/Icon.png?alt=media&token=6c3a295c-e9e0-43ba-8b8b-75b4d548e647";
+      if (user[0] == null) {
+        return this.getSpecificUser(id);
+      }
+      return user[0] != null ? user[0].Img : "https://firebasestorage.googleapis.com/v0/b/canalava-353c7.appspot.com/o/Icon.png?alt=media&token=6c3a295c-e9e0-43ba-8b8b-75b4d548e647";
     }
+  }
+
+  getSpecificUser(id ) {
+    return this.getProfileData(id).then((user) => {
+      this.users.push(user);
+    }) 
   }
 
 // Purpose: Returns the User's Name based on his ID
@@ -229,8 +244,9 @@ export class UsersProvider {
         if (id == user.Key) {
           return true;
         }
+        return false;
       });
-      return user[0].Name != null? user[0].Name : "" ;
+      return user[0] != null? user[0].Name : "" ;
     }
   }
 }

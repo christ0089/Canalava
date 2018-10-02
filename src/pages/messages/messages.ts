@@ -27,6 +27,15 @@ export class MessagesPage {
   }
 
 
+  getMessage(key) {
+    if (key == null) {
+      return ""
+    }
+    let message = this.messages.convos[key].Message
+    return  message != null ? message : "" 
+  }
+
+
   openMessages(messageKey) {
     this.navCtrl.push("MessagePage", {
       key : messageKey

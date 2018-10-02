@@ -20,7 +20,7 @@
               <img src="{{users.getUserImage(message)}}">
             </ion-avatar>
             <h2>{{users.getUserName(message)}}</h2>
-            <p>{{messages.convos[message].Message}}</p>
+            <p>{{getMessage(message)}}</p>
             <ion-note item-end>{{messages.convos[message].Timestamp | date}}</ion-note>
           </ion-item>
     </ion-list>  
