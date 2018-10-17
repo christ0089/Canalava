@@ -51,6 +51,37 @@ page-login {
  }
 }
 
+.ResgisterBlock {
+    background-color: white;
+    display: block;
+    padding: 10px;
+    ion-input {
+        height: 40px;
+        border-radius: 20px;
+        background: white;
+        margin-bottom: 10px;
+        padding-left: 10px;
+    }
+    p {
+        font-size: .75em;
+        color: black;
+        padding-left: 10px;
+    }
+    .styleLoginButton {
+        width: 100%;
+    }
+    
+    .returnButton {
+        position: absolute;
+        border-radius: 20px;
+        width: 40px;
+        height: 40px;
+        background: white;
+        margin-top: -40px; 
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26); 
+    }
+}
+
 
 .slider  {
     width: 60% !important;

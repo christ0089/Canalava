@@ -1,3 +1,10 @@
 page-temas {
-
+    ion-item {
+        ion-label {
+            vertical-align: baseline;
+            h2 {
+                padding-top: 3px;
+            }
+        }
+    }
 }

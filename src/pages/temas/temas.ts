@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TemasDeIndustriaProvider } from '../../providers/temas-de-industria/temas-de-industria';
 import { DatePipe } from '@angular/common';
+import { UsersProvider } from '../../providers/users/users';
 /**
  * Generated class for the TemasPage page.
  *
@@ -16,7 +17,8 @@ import { DatePipe } from '@angular/common';
 })
 export class TemasPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private temas: TemasDeIndustriaProvider) {
+  constructor(public navCtrl: NavController,
+    private users: UsersProvider, public navParams: NavParams, private temas: TemasDeIndustriaProvider) {
   }
 
   ionViewDidLoad() {

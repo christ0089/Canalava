@@ -25,7 +25,7 @@ export class ToastAndLoadProvider {
     }
 
     dismissLoader() {
-        this.loader.dismiss();
+        return this.loader.dismiss();
     }
 
     presetToast(message) {

@@ -12,6 +12,45 @@ import { WindowProvider } from '../../providers/window/window';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+export class LogInfo {
+  public state = "Login";
+  public Email: string = "";
+  public Password: string = "";
+  public Phone: string = "";
+  public Name: string = "";
+  public RePassword: string = "";
+  public image_url: string = "";
+
+  get Credentials() {
+    let creds = {
+      Email : this.Email,
+      Password : this.Password
+    }
+    return creds
+  }
+
+  get userDataStore() {
+    let data = {
+      "ProfileImg": this.image_url,
+      "Email" : this.Email,
+      "Id" : "",
+      "Name" : this.Name,
+      "Phone": this.Phone
+    }
+    return data
+  }
+
+  isPhoneNumberValid() {
+    var pattern = /^\+[0-9\s\-\(\)]+$/;
+    var phoneNumber = '+52' + this.Phone;
+    return phoneNumber.search(pattern) !== -1;
+  }
+
+  validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+}
 
 export class Phone {
   Country: string;
@@ -43,20 +82,34 @@ export class LoginPage implements OnInit {
   verificationCode: string;
   windowRef: any;
 
+  public user = new LogInfo();
+  state = "Login";
+  allowed = true;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private load_and_toast: ToastAndLoadProvider,
     private auth: AuthServiceProvider, private platform: Platform, private alertCtrl: AlertController,
-    private firebase: FirebaseApp, private events: Events,
+    private firebase: FirebaseApp, 
+    private events: Events,
     private win: WindowProvider) {
   }
 
   ionViewDidLoad() {
-    this.unregister = this.platform.registerBackButtonAction(() => {})
+    this.unregister = this.platform.registerBackButtonAction(() => { })
+    const db = this.firebase.database().ref();
+    db.child("RegisterAllowed").once("child_added").then((snap) => {
+      console.log(`${snap.key}`);
+      if (snap.val() == true) {
+        this.allowed = true;
+      }else {
+        this.allowed = false;
+      }
+    })
   }
 
   ngOnInit() {
     this.windowRef = this.win.windowRef
-    this.windowRef.recaptchaVerifier = new firebaseNat.auth.RecaptchaVerifier("recaptcha-container");
-    this.windowRef.recaptchaVerifier.render()
+  //  this.windowRef.recaptchaVerifier = new firebaseNat.auth.RecaptchaVerifier("recaptcha-container");
+  //  this.windowRef.recaptchaVerifier.render()
   }
 
   LoginWithEmail() {
@@ -155,14 +208,17 @@ export class LoginPage implements OnInit {
   keyTab(event, max) {
     let element = event.srcElement.nextElementSibling;
 
-    console.log(event.target.value.length, max) 
- // get the sibling element
+    console.log(event.target.value.length, max)
+    // get the sibling element
 
-    if(element == null)   // check if its null
-        return;
+    if (element == null)   // check if its null
+      return;
     else if (event.target.value.length == max) {
-      element.focus();  
+      element.focus();
     }
-  } 
+  }
+
+
+
 
 }

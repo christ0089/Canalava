@@ -31,5 +31,14 @@ export class AuthServiceProvider {
 		return this.afAuth.auth.signOut();
 	}
 
-
+	registerDataAuth(Email, Password) {
+		let authFirebase = firebase.auth();
+		return new Promise(function (success, error) {
+		  authFirebase.createUserWithEmailAndPassword(Email, Password).then(() => {
+			authFirebase.currentUser.sendEmailVerification().then(() => {
+			  return success("Success");
+			});
+		  });
+		});
+	}
 }

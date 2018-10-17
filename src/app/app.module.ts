@@ -22,7 +22,7 @@ import { ToastAndLoadProvider } from '../providers/AlertandLoader';
 import { PostPicture } from '../providers/post-picture';
 import { MessagesServiceProvider } from '../providers/messages-service/messages-service';
 import { TemasDeIndustriaProvider } from '../providers/temas-de-industria/temas-de-industria';
-import {InternetProvider} from '../providers/internet';
+import { InternetProvider} from '../providers/internet';
 import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
 import { FcmProvider } from '../providers/messages-service/fcm';
 

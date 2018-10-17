@@ -1,5 +1,12 @@
 page-main-feed {
-
+    ion-item {
+        ion-label {
+            vertical-align: baseline;
+            h2 {
+                padding-top: 3px;
+            }
+        }
+    }
 }
 .feed {
     padding-bottom: 0px;

@@ -2,4 +2,13 @@ page-account {
     #googleMaps {
         height: 400px;
     }
+
+    ion-item {
+        ion-label {
+            vertical-align: baseline;
+            h2 {
+                padding-top: 3px;
+            }
+        }
+    }
 }

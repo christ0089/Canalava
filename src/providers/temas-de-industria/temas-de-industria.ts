@@ -24,8 +24,8 @@ export class TemasDeIndustriaProvider {
       snapchot.forEach((child) => {
         let data = child.val();
         let inquiryData = {
-          "Img" : this.userData.getUserImage(data.PostedBy),
-          "Name" : this.userData.getUserName(data.PostedBy),
+          "Img" : "",
+          "Name" : "",
           "PostedBy" : data.PostedBy,
           "Timestamp" : data.Timestamp,
           "Title" : data.Topic,
