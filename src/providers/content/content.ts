@@ -21,52 +21,6 @@ export class ContentProvider {
     console.log('Hello ContentProvider Provider');
   }
 
-  async getContent() {
-    let tempArray = [];
-    const firebaseDb = this.db.database().ref();
-    this.auth.afAuth.authState.subscribe(user => {
-      if (user == null) {
-        return
-      }
-      firebaseDb.child("PublicContent").orderByChild("Timestamp").on("child_added", function (snapchot) {
-        let data = snapchot.val();
-
-        if (snapchot.val() == null) {
-          return
-        }
-        var isImageLiked = false;
-        firebaseDb.child("ContentLikedBy").child(snapchot.key).child(user.uid).once('value').then((snapchotLiked) => {
-          if (snapchotLiked.val() == null){
-            return
-          }else {
-            isImageLiked = true;
-          }
-        })
-        firebaseDb.child("ContentLikes").child(snapchot.key).once('value').then((snapchotLikes) => {
-          let likeNumber = snapchotLikes.val();
-
-          firebaseDb.child("UserData").child(data.Uploader).once("value").then((user_snapchot) => {
-            let user_data = user_snapchot.val();
-            let content = {
-              ImageURL: data.Image,
-              Message: data.Message,
-              Timestamp: data.Timestamp,
-              likeNumber: likeNumber["Likes"],
-              Key : data.Uploader,
-              Name: user_data.Name,
-              isVideo : data.isVideo != null ?  true : false,
-              Img: user_data.ProfileImg,
-              isImageLiked : isImageLiked,
-              ID : snapchot.key
-            }
-            tempArray.push(content);
-            tempArray = tempArray.sort((a,b) => b.Timestamp - a.Timestamp);
-          });
-        });
-      });
-    })
-    this.contentArray = tempArray;
-  }
 
   getUserContent(userID) {
     this.userContent = this.getProfileContent(userID, userID)

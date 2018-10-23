@@ -29,6 +29,7 @@ export class GoogleMapsProvider {
         return
       }
       this.title = title;
+      
       snapchot.forEach((address) => {
         console.log(address.val());
         this.firebase.database().ref().child("AddressBook").child(address.key).once("value").then((location) => {

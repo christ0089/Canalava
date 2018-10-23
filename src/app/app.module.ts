@@ -31,6 +31,7 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/dat
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { WindowProvider } from '../providers/window/window';
+import { ResultsProvider } from '../providers/results/results';
 
 
 
@@ -84,7 +85,8 @@ export const firebaseConfig = {
     Firebase,
     GoogleMapsProvider,
     FcmProvider,
-    WindowProvider
+    WindowProvider,
+    ResultsProvider
   ]
 })
 export class AppModule {}

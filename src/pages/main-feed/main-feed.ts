@@ -5,6 +5,9 @@ import { ContentProvider } from '../../providers/content/content';
 import { DatePipe } from '@angular/common';
 import { FcmProvider } from '../../providers/messages-service/fcm';
 import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
+import { ResultsProvider } from '../../providers/results/results';
+import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 /**
  * Generated class for the MainFeedPage page.
  *
@@ -21,13 +24,15 @@ export class MainFeedPage {
 
   data = [];
 
+  content$:  Observable<any[]>;
   constructor(public navCtrl: NavController,
      public navParams: NavParams, 
      private fcm: FcmProvider,
      private userContent: UsersProvider,
      public content: ContentProvider,
-     private toastCtrl: ToastAndLoadProvider) {
-    
+     private toastCtrl: ToastAndLoadProvider,
+     private results: ResultsProvider) {
+    this.content$ = results.content$;
   }
 
 
@@ -54,19 +59,30 @@ export class MainFeedPage {
   giveLike(content) {
     if (content.isImageLiked == false) {
       content.isImageLiked = true;
-      content.likeNumber++;
     } else {
       content.isImageLiked = false;
-      content.likeNumber--;
     }
-    this.content.postLike(content.ID, this.userContent.userID, content.isImageLiked).catch(() => {
+    console.log(content.isImageLiked);
+    this.content.postLike(content.Uploader, this.userContent.userID, content.isImageLiked).catch(() => {
       if (content.isImageLiked == false) {
         content.isImageLiked = true;
-        content.likeNumber++;
       } else {
         content.isImageLiked = false;
-        content.likeNumber--;
       }
     })
+  }
+
+  doInfinite(infiniteScroll): Promise<void> { // 1
+    if (!this.results.finished) { // 2
+      return new Promise((resolve, reject) => {
+        this.results.nextPage() // 3
+          .pipe(take(1))
+          .subscribe(movies => {
+            console.log('Movies:', movies);
+            resolve();
+          });
+      });
+    }
+    return Promise.resolve();
   }
 }
