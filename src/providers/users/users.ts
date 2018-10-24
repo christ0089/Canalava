@@ -44,7 +44,6 @@ export class UsersProvider {
   }
 
   loadData() {
-    this.content.getContent();
     this.content.getUserContent(this.selectedID);
     this.getProfileData(this.userID).then((data : { Name: string, Phone: string, Img:string, isPhonePublic: boolean, Key: string}) => {
       this.userData = [data];
@@ -170,7 +169,6 @@ export class UsersProvider {
         "isPhonePublic": userData.isPhonePublic,
       }).then(() => {
         this.userData[this.selectedValue] = userData;
-        this.content.getContent();
         return success();
       }).catch((error) => {
         return reject(error);

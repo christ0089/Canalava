@@ -8,6 +8,8 @@ import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
 import { ResultsProvider } from '../../providers/results/results';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { AdProvider } from '../../providers/results/adProvider';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 /**
  * Generated class for the MainFeedPage page.
  *
@@ -23,16 +25,18 @@ import { Observable } from 'rxjs';
 export class MainFeedPage {
 
   data = [];
-
   content$:  Observable<any[]>;
+  anuncio$:  Observable<any[]>;
   constructor(public navCtrl: NavController,
      public navParams: NavParams, 
-     private fcm: FcmProvider,
+     private inAppBrowser:InAppBrowser,
      private userContent: UsersProvider,
      public content: ContentProvider,
      private toastCtrl: ToastAndLoadProvider,
+     private anuncios: AdProvider,
      private results: ResultsProvider) {
     this.content$ = results.content$;
+    this.anuncio$ = anuncios.anuncio$;
   }
 
 
@@ -54,6 +58,15 @@ export class MainFeedPage {
         data: success
       });
     });
+  }
+  
+  openWebsite(anuncio, index) {
+    if (index == null) {
+      return
+    }
+    if (anuncio[index/3] != null) {
+      this.inAppBrowser.create(anuncio[index/3].Website);
+    }
   }
 
   giveLike(content) {
@@ -84,5 +97,14 @@ export class MainFeedPage {
       });
     }
     return Promise.resolve();
+  }
+
+  ad(anuncio, index: number) {
+    if (index == null) {
+      return
+    }
+    if (anuncio[index/3] != null) {
+      return anuncio[index/3];
+    }
   }
 }

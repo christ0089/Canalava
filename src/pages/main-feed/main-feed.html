@@ -21,19 +21,20 @@
 <ion-content>
   <ion-list *ngIf="content$ | async; let contents; else loading">
     <ion-list>
-      <div *ngFor="let content of contents" class="feed">
-        <ion-item (tap)="openAccount(content.Uploader)" *ngIf="('UserData' + '/' + content.Uploader | doc | async); let data" >
-          <ion-avatar item-start >
-              <img-loader useImg src={{data.ProfileImg}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true" ></img-loader>
+      <div *ngFor="let content of contents; let i = index" class="feed">
+        <ion-item (tap)="openAccount(content.Uploader)" *ngIf="('UserData' + '/' + content.Uploader | doc | async); let data">
+          <ion-avatar item-start>
+            <img-loader useImg src={{data.ProfileImg}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
           </ion-avatar>
           <h2>{{data.Name}}</h2>
         </ion-item>
-        <video *ngIf="content.isVideo == true" [src]=content.Image muted="true" autoplay controls playsinline webkit-playsinline loop width="100%"></video>
+        <video *ngIf="content.isVideo == true" [src]=content.Image muted="true" autoplay controls playsinline
+          webkit-playsinline loop width="100%"></video>
         <img *ngIf="content.isVideo == false" src={{content.Image}}>
         <ion-item>
           <h2 text-wrap>{{content.Message}}</h2>
           <div item-end>
-            <ion-badge >{{ ('ContentLikes' + '/' + content.key | doc | async)?.Likes }} Likes</ion-badge>
+            <ion-badge>{{ ('ContentLikes' + '/' + content.key | doc | async)?.Likes }} Likes</ion-badge>
             <button ion-button clear (tap)="giveLike(content)">
               <ion-icon *ngIf="content.isImageLiked == null || content.isImageLiked == false" name="heart-outline"></ion-icon>
               <ion-icon *ngIf="content.isImageLiked == true" name="heart"></ion-icon>
@@ -41,6 +42,27 @@
           </div>
           <p>{{content.Timestamp | date}}</p>
         </ion-item>
+        <div *ngIf="i % 3 == 0">
+          <div *ngIf="anuncio$ | async; let anuncio; else loading">
+            <ion-card *ngIf="ad(anuncio,i) != null" (tap)="openWebsite(anuncio,i)">
+              <img src={{ad(anuncio,i)?.Image}}>
+              <ion-card-content>
+                <ion-card-title>
+                  <ion-item>
+                    <ion-avatar item-start>
+                      <img src={{ad(anuncio,i)?.Logo}}>
+                    </ion-avatar>
+                    {{ad(anuncio,i)?.Title}}
+                  </ion-item>
+                </ion-card-title>
+                <p>
+                  (Promocion) <br>
+                  {{ad(anuncio,i)?.Message}}
+                </p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
       </div>
     </ion-list>
   </ion-list>

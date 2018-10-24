@@ -32,6 +32,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { WindowProvider } from '../providers/window/window';
 import { ResultsProvider } from '../providers/results/results';
+import { AdProvider } from '../providers/results/adProvider';
 
 
 
@@ -76,6 +77,7 @@ export const firebaseConfig = {
     TemasDeIndustriaProvider,
     ToastAndLoadProvider,
     PostPicture,
+    AdProvider,
     InAppBrowser,
     InternetProvider,
     Camera,
