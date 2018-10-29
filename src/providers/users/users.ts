@@ -216,16 +216,17 @@ export class UsersProvider {
         return false;
       });
       if (user[0] == null) {
-        return this.getSpecificUser(id);
+        this.getProfileData(id).then((user : any) => {
+          this.users.push(user);
+          return user.ProfileImg == null? user.ProfileImg : "https://firebasestorage.googleapis.com/v0/b/canalava-353c7.appspot.com/o/Icon.png?alt=media&token=6c3a295c-e9e0-43ba-8b8b-75b4d548e647";
+        }) 
       }
       return user[0] != null ? user[0].Img : "https://firebasestorage.googleapis.com/v0/b/canalava-353c7.appspot.com/o/Icon.png?alt=media&token=6c3a295c-e9e0-43ba-8b8b-75b4d548e647";
     }
   }
 
-  getSpecificUser(id ) {
-    return this.getProfileData(id).then((user) => {
-      this.users.push(user);
-    }) 
+  getSpecificUser(id) {
+    return this.getProfileData(id)
   }
 
 // Purpose: Returns the User's Name based on his ID

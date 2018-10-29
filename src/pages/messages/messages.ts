@@ -31,6 +31,9 @@ export class MessagesPage {
     if (key == null) {
       return ""
     }
+    if (this.messages.convos[key].Message == null) {
+      return ""
+    }
     let message = this.messages.convos[key].Message
     return  message != null ? message : "" 
   }
