@@ -69,6 +69,7 @@ export class MessagePage {
     this.data.Receiver = this.messageKey;
     this.messageProvider.postMessage(this.data).catch((error) => {
       this.alertProvider.presetToast(error);
+      this.data.Message = "";
     })
   }
 }

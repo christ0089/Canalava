@@ -39,19 +39,25 @@ export class TemaPage {
     private actionSheetCtrl: ActionSheetController) {
     this.isEditEnabled = false;
     let key = this.navParams.get("Key");
+    console.log(key);
     if (key != null) {
-      this.id = key.Key;
-      temas.getIndustryTopicSpecific(key.Key).then((tema_download: any) => {
-        this.tema = {
-          "Title": tema_download.Title,
-          "Message": tema_download.Text,
-          "MainPhoto": tema_download.MainPhoto,
-          "Author": key.Name,
-          "AuthorImg": key.Img,
-          "Date": key.Timestamp,
-          "PostedBy": key.PostedBy
-        }
+      this.id = key.Key
+
+      this.userData.getProfileData(key.PostedBy).then((data: any) => {
+        console.log(data);
+        temas.getIndustryTopicSpecific(key.Key).then((tema_download: any) => {
+          this.tema = {
+            "Title": tema_download.Title,
+            "Message": tema_download.Text,
+            "MainPhoto": tema_download.MainPhoto,
+            "Author": data.Name,
+            "AuthorImg": data.Img,
+            "Date": key.Timestamp,
+            "PostedBy": key.PostedBy
+          }
+        })
       })
+
     }else {
       let tema = this.navParams.get("Tema");
 
@@ -84,6 +90,7 @@ export class TemaPage {
   postComment() {
     this.temas.postComments(this.comment, this.id).then(() => {
       console.log(this.commentsArray);
+      this.comment = "";
     }).catch((error) => {
       this.alertController.presetToast("error")
     })

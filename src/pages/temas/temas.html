@@ -17,7 +17,7 @@
   <ion-list>
     <ion-item *ngFor="let tema of temas.Inqury" (tap)="openTema(tema)">
       <ion-avatar item-start>
-        <img-loader  src={{users.getUserImage(tema.PostedBy)}} fallbackUrl="/assets/imgs/Unknown.png" useImg [spinner]="true"></img-loader>
+        <img-loader  src={{users.getUserImage(tema.PostedBy)}} fallbackUrl="assets/imgs/Unknown.png" useImg [spinner]="true"></img-loader>
       </ion-avatar>
       <h2 text-wrap>{{users.getUserName(tema.PostedBy)}}</h2>
       <p text-wrap>{{tema.Title}}</p>

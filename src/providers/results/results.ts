@@ -26,7 +26,7 @@ interface content {
 @Injectable()
 export class ResultsProvider {
 
-  private _cars$ = new BehaviorSubject<any[]>([]); // 1
+  private _cars$ = new BehaviorSubject<content[]>([]); // 1
   batch = 5; // 2
   lastKey = ''; // 3
   finished = false; // 4
@@ -41,25 +41,26 @@ export class ResultsProvider {
     return this._cars$.asObservable();
   }
 
-  private getContent(batch: number, lastKey: string): // 1 e 2
+  getContent(batch: number, lastKey: string): // 1 e 2
     Observable<content[]> {
     const contents = this.mapListKeys<content>( // 3
       this.db.list<any>('/PublicContent', ref => { // 4
         const query = ref
           .orderByChild('Timestamp')
           .limitToFirst(batch);
-        return (this.lastKey) // 5
-          ? query.startAt(this.lastKey)
+        return (lastKey) // 5
+          ? query.startAt(lastKey)
           : query;
       })
     )
     return contents.map((contents) => contents.map(
-      (content) => ({ isImageLiked: this.db.object("ContentLikedBy" + 
-      content.key + this.userData.userID) == null? false : true, ...content
+      (content) => ({
+        isImageLiked: this.db.object("ContentLikedBy" +
+          content.key + this.userData.userID) == null ? false : true, ...content
       })))
   }
 
-  
+
 
   mapListKeys<T>(list: AngularFireList<T>): Observable<T[]> {
     return list
@@ -73,14 +74,16 @@ export class ResultsProvider {
 
   nextPage(): Observable<content[]> {
     if (this.finished) { return this.content$; } // 1
+    console.log(this.lastKey)
     return this.getContent(this.batch + 1, this.lastKey) // 2
       .pipe(
-        tap((movies: content[]) => {
-          this.lastKey = movies[movies.length - 1].key; // 3
+        tap(movies => {
+          this.batch += 1;
+          this.lastKey = movies[movies.length - 1]['key']; // 3
           const newMovies = movies.slice(0, this.batch); // 4
           const currentCars = this._cars$.getValue(); // 5
           if (
-            this.lastKey == newMovies[newMovies.length - 1].key
+            this.lastKey == newMovies[newMovies.length - 1]['key']
           ) { // 6
             this.finished = true;
           }
@@ -89,5 +92,7 @@ export class ResultsProvider {
         )
       );
   }
+
+
 
 }
