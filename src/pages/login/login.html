@@ -30,21 +30,4 @@
     <button ion-button class="styleLoginButton" (tap)="LoginWithEmail()">Login</button>
     <div class="Divider"></div>
   </div>
-  <div padding class="LoginContainer" *ngIf="state == 'Login'">
-    <label for="Phone">Numero de Telefono</label><br>
-    <div padding class="PhoneInput">
-      <input type="tel" max="9"     [(ngModel)]="phoneNumber.Country"   class="input" placeholder="52" (keyup)="keyTab($event, 2)">
-      <input type="tel" max="99"    [(ngModel)]="phoneNumber.Area"     class="input"  placeholder="555" (keyup)="keyTab($event, 3)">
-      <input type="tel" max="999"   [(ngModel)]="phoneNumber.Prefix"   class="input"  placeholder="555" (keyup)="keyTab($event, 3)">
-      <input type="tel" max="9999" [(ngModel)]="phoneNumber.line"      class="input" placeholder="0000" (keyup)="keyTab($event, 4)">
-    </div>
-    <div id="recaptcha-container"></div>
-    <button ion-button class="styleLoginButton"  (click)="sendLoginCode()">Mandar SMS</button>
-    <div *ngIf="windowRef.confirmationResult" class="VerifyCode">
-      <hr>
-      <label for="code">Ingresa numero de verificacion</label><br>
-      <input type="number" name="code" [(ngModel)]="verificationCode" (keyup)="keyTab($event, 6)">
-      <button ion-button class="styleLoginButton" (click)="verifyLoginCode()">Verify</button>
-    </div>
-  </div>
 </ion-content>

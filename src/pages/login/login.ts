@@ -3,9 +3,9 @@ import { IonicPage, NavController, NavParams, Platform, AlertController, Events 
 import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { FirebaseApp } from 'angularfire2';
-import * as firebaseNat from 'firebase';
 import { WindowProvider } from '../../providers/window/window';
-
+import { AngularFireAuth } from 'angularfire2/auth';
+import firebase from 'firebase';
 /**
  * Generated class for the LoginPage page.
  *
@@ -23,8 +23,8 @@ export class LogInfo {
 
   get Credentials() {
     let creds = {
-      Email : this.Email,
-      Password : this.Password
+      Email: this.Email,
+      Password: this.Password
     }
     return creds
   }
@@ -32,9 +32,9 @@ export class LogInfo {
   get userDataStore() {
     let data = {
       "ProfileImg": this.image_url,
-      "Email" : this.Email,
-      "Id" : "",
-      "Name" : this.Name,
+      "Email": this.Email,
+      "Id": "",
+      "Name": this.Name,
       "Phone": this.Phone
     }
     return data
@@ -80,15 +80,16 @@ export class LoginPage implements OnInit {
 
   phoneNumber = new Phone();
   verificationCode: string;
-  windowRef: any;
+  public recaptchaVerifier: firebase.auth.RecaptchaVerifier;
 
   public user = new LogInfo();
   state = "Login";
   allowed = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private load_and_toast: ToastAndLoadProvider,
+    private firebaseAuth: AngularFireAuth,
     private auth: AuthServiceProvider, private platform: Platform, private alertCtrl: AlertController,
-    private firebase: FirebaseApp, 
+    private firebase: FirebaseApp,
     private events: Events,
     private win: WindowProvider) {
   }
@@ -100,16 +101,16 @@ export class LoginPage implements OnInit {
       console.log(`${snap.key}`);
       if (snap.val() == true) {
         this.allowed = true;
-      }else {
+      } else {
         this.allowed = false;
       }
     })
   }
 
   ngOnInit() {
-    this.windowRef = this.win.windowRef
-  //  this.windowRef.recaptchaVerifier = new firebaseNat.auth.RecaptchaVerifier("recaptcha-container");
-  //  this.windowRef.recaptchaVerifier.render()
+
+    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container'); 
+
   }
 
   LoginWithEmail() {
@@ -182,27 +183,36 @@ export class LoginPage implements OnInit {
     confirm.present();
   }
 
+  verificationId: any;
+  codeSent = false;
+
   sendLoginCode() {
-    const appVerifier = this.windowRef.recaptchaVerifier;
     const num = this.phoneNumber.e164;
-
+    this.codeSent = true;
     console.log(num);
-
-    this.firebase.auth().signInWithPhoneNumber(num, appVerifier)
-      .then(result => {
-        this.windowRef.confirmationResult = result;
-      })
-      .catch(() => this.load_and_toast.presetToast("No se pudo Iniciar Session"));
+    this.load_and_toast.presentLoader();
+    (<any>window).FirebasePlugin.verifyPhoneNumber(num, 60, (credential) => {
+      console.log(credential);
+      this.load_and_toast.dismissLoader();
+      this.verificationId = credential.verificationId;
+    }, () => this.load_and_toast.presetToast("No se pudo Iniciar Session"));
   }
 
 
   verifyLoginCode() {
-    this.windowRef.confirmationResult
-      .confirm(this.verificationCode)
-      .then(() => {
-        this.logIn();
-      })
-      .catch(error => this.load_and_toast.presetToast("Error :Verfique el Codigo"));
+    var signInCredential = firebase.auth.PhoneAuthProvider.credential(this.verificationId,this.verificationCode);
+    firebase.auth().signInWithCredential(signInCredential).then(()=>{    
+      console.log(signInCredential);
+      setTimeout(()=>{
+        this.load_and_toast.dismissLoader();
+        this.load_and_toast.presetToast('OTP Verified');
+      },2000);
+      this.navCtrl.setRoot('RoleSelectionPage');
+    }).catch(()=>{
+      this.load_and_toast.dismissLoader();
+      this.load_and_toast.presetToast('OTP Failed');
+      console.log('Erorr in OTP');
+    });
   }
 
   keyTab(event, max) {

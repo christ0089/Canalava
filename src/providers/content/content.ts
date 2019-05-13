@@ -93,7 +93,6 @@ export class ContentProvider {
         return reject(error)
       });
     });
-
   }
 
   deletePicture(id, uid) {

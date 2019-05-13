@@ -185,7 +185,7 @@ export class UsersProvider {
       return;
     }
     this.users = this.users.filter(user => {
-      if (Name && user.Name) {
+      if (Name == user.Name) {
         if (user.Name.toLowerCase().indexOf(Name.toLowerCase()) > -1) {
           return true;
         }

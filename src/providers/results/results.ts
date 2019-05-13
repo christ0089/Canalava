@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
-import { map, tap, take } from 'rxjs/operators';
+import { tap, take } from 'rxjs/operators';
 import 'rxjs/add/observable/of';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { UsersProvider } from '../users/users';

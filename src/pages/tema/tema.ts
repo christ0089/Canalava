@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams, ActionSheetController } from 'ioni
 import { UsersProvider } from '../../providers/users/users';
 import { TemasDeIndustriaProvider } from '../../providers/temas-de-industria/temas-de-industria';
 import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
+import { Tema } from '../../Models/Tema';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs/observable/of';
 
 /**
  * Generated class for the TemaPage page.
@@ -18,19 +21,10 @@ import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
 })
 export class TemaPage {
 
-  tema = {
-    "Title": "",
-    "Message": "",
-    "MainPhoto": "/assets/imgs/Unknown.png",
-    "Author": "",
-    "AuthorImg": "",
-    "Date": "",
-    "PostedBy": ""
-  };
-
+  tema$: Observable<Tema>
   comment = "";
   commentsArray = [];
-  id : any = null;
+  id: any = null;
 
   isEditEnabled = false;
 
@@ -43,28 +37,28 @@ export class TemaPage {
     if (key != null) {
       this.id = key.Key
 
-      this.userData.getProfileData(key.PostedBy).then((data: any) => {
+      const userData = this.userData.getProfileData(key.PostedBy);
+      const tema = temas.getIndustryTopicSpecific(key.Key);
+      Promise.all([userData, tema]).then((data: any) => {
         console.log(data);
-        temas.getIndustryTopicSpecific(key.Key).then((tema_download: any) => {
-          this.tema = {
-            "Title": tema_download.Title,
-            "Message": tema_download.Text,
-            "MainPhoto": tema_download.MainPhoto,
-            "Author": data.Name,
-            "AuthorImg": data.Img,
-            "Date": key.Timestamp,
-            "PostedBy": key.PostedBy
-          }
-        })
+        let tema: Tema = {
+          "Title": data[1].Title,
+          "Message": data[1].Text,
+          "MainPhoto": data[1].MainPhoto,
+          "Author": data[0].Name,
+          "AuthorImg": data[0].Img,
+          "Date": key.Timestamp,
+          "PostedBy": key.PostedBy
+        }
+        this.tema$ = of(tema);
       })
 
-    }else {
-      let tema = this.navParams.get("Tema");
+    } else {
+      let tema: any = this.navParams.get("Tema");
 
       tema.Description = tema.Description.split("\\n").join("\n")
       this.id = null;
-      console.log(tema);
-      this.tema = {
+      tema = {
         "Title": tema.Title,
         "Message": tema.Description,
         "MainPhoto": tema.Img,
@@ -73,6 +67,7 @@ export class TemaPage {
         "Date": tema.Timestamp,
         "PostedBy": ""
       }
+      this.tema$ = of(tema as Tema);
     }
 
   }
@@ -126,12 +121,12 @@ export class TemaPage {
     actionSheet.present();
   }
 
-  saveMessage() {
-    this.temas.updateTema(this.tema.Title,this.tema.Message,this.id).then(() => {
+  saveMessage(tema: Tema) {
+    this.temas.updateTema(tema.Title, tema.Message, this.id).then(() => {
       this.isEditEnabled = false;
     }).catch((error) => {
       this.alertController.presetToast("Error al actualizar");
-    }) 
+    })
   }
 
 }

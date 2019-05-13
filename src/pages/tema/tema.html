@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar *ngIf="tema$ | async; let tema">
     <ion-title>Tema</ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (tap)="editTema()" *ngIf="tema.PostedBy == userData.userID && isEditEnabled == false">
@@ -21,7 +21,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding *ngIf="tema$ | async; let tema;">
   <img class="uploadImg" src="{{tema.MainPhoto}}">
   <h1 *ngIf="isEditEnabled == false">{{tema.Title}}</h1>
   <p *ngIf="isEditEnabled == false">{{tema.Message}}</p>
