@@ -109,7 +109,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
 
-    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container'); 
+  
 
   }
 

@@ -29,6 +29,11 @@ export class ServicesPage {
     })
   }
 
+  openTema() {
+    this.navCtrl.push("TemasPage", {
+    })
+  }
+
   openDocument() {
     const options: DocumentViewerOptions = {
       title: 'Beneficios'

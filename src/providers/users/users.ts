@@ -192,9 +192,7 @@ export class UsersProvider {
         return false;
       }
     });
-    console.log(this.users.length == 0);
     if (this.users.length == 0) {
-      console.log("Attempt To Get User");
       this.loadUsers(Name, "Name").then((resolve: any) => this.users = resolve);
     }
   }

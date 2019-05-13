@@ -4,6 +4,7 @@ import { ContentProvider } from '../../providers/content/content';
 import { UsersProvider } from '../../providers/users/users';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
+import { User } from '../../Models/User';
 declare var google: any;
 /**
  * Generated class for the AccountPage page.
@@ -135,15 +136,9 @@ export class AccountPage {
   }
 
   editData() {
-    let user: any = this.userData.getSelectedAccount();
-    let data = {
-      "Name": user.Name,
-      "Phone": user.Phone,
-      "Img": user.Img,
-      "isPhonePublic": user.isPhonePublic,
-    }
+    let user: User = this.userData.getSelectedAccount();
     let profileModal = this.modalCtrl.create("EditPage", {
-      UserData: data
+      UserData: user
     });
     profileModal.present();
   }

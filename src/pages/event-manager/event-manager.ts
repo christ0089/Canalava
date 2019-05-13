@@ -26,29 +26,25 @@ export class EventManagerPage {
     if (type == 0) //Asesoria 
     {
       this.title = "Asesorias"
-      this.firebase.database().ref().child("Events/Asesorias").on("child_added", function(snapchot){
-        let data = snapchot.val();
-        console.log(data);
-        array.push(data);
-        array = array.sort((a,b) => b.Timestamp - a.Timestamp)
-      })
     }else if (type == 1) { //Eventos
       this.title = "Eventos"
-      this.firebase.database().ref().child("Events/EventsList").on("child_added", function(snapchot){
+      this.firebase.database().ref().child("Events/EventsList").orderByChild('Timestamp').startAt(Date.now()).on("child_added", function(snapchot){
         let data = snapchot.val();
         console.log(data);
         array.push(data);
         array = array.sort((a,b) => b.Timestamp - a.Timestamp)
       })
-    }else { //Capacitacion
+      return 
+    }else
+     {
       this.title = "Capacitacion"
-      this.firebase.database().ref().child("Events/Capacitacion").on("child_added", function(snapchot){
-        let data = snapchot.val();
-        console.log(data);
-        array.push(data);
-        array = array.sort((a,b) => b.Timestamp - a.Timestamp)
-      })
     }
+    this.firebase.database().ref().child(`Events/${this.title}`).orderByChild('Timestamp').startAt(Date.now()).on("child_added", function(snapchot){
+      let data = snapchot.val();
+      console.log(data);
+      array.push(data);
+      array = array.sort((a,b) => b.Timestamp - a.Timestamp)
+    })
   }
 
   openTema(tema) {

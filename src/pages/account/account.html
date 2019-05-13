@@ -24,12 +24,12 @@
       <img-loader useImg src={{userData.getSelectedAccount().Img}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
     </ion-avatar>
     <h2>{{userData.userData[selected].Name}}</h2>
-    <p>Telefono: {{userData.userData[selected].Phone}}</p>
+    <p *ngIf='userData.userData[selected].isPhonePublic == true'>Telefono: {{userData.userData[selected].Phone}}</p>
     <button ion-button (tap)="editData()">Editar Información</button>
 
   </ion-item>
 
-  <ion-list>
+  <ion-list *ngIf="userData.userData.lenght > 0">
     <ion-item>
       <ion-label>Cuentas</ion-label>
       <ion-select (ionChange)="onChange($event)">
@@ -86,7 +86,7 @@
     <div *ngSwitchCase="'Grid'">
       <div class="square" *ngFor="let content of content.userContent">
         <button class="content" (tap)="openPhoto(content)">
-          <img *ngIf="content.isVideo == true" src={{content.Thumbnail}}>
+          <img *ngIf="content.isVideo == true; else image" src={{content.Thumbnail}}>
           <img *ngIf="content.isVideo == false" src={{content.ImageURL}}>
         </button>
       </div>

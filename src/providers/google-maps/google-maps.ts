@@ -59,7 +59,7 @@ export class GoogleMapsProvider {
         var contentString = '<div id="content">' +
           '<div id="siteNotice">' +
           '</div>' +
-          `<h1 id="firstHeading" class="firstHeading">${ title }</h1>` +
+          `<h1 id="firstHeading" class="firstHeading">${ address }</h1>` +
           '<div id="bodyContent">' +
           '</div>' +
           '</div>';

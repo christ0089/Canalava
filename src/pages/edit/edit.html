@@ -32,6 +32,10 @@
     <ion-input [(ngModel)]="user_data.Phone">{{user_data.Phone}}</ion-input>
   </ion-item>
   <ion-item>
+    <ion-label>Mostrar Telefono</ion-label>
+    <ion-toggle [(ngModel)]=user_data.isPhonePublic></ion-toggle>
+  </ion-item>
+  <ion-item>
     <ion-label floating>Pagina de Internet</ion-label>
     <ion-input></ion-input>
   </ion-item>

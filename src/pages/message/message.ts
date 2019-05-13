@@ -65,9 +65,11 @@ export class MessagePage {
 
   sendMessage() 
   {
-    this.data.Timestamp = Date.now();
+  
     this.data.Receiver = this.messageKey;
-    this.messageProvider.postMessage(this.data).catch((error) => {
+    this.messageProvider.postMessage(this.data).then(() => {
+      this.data.Message = '';
+    }).catch((error) => {
       this.alertProvider.presetToast(error);
       this.data.Message = "";
     })

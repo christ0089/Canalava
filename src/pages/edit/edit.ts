@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PostPicture } from '../../providers/post-picture';
 import { UsersProvider } from '../../providers/users/users';
 import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
+import { User } from '../../Models/User';
 
 /**
  * Generated class for the EditPage page.
@@ -17,7 +18,7 @@ import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
   templateUrl: 'edit.html',
 })
 export class EditPage {
-  user_data: any
+  user_data: User;
   constructor(public navCtrl: NavController, public navParams: NavParams, private camera: PostPicture,
     private userData: UsersProvider, private toastCtrl: ToastAndLoadProvider) {
     this.user_data = navParams.get("UserData");
