@@ -14,17 +14,19 @@
 
 
 <ion-content>
-    <ion-list>
-        <ion-item (tap)="openMessages(message)" *ngFor="let message of messages.key">
-            <ion-avatar item-start>
-              <img src="{{users.getUserImage(message)}}">
-            </ion-avatar>
-            <h2>{{users.getUserName(message)}}</h2>
-            <p>{{getMessage(message)}}</p>
-            <ion-note item-end>{{messages.convos[message].Timestamp | date}}</ion-note>
-          </ion-item>
-    </ion-list>  
-    <ion-fab right bottom (tap)="searchUser()">
-        <button ion-fab color="blue"><ion-icon name="text"></ion-icon></button>
-    </ion-fab>
+  <ion-list>
+    <ion-item (tap)="openMessages(message)" *ngFor="let message of messages.key">
+      <ion-avatar item-start *ngIf="('UserData/' + message | doc | async); let user; else loading">
+        <img src="{{user?.ProfileImg}}">
+      </ion-avatar>
+      <h2 *ngIf="('UserData/' + message | doc | async); let user; else loading">{{user?.Name}}</h2>
+      <p>{{getMessage(message)}}</p>
+      <ion-note item-end>{{messages.convos[message].Timestamp | date}}</ion-note>
+    </ion-item>
+  </ion-list>
+  <ion-fab right bottom (tap)="searchUser()">
+    <button ion-fab color="blue">
+      <ion-icon name="text"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

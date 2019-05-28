@@ -17,50 +17,19 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 })
 export class ServicesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private document: DocumentViewer
-    , private toast: ToastAndLoadProvider, private platform: Platform,
-    private inAppBrowser: InAppBrowser) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastAndLoadProvider) {
 
   }
 
   getData(type) {
-    this.navCtrl.push("EventManagerPage", {
+    this.navCtrl.push("TemasPage", {
       Type: type
     })
-  }
-
-  openTema() {
-    this.navCtrl.push("TemasPage", {
-    })
-  }
-
-  openDocument() {
-    const options: DocumentViewerOptions = {
-      title: 'Beneficios'
-    }
-    let toast = this.toast;
-
-    var address = "assets/Beneficios.pdf";
-    if (this.platform.is('android')) {
-      this.inAppBrowser.create("https://canalava.org.mx/Beneficios.html")
-      return 
-    }
-    this.document.viewDocument(address, 'application/pdf', options, function onShow() { }, function onClose() { }, function onMissingApp(appId, installer) {
-      if (confirm("No tienes un visor de PDF, Quieres Instalar uno?" +
-        + appId + " for Android?")) {
-        installer();
-      }
-    },
-      function onError(error) { toast.presetToast("Error al abrir archivo" + error) })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServicesPage');
   }
 
-  openMagazine() {
-    this.inAppBrowser.create("https://canalava.org.mx/Revista.html")
-    //this.toast.presetToast("No Revista Disponible en este momento");
-  }
 
 }

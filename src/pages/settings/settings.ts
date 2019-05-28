@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
 
 /**
  * Generated class for the SettingsPage page.
@@ -17,7 +19,10 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 })
 export class SettingsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userData: UsersProvider,
+  constructor(public navCtrl: NavController,
+    private auth: AuthServiceProvider,
+    private snackBar: ToastAndLoadProvider,
+     public navParams: NavParams, private userData: UsersProvider,
     private inAppBrowser: InAppBrowser) {
   }
 
@@ -39,6 +44,12 @@ export class SettingsPage {
     } else if (path == "Terms") {
       this.inAppBrowser.create("https://canalava.org.mx/Terminos-y-condiciones.html")
     }
+  }
+
+  changePassword() {
+    this.auth.afAuth.auth.sendPasswordResetEmail(this.auth.afAuth.auth.currentUser.email).then(() => {
+      this.snackBar.presetToast('Se ha enviado un correo para cambiar la contraseña');
+    });
   }
 
 

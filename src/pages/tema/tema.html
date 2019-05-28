@@ -8,6 +8,7 @@
 
   <ion-navbar *ngIf="tema$ | async; let tema">
     <ion-title>Tema</ion-title>
+
     <ion-buttons end>
       <button ion-button icon-only clear (tap)="editTema()" *ngIf="tema.PostedBy == userData.userID && isEditEnabled == false">
         <ion-icon name="create"></ion-icon>

@@ -33,6 +33,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { WindowProvider } from '../providers/window/window';
 import { ResultsProvider } from '../providers/results/results';
 import { AdProvider } from '../providers/results/adProvider';
+import { ContentLoaderService } from '../providers/content/content-loader.service';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 
@@ -48,7 +50,6 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-
   ],
   imports: [
     BrowserModule,
@@ -60,6 +61,7 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -88,6 +90,7 @@ export const firebaseConfig = {
     GoogleMapsProvider,
     FcmProvider,
     WindowProvider,
+    ContentLoaderService,
     ResultsProvider
   ]
 })

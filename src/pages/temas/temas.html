@@ -7,20 +7,19 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Temas</ion-title>
+    <ion-title>{{type}}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let tema of temas.Inqury" (tap)="openTema(tema)">
+  <ion-list *ngIf="temas$ | async; let temas; else loading">
+    <ion-item *ngFor="let tema of temas" (tap)="openTema(tema)">
       <ion-avatar item-start>
         <img-loader  src={{users.getUserImage(tema.PostedBy)}} fallbackUrl="assets/imgs/Unknown.png" useImg [spinner]="true"></img-loader>
       </ion-avatar>
-      <h2 text-wrap>{{users.getUserName(tema.PostedBy)}}</h2>
-      <p text-wrap>{{tema.Title}}</p>
+      <h2 text-wrap *ngIf="('UserData/' + tema.PostedBy | doc | async); let user; else loading ">{{user.Name}}</h2>
+      <p text-wrap>{{tema.Topic}}</p>
       <ion-note item-end>{{tema.Timestamp | date}}</ion-note>
     </ion-item>
   </ion-list>

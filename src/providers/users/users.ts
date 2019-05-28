@@ -104,31 +104,7 @@ export class UsersProvider {
 
   loadUsers(name, query) {
     const db = this.firebase.database().ref();
-    let dataArray = [];
-
-    let userID = this.userID;
-    return new Promise((resolve, reject) => {
-      db.child("UserData").orderByChild(query).limitToFirst(10).startAt(name).once("value").then((snapchot) => {
-        console.log(snapchot.val());
-        snapchot.forEach(function (child) {
-          let data = child.val();
-          if (child.key == userID) {
-            return
-          }
-          var userData = {
-            "Name": data.Name,
-            "Phone": data.Phone,
-            "Img": data.ProfileImg,
-            isPhonePublic: data.isPhonePublic,
-            "Key": child.key
-          }
-          dataArray.push(userData);
-          return resolve(dataArray);
-        });
-      }).catch((error) => {
-        return reject(error);
-      });
-    })
+    
   }
 
   getSelectedAccount() {
@@ -192,9 +168,6 @@ export class UsersProvider {
         return false;
       }
     });
-    if (this.users.length == 0) {
-      this.loadUsers(Name, "Name").then((resolve: any) => this.users = resolve);
-    }
   }
 
 // Purpose: Returns the User's Image based on his ID

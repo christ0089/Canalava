@@ -16,27 +16,6 @@ export class TemasDeIndustriaProvider {
     console.log('Hello TemasDeIndustriaProvider Provider');
   }
 
-  Inqury = [];
-
-  getIndustryTopicSimple() {
-    let tempArray = [];
-    this.firebase.database().ref().child("InductryInquiry").child("AllInquiries").once("value").then((snapchot) => {
-      snapchot.forEach((child) => {
-        let data = child.val();
-        let inquiryData = {
-          "Img" : "",
-          "Name" : "",
-          "PostedBy" : data.PostedBy,
-          "Timestamp" : data.Timestamp,
-          "Title" : data.Topic,
-          "Key" : child.key
-        }
-        tempArray.push(inquiryData);
-      })
-     
-    })
-    this.Inqury = tempArray;
-  }
 
   getIndustryTopicSpecific(id) {
     return new Promise ((success, reject)=> {
@@ -115,7 +94,6 @@ export class TemasDeIndustriaProvider {
           "Title" : data.Title,
           "PostedBy" : id 
         }).then(() => {
-          this.getIndustryTopicSimple();
           return success();
         }).catch((error) => {
           return reject(error);

@@ -42,30 +42,12 @@
           </div>
           <p>{{content.Timestamp | date}}</p>
         </ion-item>
-        <div *ngIf="i % 3 == 0">
-          <div *ngIf="anuncio$ | async; let anuncio; else loading">
-            <ion-card *ngIf="ad(anuncio,i) != null" (tap)="openWebsite(anuncio,i)">
-              <img src={{ad(anuncio,i)?.Image}}>
-              <ion-card-content>
-                <ion-card-title>
-                  <ion-item>
-                    <ion-avatar item-start>
-                      <img src={{ad(anuncio,i)?.Logo}}>
-                    </ion-avatar>
-                    {{ad(anuncio,i)?.Title}}
-                  </ion-item>
-                </ion-card-title>
-                <p>
-                  (Promocion) <br>
-                  {{ad(anuncio,i)?.Message}}
-                </p>
-              </ion-card-content>
-            </ion-card>
-          </div>
-        </div>
       </div>
     </ion-list>
   </ion-list>
+  <ng-template #loading>
+      <div>Cargando</div>
+  </ng-template>
 
   <ion-infinite-scroll threshold="20%" (ionInfinite)="$event.waitFor(doInfinite())">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>

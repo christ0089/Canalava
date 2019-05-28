@@ -3,10 +3,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { AngularFireDatabase } from 'angularfire2/database';
 
-interface Lote {
-  NombreLote: string,
-  Phone : string
-}
+
 
 @Pipe({
   name: 'doc',

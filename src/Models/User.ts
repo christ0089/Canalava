@@ -1,7 +1,7 @@
 export interface User {
     "Name": string,
     "Phone": string,
-    "Img": string,
+    "ProfileImg": string,
     "isPhonePublic":boolean,
-    "Key":string
+    "key":string
 }

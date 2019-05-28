@@ -44,7 +44,7 @@ export class GoogleMapsProvider {
 
 
 
-  addMarkers(map, address) {
+  addMarkers(map, address : string) {
     var geocoder = new google.maps.Geocoder();
     var title = this.title;
     geocoder.geocode({ 'address': address }, function (results, status) {
@@ -55,11 +55,15 @@ export class GoogleMapsProvider {
           animation: google.maps.Animation.DROP,
           position: results[0].geometry.location
         });
-
+        const reg = new RegExp(' ', 'g');
+        const google_addres = address.replace(reg, '%20');
+        console.log(google_addres);
         var contentString = '<div id="content">' +
           '<div id="siteNotice">' +
           '</div>' +
-          `<h1 id="firstHeading" class="firstHeading">${ address }</h1>` +
+          `<h1 id="firstHeading" class="firstHeading">${ title }</h1>` +
+          `<p id="firstHeading" class="firstHeading">${ address }</p>` +
+          `<a href=https://www.google.com/maps/search/?api=1&query=${google_addres}>Ver en google maps </a>` +
           '<div id="bodyContent">' +
           '</div>' +
           '</div>';

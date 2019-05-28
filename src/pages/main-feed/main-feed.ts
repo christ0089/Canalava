@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
 import { ContentProvider } from '../../providers/content/content';
 import { DatePipe } from '@angular/common';
-import { FcmProvider } from '../../providers/messages-service/fcm';
 import { ToastAndLoadProvider } from '../../providers/AlertandLoader';
 import { ResultsProvider } from '../../providers/results/results';
 import { take } from 'rxjs/operators';
@@ -26,25 +25,19 @@ export class MainFeedPage {
 
   data = [];
   content$:  Observable<any[]>;
-  anuncio$:  Observable<any[]>;
   constructor(public navCtrl: NavController,
      public navParams: NavParams, 
-     private inAppBrowser:InAppBrowser,
      private userContent: UsersProvider,
      public content: ContentProvider,
-     private toastCtrl: ToastAndLoadProvider,
-     private anuncios: AdProvider,
      private results: ResultsProvider) {
     this.content$ = results.content$;
-    this.anuncio$ = anuncios.anuncio$;
+
   }
 
 
   ionViewDidLoad() {
     this.userContent.getCurrentSession();
-    /*this.fcm.listenToNotification().pipe(tap(msg => {
-      this.toastCtrl.presetToast(msg.body)
-     }))*/
+
   }
 
   openSettings() {
@@ -60,14 +53,6 @@ export class MainFeedPage {
     });
   }
   
-  openWebsite(anuncio, index) {
-    if (index == null) {
-      return
-    }
-    if (anuncio[index/3] != null) {
-      this.inAppBrowser.create(anuncio[index/3].Website);
-    }
-  }
 
   giveLike(content) {
     if (content.isImageLiked == false) {
@@ -99,12 +84,4 @@ export class MainFeedPage {
     return Promise.resolve();
   }
 
-  ad(anuncio, index: number) {
-    if (index == null) {
-      return
-    }
-    if (anuncio[index/3] != null) {
-      return anuncio[index/3];
-    }
-  }
 }

@@ -8,18 +8,51 @@
 
   <ion-navbar>
     <ion-title>Busqueda</ion-title>
+
+
   </ion-navbar>
 </ion-header>
 
 
 <ion-content>
   <ion-searchbar placeholder="Buscar" (ionInput)="getItems($event)"></ion-searchbar>
-  <ion-list>
-      <ion-item (tap)="openAccount(user)" *ngFor="let user of userContent.users">
-          <ion-avatar item-start>
-            <img-loader useImg src={{user.Img}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
-          </ion-avatar>
-          <h2>{{user.Name}}</h2>
-        </ion-item>
+  <ion-segment [(ngModel)]="icons" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="partners">
+        <ion-label>Socios</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="providers">
+        <ion-label>Provedores</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  <ion-list *ngIf="dataArray$ | async; let users">
+    <ion-item class="userItem" *ngFor="let user of users" (tap)="openAccount(user)">
+      <ion-avatar item-start>
+        <img-loader useImg src={{user.ProfileImg}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
+      </ion-avatar>
+      <h2>{{user.Name}}</h2>
+    </ion-item>
   </ion-list>
+
+  <div *ngIf="icons == 'providers'">
+    <div *ngIf="anuncio$ | async; let anuncio; let i = index; else loading">
+      <ion-card *ngFor="let advert of anuncio" (tap)="openWebsite(anuncio,i)">
+        <img src={{advert?.Image}}>
+        <ion-card-content>
+          <ion-card-title>
+            <ion-item>
+              <ion-avatar item-start>
+                <img src={{advert?.Logo}}>
+              </ion-avatar>
+              {{advert?.Title}}
+            </ion-item>
+          </ion-card-title>
+          <p>
+            (Promocion) <br>
+            {{advert?.Message}}
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
 </ion-content>

@@ -35,10 +35,9 @@ export class TemaPage {
     let key = this.navParams.get("Key");
     console.log(key);
     if (key != null) {
-      this.id = key.Key
-
+      this.id = key.key;
       const userData = this.userData.getProfileData(key.PostedBy);
-      const tema = temas.getIndustryTopicSpecific(key.Key);
+      const tema = temas.getIndustryTopicSpecific(key.key);
       Promise.all([userData, tema]).then((data: any) => {
         console.log(data);
         let tema: Tema = {
@@ -59,9 +58,9 @@ export class TemaPage {
       tema.Description = tema.Description.split("\\n").join("\n")
       this.id = null;
       tema = {
-        "Title": tema.Title,
+        "Title": tema.Topic,
         "Message": tema.Description,
-        "MainPhoto": tema.Img,
+        "MainPhoto": tema.Image,
         "Author": "Canalava",
         "AuthorImg": "https://firebasestorage.googleapis.com/v0/b/canalava-353c7.appspot.com/o/Icon.png?alt=media&token=6c3a295c-e9e0-43ba-8b8b-75b4d548e647",
         "Date": tema.Timestamp,
@@ -79,7 +78,6 @@ export class TemaPage {
     this.temas.getCommentsOnInquiry(this.id).then((comments: any) => {
       this.commentsArray = comments;
     })
-    console.log('ionViewDidLoad TemaPage');
   }
 
   postComment() {

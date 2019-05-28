@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Servicios</ion-title>
+    <ion-title>Desmanchado</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,29 +15,13 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item (tap)="openDocument()">
-      <ion-icon name="document" item-start></ion-icon>
-      <h2>Trámites</h2>
+    <ion-item (tap)="getData('Lav')">
+      <ion-icon name="appname-customicon" item-start></ion-icon>
+      <h2>Lavanderia</h2>
     </ion-item>
-    <ion-item (tap)="openMagazine()">
-      <ion-icon name="book" item-start></ion-icon>
-      <h2>Revista</h2>
-    </ion-item>
-    <ion-item (tap)="openTema()">
-      <ion-icon name="briefcase" item-start></ion-icon>
-      <h2>Tema</h2>
-    </ion-item>
-    <ion-item (tap)="getData(2)">
-      <ion-icon name="bookmark" item-start ></ion-icon>
-      <h2>Capacitación</h2>
-    </ion-item>
-    <ion-item (tap)="getData(0)">
-      <ion-icon name="create" item-start></ion-icon>
-      <h2>Asesoría</h2>
-    </ion-item>
-    <ion-item (tap)="getData(1)">
-      <ion-icon name="calendar" item-start></ion-icon>
-      <h2>Eventos</h2>
+    <ion-item (tap)="getData('Tint')">
+      <ion-icon name="appname-customicon2" item-start></ion-icon>
+      <h2>Tintorería</h2>
     </ion-item>
   </ion-list>
 </ion-content>

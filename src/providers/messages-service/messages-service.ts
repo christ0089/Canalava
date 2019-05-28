@@ -50,8 +50,8 @@ export class MessagesServiceProvider {
 
           db.child("MessagesBranch").child("Messages").child(value).once("value").then((message) => {
             let data = message.val();
-            console.log(this.convos);
             this.convos[toID] = data;
+            
           })
         })
         return false;

@@ -20,8 +20,8 @@
 
 <ion-content padding>
   <ion-item>
-    <ion-avatar item-start>
-      <img-loader useImg src={{userData.Img}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
+    <ion-avatar item-start >
+      <img-loader useImg src={{userData.ProfileImg}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
     </ion-avatar>
     <h2>{{userData.Name}}</h2>
     <p>Telefono: {{userData.Phone}}</p>
@@ -50,7 +50,7 @@
       <div *ngFor="let content of DataImgs" class="feed">
         <ion-item>
           <ion-avatar item-start>
-            <img src={{userData.Img}}>
+            <img src={{userData.ProfileImg}}>
           </ion-avatar>
           <h2>{{userData.Name}}</h2>
         </ion-item>

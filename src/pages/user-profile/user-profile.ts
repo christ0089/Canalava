@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { ContentProvider } from '../../providers/content/content';
 import { UsersProvider } from '../../providers/users/users';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+import { User } from '../../Models/User';
 declare var google: any;
 /**
  * Generated class for the UserProfilePage page.
@@ -18,13 +19,7 @@ declare var google: any;
 })
 export class UserProfilePage {
 
-  userData = {
-    "Name": "",
-    "Phone": "",
-    "Img": "",
-    "isPhonePublic": "",
-    "Key": ""
-  };
+  userData : User;
 
   DataImgs = [];
   map:any;
@@ -37,25 +32,26 @@ export class UserProfilePage {
 
   @ViewChild('googleMaps') mapRef : ElementRef;
 
-  ionViewDidLoad() {
+  ionViewWillLoad() {
     this.userData = this.navParams.get('data');
-    this.DataImgs = this.content.getProfileContent(this.userData.Key, this.user_data.userID);
+    this.DataImgs = this.content.getProfileContent(this.userData.key, this.user_data.userID);
     this.platform.ready().then(() => {
       console.log(this.mapRef);
       this.showMap();
     })
   }
+  
 
   openMessages() {
     this.navCtrl.push("MessagePage", {
-      key : this.userData.Key
+      key : this.userData.key
     });
   }
 
   openPhoto(content) {
     this.navCtrl.push("PhotoPage", {
       Content: content,
-      ID : this.userData.Key
+      ID : this.userData.key
     })
   }
 
@@ -68,7 +64,7 @@ export class UserProfilePage {
     }
 
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-    this.googleMaps.getAddresses(this.map,  this.userData.Key, this.userData.Name)
+    this.googleMaps.getAddresses(this.map,  this.userData.key, this.userData.Name)
   }
 
   giveLike(content) {

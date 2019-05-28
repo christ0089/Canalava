@@ -17,8 +17,8 @@ import { UsersProvider } from '../../providers/users/users';
 export class TabsPage {
   tab1Root: string = 'MainFeedPage';
   tab2Root: string = 'SearchPage';
-  tab3Root: string = 'MessagesPage';
-  tab4Root: string = 'ServicesPage';
+  tab3Root: string = 'ServicesPage';
+  tab4Root: string = 'TemasPage';
   tab5Root: string = 'AccountPage';
 
   constructor(public navCtrl: NavController,

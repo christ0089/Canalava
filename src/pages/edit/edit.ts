@@ -34,7 +34,7 @@ export class EditPage {
       this.toastCtrl.dismissLoader();
       this.toastCtrl.presetToast("Necesitas un Nombre");
     }
-    else if (this.user_data.Img == this.userData.getSelectedAccount().Img){
+    else if (this.user_data.ProfileImg == this.userData.getSelectedAccount().Img){
       this.userData.updateUserData(this.user_data).then(() => {
         this.toastCtrl.dismissLoader();
         this.closeModal();
@@ -43,8 +43,8 @@ export class EditPage {
         this.toastCtrl.presetToast(error);
       });
     } else {
-      this.camera.postPicture(this.user_data.Img, "Users" + this.userData.userID).then((url:string)=> {
-        this.user_data.Img = url;
+      this.camera.postPicture(this.user_data.ProfileImg, "Users" + this.userData.userID).then((url:string)=> {
+        this.user_data.ProfileImg = url;
         this.userData.updateUserData(this.user_data).then(() => {
           this.toastCtrl.dismissLoader();
           this.closeModal();
@@ -61,7 +61,7 @@ export class EditPage {
 
   openGallery() {
     this.camera.openGallery().then((url: string) => {
-      this.user_data.Img = url;
+      this.user_data.ProfileImg = url;
     });
   }
 
