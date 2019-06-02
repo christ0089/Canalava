@@ -30,10 +30,13 @@ ion-icon {
     &[class*="appname-customicon"] {
         mask-image: url(../assets/imgs/baseline-local_laundry_service-24px.svg);
     }
+    &[class*="appname-customicon1"] {
+        mask-image: url(../assets/imgs/Asset_14.svg);
+    }
     &[class*="appname-customicon2"] {
-        mask-image: url(../assets/imgs/t-shirt-svgrepo-com.svg);
+        mask-image: url(../assets/imgs/Asset_13.svg);
     }
     &[class*="appname-customicon3"] {
-        mask-image: url(../assets/imgs/baseline-local_laundry_service-24px.svg);
+        mask-image: url(../assets/imgs/Asset_12.svg);
     }
 }

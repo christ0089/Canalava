@@ -20,11 +20,11 @@
 
 <ion-content padding>
   <ion-item>
-    <ion-avatar item-start >
+    <ion-avatar item-start>
       <img-loader useImg src={{userData.ProfileImg}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
     </ion-avatar>
     <h2>{{userData.Name}}</h2>
-    <p>Telefono: {{userData.Phone}}</p>
+    <p>Telefono :  <a href={{userData.Phone}}>{{userData.Phone}}</a></p>
   </ion-item>
   <div padding>
     <ion-segment [(ngModel)]="displayMode">

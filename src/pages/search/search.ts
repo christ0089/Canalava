@@ -23,11 +23,12 @@ export class SearchPage {
 
   isMessaging: boolean = false;
   dataArray$: Observable<any[]>;
-  icons : string = '';
+  icons: string = '';
+  state = '';
   anuncio$: Observable<any[]>;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private anuncios: AdProvider,
-    private inAppBrowser:InAppBrowser,
+    private inAppBrowser: InAppBrowser,
     private contentService: ContentLoaderService) {
     this.anuncio$ = anuncios.anuncio$;
   }
@@ -54,21 +55,17 @@ export class SearchPage {
   }
 
   segmentChanged($event) {
-    console.log($event._value);
-    if ($event._value == "partners") {
-      this.dataArray$ = this.contentService.getObjectList('UserData', 'isBusiness', true, 10);
-    }else {
-      this.dataArray$ = this.contentService.getObjectList('Providers', 'isBusiness', true, 10);
-    }
+    this.state = $event._value;
+    this.dataArray$ = this.contentService.getObjectList(this.state, 'isBusiness', true, 10);
   }
 
   getItems(searchbar) {
     var name = searchbar.srcElement.value;
     if (name == '') {
-      this.dataArray$ = this.contentService.getObjectList('UserData', 'isBusiness', true, 20);
+      this.dataArray$ = this.contentService.getObjectList(this.state, 'isBusiness', true, 20);
       return;
     }
-    this.dataArray$ = this.contentService.getObjectList('UserData', 'isBusiness', true).map((data: any[]) => {
+    this.dataArray$ = this.contentService.getObjectList(this.state, 'isBusiness', true).map((data: any[]) => {
       return data.filter(data => {
         if (data.Name.toLowerCase().indexOf(name.toLowerCase()) > -1) {
           return true;
@@ -78,13 +75,17 @@ export class SearchPage {
     })
   }
 
-  openWebsite(anuncio, index) {
-    if (index == null) {
-      return
+  async onChange($event) {
+    console.log($event);
+    if ($event > 0) {
+      this.dataArray$ = await this.contentService.getObjectList(this.state, 'Type', $event, 20);
+      return;
     }
-    if (anuncio[index] != null) {
-      this.inAppBrowser.create(anuncio[index].Website);
-    }
+    this.dataArray$ = this.contentService.getObjectList(this.state, 'isBusiness', true, 20);
+  }
+
+  openWebsite(anuncio) {
+    this.inAppBrowser.create(anuncio);
   }
 
 }

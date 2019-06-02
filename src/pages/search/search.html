@@ -17,25 +17,36 @@
 <ion-content>
   <ion-searchbar placeholder="Buscar" (ionInput)="getItems($event)"></ion-searchbar>
   <ion-segment [(ngModel)]="icons" (ionChange)="segmentChanged($event)">
-      <ion-segment-button value="partners">
-        <ion-label>Socios</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="providers">
-        <ion-label>Provedores</ion-label>
-      </ion-segment-button>
-    </ion-segment>
-  <ion-list *ngIf="dataArray$ | async; let users">
-    <ion-item class="userItem" *ngFor="let user of users" (tap)="openAccount(user)">
-      <ion-avatar item-start>
-        <img-loader useImg src={{user.ProfileImg}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
-      </ion-avatar>
-      <h2>{{user.Name}}</h2>
-    </ion-item>
-  </ion-list>
+    <ion-segment-button value="UserData">
+      <ion-label>Socios</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Anuncios">
+      <ion-label>Provedores</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <div *ngIf="icons == 'UserData'">
+    <ion-list *ngIf="dataArray$ | async; let users">
+      <ion-item class="userItem" *ngFor="let user of users" (tap)="openAccount(user)">
+        <ion-avatar item-start>
+          <img-loader useImg src={{user.ProfileImg}} fallbackUrl="/assets/imgs/Unknown.png" spinner="true"></img-loader>
+        </ion-avatar>
+        <h2>{{user.Name}}</h2>
+      </ion-item>
+    </ion-list>
+  </div>
 
-  <div *ngIf="icons == 'providers'">
-    <div *ngIf="anuncio$ | async; let anuncio; let i = index; else loading">
-      <ion-card *ngFor="let advert of anuncio" (tap)="openWebsite(anuncio,i)">
+  <div *ngIf="icons == 'Anuncios'">
+    <ion-item>
+      <ion-label>Typo de Provedor</ion-label>
+      <ion-select value="brown" okText="Okay" cancelText="Dismiss" (ionChange)="onChange($event)">
+        <ion-option value="-1">Ninguno</ion-option>
+        <ion-option value="0">Lavadoras Indusrtriales</ion-option>
+        <ion-option value="1">Mantenimiento</ion-option>
+        <ion-option value="2">Transporte</ion-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="dataArray$ | async; let anuncio; let i = index; else loading">
+      <ion-card *ngFor="let advert of anuncio" (tap)="openWebsite(advert?.Website)">
         <img src={{advert?.Image}}>
         <ion-card-content>
           <ion-card-title>

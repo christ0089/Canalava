@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Desmanchado</ion-title>
+    <ion-title>Manchas</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,12 +16,16 @@
 <ion-content padding>
   <ion-list>
     <ion-item (tap)="getData('Lav')">
-      <ion-icon name="appname-customicon" item-start></ion-icon>
+      <ion-icon name="appname-customicon1" item-start></ion-icon>
       <h2>Lavanderia</h2>
     </ion-item>
     <ion-item (tap)="getData('Tint')">
       <ion-icon name="appname-customicon2" item-start></ion-icon>
       <h2>Tintorería</h2>
+    </ion-item>
+    <ion-item (tap)="getData('Tint')">
+      <ion-icon name="appname-customicon" item-start></ion-icon>
+      <h2>Wet-Cleaning</h2>
     </ion-item>
   </ion-list>
 </ion-content>
