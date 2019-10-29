@@ -35,6 +35,7 @@ import { ResultsProvider } from '../providers/results/results';
 import { AdProvider } from '../providers/results/adProvider';
 import { ContentLoaderService } from '../providers/content/content-loader.service';
 import { PipesModule } from '../pipes/pipes.module';
+import { IonTextAvatar } from 'ionic-text-avatar';
 
 
 

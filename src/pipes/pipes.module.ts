@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { DocPipe } from './doc/doc';
+import { LetterPipe } from './firstLetters/letters';
 @NgModule({
-	declarations: [DocPipe],
+	declarations: [DocPipe, LetterPipe],
 	imports: [],
-	exports: [DocPipe]
+	exports: [DocPipe, LetterPipe]
 })
 export class PipesModule {}

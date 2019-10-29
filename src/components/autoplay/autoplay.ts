@@ -1,4 +1,4 @@
-import { AutoplayVideoDirective } from './../../directives/autoplay-video/autoplay-video';
+import { AutoplayVideoDirective } from '../../directives/autoplay-video/autoplay-video';
 import { Component, ElementRef, NgZone, QueryList, ContentChildren, OnDestroy, OnInit } from '@angular/core';
 
 @Component({

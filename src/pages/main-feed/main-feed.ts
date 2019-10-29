@@ -28,6 +28,7 @@ export class MainFeedPage {
   constructor(public navCtrl: NavController,
      public navParams: NavParams, 
      private userContent: UsersProvider,
+     private inAppBrowser: InAppBrowser,
      public content: ContentProvider,
      private results: ResultsProvider) {
     this.content$ = results.content$;
@@ -53,6 +54,9 @@ export class MainFeedPage {
     });
   }
   
+  openFile(url) {
+    this.inAppBrowser.create(url);
+  }
 
   giveLike(content) {
     if (content.isImageLiked == false) {

@@ -46,7 +46,7 @@ export class ResultsProvider {
     const contents = this.mapListKeys<content>( // 3
       this.db.list<any>('/PublicContent', ref => { // 4
         const query = ref
-          .orderByChild('Timestamp')
+          .orderByChild('Inverse')
           .limitToFirst(batch);
         return (lastKey) // 5
           ? query.startAt(lastKey)

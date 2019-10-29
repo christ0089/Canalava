@@ -23,8 +23,8 @@ export class SearchPage {
 
   isMessaging: boolean = false;
   dataArray$: Observable<any[]>;
-  icons: string = '';
-  state = '';
+  icons: string = 'UserData';
+  state = 'UserData';
   anuncio$: Observable<any[]>;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private anuncios: AdProvider,
@@ -56,13 +56,13 @@ export class SearchPage {
 
   segmentChanged($event) {
     this.state = $event._value;
-    this.dataArray$ = this.contentService.getObjectList(this.state, 'isBusiness', true, 10);
+    this.dataArray$ = this.contentService.getObjectList(this.state, 'isBusiness', true, 10)
   }
 
   getItems(searchbar) {
     var name = searchbar.srcElement.value;
     if (name == '') {
-      this.dataArray$ = this.contentService.getObjectList(this.state, 'isBusiness', true, 20);
+      this.dataArray$ = this.contentService.getObjectList(this.state, 'isBusiness', true, 20)
       return;
     }
     this.dataArray$ = this.contentService.getObjectList(this.state, 'isBusiness', true).map((data: any[]) => {
@@ -75,14 +75,6 @@ export class SearchPage {
     })
   }
 
-  async onChange($event) {
-    console.log($event);
-    if ($event > 0) {
-      this.dataArray$ = await this.contentService.getObjectList(this.state, 'Type', $event, 20);
-      return;
-    }
-    this.dataArray$ = this.contentService.getObjectList(this.state, 'isBusiness', true, 20);
-  }
 
   openWebsite(anuncio) {
     this.inAppBrowser.create(anuncio);

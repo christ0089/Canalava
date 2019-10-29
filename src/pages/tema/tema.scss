@@ -1,13 +1,46 @@
 page-tema {
     p {
-     white-space:pre-wrap;
+        white-space: pre-wrap;
+        font-size: 18px;
     }
+
+
+    div {
+        font-size: 18px;
+    }
+
     ion-item {
         ion-label {
             vertical-align: baseline;
+
             h2 {
                 padding-top: 3px;
             }
         }
     }
+
+    .step {
+        font-weight: 600;
+        color: #3b74be;
+    }
+
+    .underline {
+        color: rgb(59, 116, 190);
+    }
+
+    .symbol {
+        margin-top: 50px !important;
+        height: fit-content;
+    }
+
+    img {
+        margin-top: 50px !important;
+        width: 100%;
+    }
+}
+
+.MsoNormal {
+    hyphens: auto;
+    white-space: normal !important;
+
 }

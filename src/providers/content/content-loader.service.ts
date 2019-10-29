@@ -113,27 +113,16 @@ export class ContentLoaderService {
   }
 
   deletePicture(id, uid) {
-    return new Promise((resolve, reject) => {
       let publicContent = this.deleteData(`PublicContent/${id}`).then(() => {
         this.data.splice(this.data.indexOf(id), 1)
-      }).catch((error) => {
-        return reject(error)
       })
       let content = this.deleteData(`Content/${uid}/${id}`)
-      Promise.all([publicContent, content]).then(() => {
-        return resolve();
-      })
-    })
+      return Promise.all([publicContent, content])
   }
 
   editPost(post, path) {
     const firebaseDb = this.databaseRef.database.ref();
-    return new Promise((resolve, reject) => {
-      firebaseDb.child(path).update(post).catch((error) => {
-        return reject(error)
-      });
-      return resolve();
-    })
+    return firebaseDb.child(path).update(post)
   }
 
   setBusiness(key, business, adresses?: string[]) {
@@ -163,7 +152,6 @@ export class ContentLoaderService {
       return Promise.all(promise).catch((error) => {
         console.log(error);
       })
-
     })
   }
 

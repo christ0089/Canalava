@@ -5,27 +5,32 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar *ngIf="tema$ | async; let tema">
+  <ion-navbar >
     <ion-title>Tema</ion-title>
-
-    <ion-buttons end>
-      <button ion-button icon-only clear (tap)="editTema()" *ngIf="tema.PostedBy == userData.userID && isEditEnabled == false">
+    <ion-buttons end *ngIf="tema$ | async; let tema">
+      <button ion-button icon-only clear (tap)="editTema()"
+        *ngIf="tema.PostedBy == userData.userID && isEditEnabled == false">
         <ion-icon name="create"></ion-icon>
       </button>
-      <button ion-button icon-only clear *ngIf="isEditEnabled == true" (tap)="saveMessage()">
+      <button ion-button icon-only clear *ngIf="isEditEnabled == true" (tap)="saveMessage(tema)">
         <ion-icon name="checkmark"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding *ngIf="tema$ | async; let tema;">
-  <img class="uploadImg" src="{{tema.MainPhoto}}">
+  <img ng-class="{'uploadImg' : customImage == false || 'symbol' : customImage == true}" src="{{tema.MainPhoto}}">
   <h1 *ngIf="isEditEnabled == false">{{tema.Title}}</h1>
-  <p *ngIf="isEditEnabled == false">{{tema.Message}}</p>
+  <div #editor *ngIf="isEditEnabled == false" [innerHTML]=tema.Message></div>
+  <div *ngIf="isTema == true">
+    <button ion-button (tap)="openGlosario()"> Ver Glosario </button><br>
+    <ion-chip *ngFor="let chip of words">
+      <ion-label>{{chip}}</ion-label>
+    </ion-chip>
+  </div>
+
   <ion-input *ngIf="isEditEnabled == true" [(ngModel)]="tema.Title">{{tema.Title}}</ion-input>
   <ion-input *ngIf="isEditEnabled == true" [(ngModel)]="tema.Message">{{tema.Message}}</ion-input>
   <ion-item>
@@ -38,7 +43,7 @@
   <div *ngIf="id !== null">
     <div class="linebreaker"></div>
     <p>Comentarios</p>
-    <ion-item  *ngFor="let comment of commentsArray">
+    <ion-item *ngFor="let comment of commentsArray">
       <ion-avatar item-start>
         <img src="{{userData.getUserImage(comment.Id)}}">
       </ion-avatar>
@@ -56,5 +61,4 @@
       </button>
     </ion-item>
   </div>
-
 </ion-content>

@@ -18,7 +18,6 @@ export class ContentProvider {
   contentArray = [];
 
   constructor(public http: Http, private db: FirebaseApp, private auth:AuthServiceProvider) {
-    console.log('Hello ContentProvider Provider');
   }
 
 
@@ -33,7 +32,7 @@ export class ContentProvider {
       if (myContent.val() == null) {
         return;
       }
-      firebaseDb.child("PublicContent").child(myContent.key).once("value").then((snapchot) => {
+      firebaseDb.child("UserContent").child(myContent.key).once("value").then((snapchot) => {
         if (snapchot.val() == null) {
           return;
         }
@@ -70,7 +69,7 @@ export class ContentProvider {
 
   postPicture(userID, data) {
     const firebaseDb = this.db.database().ref();
-    let reference = firebaseDb.child("PublicContent").push();
+    let reference = firebaseDb.child("UserContent").push();
     return new Promise((resolve, reject)=> {
       reference.update({
         "Image" : data.Img,
@@ -99,7 +98,7 @@ export class ContentProvider {
     const firebaseDb = this.db.database().ref();
     console.log(id, uid)
     return new Promise((resolve, reject) => {
-      firebaseDb.child("PublicContent").child(id).remove().catch((error)=> {
+      firebaseDb.child("UserContent").child(id).remove().catch((error)=> {
         return reject(error)
       }).then(() => {
         this.contentArray.splice(this.contentArray.indexOf(id), 1)
@@ -116,7 +115,7 @@ export class ContentProvider {
   editPost(newMessage, uid, id) {
     const firebaseDb = this.db.database().ref();
     return new Promise((resolve, reject) => {
-      firebaseDb.child("PublicContent").child(id).update({
+      firebaseDb.child("UserContent").child(id).update({
         "Message": newMessage
       }).catch((error)=> {
         return reject(error)

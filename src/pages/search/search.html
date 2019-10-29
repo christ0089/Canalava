@@ -36,15 +36,7 @@
   </div>
 
   <div *ngIf="icons == 'Anuncios'">
-    <ion-item>
-      <ion-label>Typo de Provedor</ion-label>
-      <ion-select value="brown" okText="Okay" cancelText="Dismiss" (ionChange)="onChange($event)">
-        <ion-option value="-1">Ninguno</ion-option>
-        <ion-option value="0">Lavadoras Indusrtriales</ion-option>
-        <ion-option value="1">Mantenimiento</ion-option>
-        <ion-option value="2">Transporte</ion-option>
-      </ion-select>
-    </ion-item>
+
     <div *ngIf="dataArray$ | async; let anuncio; let i = index; else loading">
       <ion-card *ngFor="let advert of anuncio" (tap)="openWebsite(advert?.Website)">
         <img src={{advert?.Image}}>

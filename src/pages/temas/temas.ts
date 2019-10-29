@@ -21,47 +21,26 @@ import { of } from 'rxjs/observable/of';
 })
 export class TemasPage {
   temas$: Observable<any[]>;
-  type: string = ""
+  title: string = ""
 
   constructor(public navCtrl: NavController,
     private users: UsersProvider, private content: ContentLoaderService, public navParams: NavParams) {
-      let data = this.navParams.get('Type');
-      console.log(data);
-      if (data != null) {
-        this.temas$ = of([]);
-      
-        this.temas$ = this.content.getObjectList(`Desmanchado/${data}`);
-        console.log(this.temas$);
-        if (data === 'Tint') {
-          this.type = "Tintorería";
-          console.log('Change Label');
-        }
-        else {
-          this.type = "Lavandería";
-        }
-      } else {
-        this.type = "Temas";
-
-        this.temas$ = this.content.getObjectList(`InductryInquiry/AllInquiries`);
-      }
+    this.title = "Temas";
   }
 
 
   ionViewWillEnter() {
 
+
+    this.temas$ = this.content.getObjectList(`InductryInquiry/FullInquiry`);
+
   }
 
   openTema(tema) {
-    if (this.type == 'Temas') {
-      this.navCtrl.push("TemaPage", {
-        Key: tema
-      });
-    }else {
-      this.navCtrl.push("TemaPage",{
-        Key : null,
-        Tema : tema
-      });
-    }
+    this.navCtrl.push("TemaPage", {
+      tema: tema
+    });
+
   }
 
   createTema() {

@@ -9,5 +9,6 @@ import { TemaPage } from './tema';
   imports: [
     IonicPageModule.forChild(TemaPage),
   ],
+
 })
 export class TemaPageModule {}

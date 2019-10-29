@@ -62,21 +62,13 @@ export class TemasDeIndustriaProvider {
   }
 
   updateTema(Title,Message, key) {
-    return new Promise ((resolve, reject) => {
-      let id = this.userData.userID; 
+ 
       var fullInquiries = this.firebase.database().ref().child("InductryInquiry").child("FullInquiry").child(key).update({
-        "Text" : Message,
-        "Title" : Title
-      })
-      var allInquiries = this.firebase.database().ref().child("InductryInquiry").child("AllInquiries").child(key).update({
+        "Description" : Message,
         "Topic" : Title
       })
-      Promise.all([fullInquiries,allInquiries]).then(()=> {
-        return resolve();
-      }).catch((error) => {
-        return reject(error);
-      })
-    })
+      return Promise.all([fullInquiries]);
+
   }
 
   postTema(data: any) {

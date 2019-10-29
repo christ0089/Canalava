@@ -41,6 +41,7 @@
             </button>
           </div>
           <p>{{content.Timestamp | date}}</p>
+          <a *ngIf="content.FileURL != null" href="{{content.FileURL}}">Abir Archivo</a>
         </ion-item>
       </div>
     </ion-list>
